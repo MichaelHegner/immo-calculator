@@ -15,7 +15,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.1.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -25,7 +25,7 @@
 	</properties>
 
 	<dependencies>
-	
+
 		<!-- SPRING FRAMEWORK ... -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,7 +58,19 @@
 			<artifactId>hsqldb</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
+		<!-- DEVELOPMENT ... -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
 		<!-- TESTING ... -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
