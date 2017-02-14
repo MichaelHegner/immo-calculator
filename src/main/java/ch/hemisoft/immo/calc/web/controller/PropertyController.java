@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("property")
 public class PropertyController {
 
+	@GetMapping("list")
+	public String list(){
+		return "/property/list";
+	}
+	
 	@GetMapping("edit")
 	public String edit(){
 		return "/property/edit";

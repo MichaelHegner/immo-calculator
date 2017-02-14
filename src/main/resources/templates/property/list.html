@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HEMISOFT - Object Management</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    
+	    <link rel="stylesheet" type="text/css" media="screen, projection" 
+	        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/css/bootstrap.min.css" 
+	        th:href="@{../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+			          
+<!-- 	    <link rel="stylesheet" type="text/css" media="screen, projection"  -->
+<!-- 	        href="#"  -->
+<!-- 	    	th:href="@{../webjars/jquery-ui/1.12.1/jquery-ui.min.css}" /> -->
+		
+<!-- 		<script type="text/javascript"  -->
+<!-- 			src="http://code.jquery.com/jquery-3.1.1-1.min.js"  -->
+<!-- 			th:src="@{../webjars/jquery/3.1.1-1/jquery.min.js}"></script> -->
+			
+		<link rel="stylesheet" type="text/css" media="screen" 
+	          href="/static/css/app.css" 
+	          th:href="@{/css/app.css}" />
+	    	
+<!-- 	    <script type="text/javascript"  -->
+<!-- 	    	src="#"  -->
+<!-- 	    	th:src="@{../webjars/jquery-ui/1.12.1/jquery-ui.min.js}"></script> -->
+			
+			<style>
+				table {
+					font-family: arial, sans-serif;
+					border-collapse: collapse;
+					width: 100%;
+				}
+				
+				td, th {
+					border: 1px solid #dddddd;
+					text-align: left;
+					padding: 8px;
+				}
+				
+				tr:nth-child(even) {
+					background-color: #dddddd;
+				}
+			</style>
+			
+	</head>
+
+	<body>
+		<h1>Immobilien Mangement</h1>
+		
+		<div class="container">
+		
+			<main>
+				<table>
+					<tr>
+						<th>Immobilientyp</th>
+						<th>Adresse/Ort</th>
+						<th>Wohnfläche</th>
+						<th>Grundstücksfläche</th>
+						<th>Erwerbsdatum</th>
+					</tr>
+					<tr>
+						<td>Eigentumswohnung</td>
+						<td>Unterrain 8, 6167 Neustift im Stubaital, Österreich</td>
+						<td>56</td>
+						<td>0</td>
+						<td>01.05.2013</td>
+					</tr>
+					<tr>
+						<td>Eigentumswohnung</td>
+						<td>Kirchstetterngasse 52-54, 1160 Wien, Österreich</td>
+						<td>43</td>
+						<td>0</td>
+						<td>01.03.2015</td>
+					</tr>
+				</table>
+		</main>
+		</div>
+	</body>
+</html>
