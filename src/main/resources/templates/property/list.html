@@ -94,6 +94,20 @@
 								
 								<div class="row filterRow">
 									<div class="col-md-2">
+										<label for="inputPurchasePrice"><strong>Kaufpreis</strong></label >
+									</div>	
+									<div class="col-md-4 col-md-offset-1">	
+										<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
+											th:field="*{purchasePrice}"
+											min="1" max="10000000" 
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
 										<label for="inputNoApartments"><strong>Anzahl Wohnungen</strong></label >
 									</div>	
 									<div class="col-md-4 col-md-offset-1">	

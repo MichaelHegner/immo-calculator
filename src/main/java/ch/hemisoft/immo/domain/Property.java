@@ -17,6 +17,7 @@ import lombok.Data;
 public class Property {
 	@Id @GeneratedValue
 	Long id; 
+	double purchasePrice;
 	long noApartments;
 	long noParking;
 	double livingSpaceInQm;
