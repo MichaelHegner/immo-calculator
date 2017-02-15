@@ -21,24 +21,19 @@ import lombok.RequiredArgsConstructor;
 public class PropertyController {
 	@NonNull PropertyService service;
 
-	@GetMapping("list")
+	@GetMapping(value={"", "list"})
 	public String list() {
 		return "/property/list";
 	}
 	
-	@GetMapping("edit")
-	public String edit() {
-		return "/property/edit";
-	}
-	
-	@PostMapping("edit")
+	@PostMapping("save")
 	public String save(@ModelAttribute("property") Property property, BindingResult errors, ModelMap model) {
 		if (errors.hasErrors()) {
-	        return null;
+	        return list();
 	    }
 	    service.save(property);
 	    model.clear();
-	    return list();
+	    return "redirect:" + list();
 	}
 	
 	@ModelAttribute("property")

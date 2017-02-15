@@ -34,25 +34,191 @@
 		<div class="container">
 		
 			<main>
-				<table class="table table-striped">
-					<tr>
-						<th>Immobilientyp</th>
-						<th>Adresse/Ort</th>
-						<th>Wohnfläche</th>
-						<th>Grundstücksfläche</th>
-						<th>Erwerbsdatum</th>
-					</tr>
-					<tr th:if="${#lists.isEmpty(properties)}">
-						<td colspan="5">Keine Einträge vorhanden.</td>
-					</tr>
-					<tr th:each="property : ${properties}">
-						<td th:text="${property.type}">PROPERTY_TYP</td>
-						<td th:text="${property.address}">ADDRESS</td>
-						<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
-						<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
-						<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
-					</tr>
-				</table>
+			
+				<article> <!-- Auflistung ... -->
+					<header>
+						<h1>Immobilien Auflistung</h1>
+					</header>
+					<section>
+						<table class="table table-striped">
+							<tr>
+								<th>Immobilientyp</th>
+								<th>Adresse/Ort</th>
+								<th>Wohnfläche</th>
+								<th>Grundstücksfläche</th>
+								<th>Erwerbsdatum</th>
+							</tr>
+							<tr th:if="${#lists.isEmpty(properties)}">
+								<td colspan="5">Keine Einträge vorhanden.</td>
+							</tr>
+							<tr th:each="property : ${properties}">
+								<td th:text="${property.type}">PROPERTY_TYP</td>
+								<td th:text="${property.address}">ADDRESS</td>
+								<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
+								<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
+								<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
+							</tr>
+						</table>
+					</section>				
+				</article> <!-- ... Auflistung -->
+				
+				<article> <!-- Stammdaten Erfassung ... -->
+					<header>
+						<h1>Stammdaten Erfassung</h1>
+					</header>
+					<section>
+						<form action="#" th:action="@{./save}" th:object="${property}" method="post">
+							<ul th:if="${#fields.hasErrors('*')}">
+							 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+							</ul>
+							<div class="container-fluid">
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="dropdownImmobilienTyp">
+											<strong>Immobilientyp</strong>
+										</label >
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<select id="selectImmoType" 
+											th:field="*{type}"
+											class="form-control"
+										>
+											<option th:each="type : ${T(ch.hemisoft.immo.domain.PropertyType).values()}"
+										          th:value="${{type}}" 
+										          th:text="${type.name()}"
+										    />
+										</select>
+									</div>
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputNoApartments"><strong>Anzahl Wohnungen</strong></label >
+									</div>	
+									<div class="col-md-4 col-md-offset-1">	
+										<input type="number" id="inputNoApartments" name="inputNoApartments" 
+											th:field="*{noApartments}"
+											min="1" max="30" 
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputNoParking"><strong>Anzahl PKW Stellplätze</strong></label >
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="number" id="inputNoParking" name="inputNoParking" 
+											th:field="*{noParking}"
+											min="0" max="5" 
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputLivingSpaceInQm"><strong>Wohnfläche in m²</strong></label >
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="number" id="inputLivingSpaceInQm" name="inputLivingSpaceInQm" 
+											th:field="*{livingSpaceInQm}"
+											min="0" max="1000" 
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputLandAreaInQm"><strong>Grundstücksfläche in m²</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="number" id="inputLandAreaInQm" name="inputLandAreaInQm" 
+											th:field="*{landAreaInQm}"
+											min="0" max="10000" 
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputYearOfConstruction"><strong>Baujahr</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="month" id="inputYearOfConstruction" name="inputYearOfConstruction" 
+											th:field="*{yearOfConstruction}"
+											required="required"
+											class="form-control" 
+									/>
+									</div>
+								</div>
+								
+								<div class="row filterRow">				
+									<div class="col-md-2">
+										<label for="inputAdress"><strong>Adresse</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="text" id="inputAdress" name="inputAdress" 
+											th:field="*{address.street}"
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputZip"><strong>Postleitzahl</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="text" id="inputZip" name="inputZip" 
+											th:field="*{address.zip}"
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label for="inputCity"><strong>Ort</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="text" id="inputCity" name="inputCity" 
+											th:field="*{address.city}"
+											required="required"
+											class="form-control" 
+										/>
+									</div>				
+								</div>
+								
+								<div class="row filterRow">
+									<div class="col-md-2">
+										<label id="inputPurchaseDate"><strong>Erwerbsdatum</strong></label>
+									</div>
+									<div class="col-md-4 col-md-offset-1">
+										<input type="date" id="inputPurchaseDate" name="inputPurchaseDate" 
+											th:field="*{purchaseDate}"
+											required="required"
+											class="form-control" 
+										/>
+									</div>
+								</div>
+								
+								 <button type="submit" name="save" th:text="Speichern">SPEICHERN</button>
+							</div>
+						</form>			
+					</section>				
+				</article> <!-- ... Stammdaten Erfassung -->
+			
 		</main>
 		</div>
 	</body>
