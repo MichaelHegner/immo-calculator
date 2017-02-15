@@ -60,19 +60,15 @@
 						<th>Grundstücksfläche</th>
 						<th>Erwerbsdatum</th>
 					</tr>
-					<tr>
-						<td>Eigentumswohnung</td>
-						<td>Unterrain 8, 6167 Neustift im Stubaital, Österreich</td>
-						<td>56</td>
-						<td>0</td>
-						<td>01.05.2013</td>
+					<tr th:if="${#lists.isEmpty(properties)}">
+						<td colspan="5">Keine Einträge vorhanden.</td>
 					</tr>
-					<tr>
-						<td>Eigentumswohnung</td>
-						<td>Kirchstetterngasse 52-54, 1160 Wien, Österreich</td>
-						<td>43</td>
-						<td>0</td>
-						<td>01.03.2015</td>
+					<tr th:each="property : ${properties}">
+						<td th:text="${property.type}">PROPERTY_TYP</td>
+						<td th:text="${property.address}">ADDRESS</td>
+						<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
+						<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
+						<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
 					</tr>
 				</table>
 		</main>

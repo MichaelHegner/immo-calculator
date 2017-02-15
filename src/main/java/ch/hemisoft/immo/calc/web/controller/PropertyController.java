@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -42,5 +44,10 @@ public class PropertyController {
 	@ModelAttribute("property")
 	public Property newProperty() {
 		return new Property();
+	}
+	
+	@ModelAttribute("properties")
+	public List<Property> allProperties() {
+		return service.findAll();
 	}
 }
