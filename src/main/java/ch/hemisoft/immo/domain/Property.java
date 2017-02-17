@@ -17,7 +17,6 @@ import lombok.Data;
 public class Property {
 	@Id @GeneratedValue
 	Long id; 
-	double purchasePrice;
 	long noApartments;
 	long noParking;
 	double livingSpaceInQm;
@@ -29,4 +28,9 @@ public class Property {
 	
 	@DateTimeFormat(iso =  DateTimeFormat.ISO.DATE)
 	@NotNull LocalDate purchaseDate;
+
+	
+	// Value ...
+	double purchasePrice;
+	PurchaseCost cost;
 }
