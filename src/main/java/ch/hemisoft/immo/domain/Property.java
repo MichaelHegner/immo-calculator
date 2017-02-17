@@ -32,5 +32,5 @@ public class Property {
 	
 	// Value ...
 	double purchasePrice;
-	PurchaseCost cost;
+//	PurchaseCost cost;
 }
