@@ -6,13 +6,11 @@ import lombok.Data;
 
 @Data
 @Embeddable
-public class PurchaseCost {
-	double landAcquisition;
-	double notary;
-	double agency;
-	double valuation;
+public class CompletionCost {
+	double renovation;
+	double reconstruction;
 	
 	public double getTotalCompletionCost() {
-		return landAcquisition + notary + agency + valuation;
+		return renovation + reconstruction;
 	}
 }

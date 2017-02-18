@@ -103,7 +103,6 @@
 										<div class="panel-group" id="accordion">
 										
 											<div class="panel panel-default">
-												
 												<div class="panel-heading">
 													<h4 class="panel-title">
 														<a data-toggle="collapse" data-parent="#accordion" href="#collapseBasic">
@@ -111,21 +110,18 @@
 														</a>
 													</h4>
 												</div>
-												
 												<div id="collapseBasic" class="panel-collapse collapse in">
-													
 													<div class="panel-body">
-										
 														<div class="container-fluid">
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="dropdownImmobilienTyp">
+																	<label for="selectBasicImmobilienTyp">
 																		<strong>Immobilientyp</strong>
 																	</label >
 																</div>
 																<div class="col-md-6 col-md-offset-2">
-																	<select id="selectImmoType" 
+																	<select id="selectBasicImmobilienTyp" 
 																		th:field="*{type}"
 																		class="form-control"
 																	>
@@ -139,10 +135,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputPurchasePrice"><strong>Kaufpreis</strong></label >
+																	<label for="inputBasicPurchasePrice"><strong>Kaufpreis</strong></label >
 																</div>	
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
+																	<input type="number" id="inputBasicPurchasePrice" name="inputBasicPurchasePrice" 
 																		th:field="*{purchasePrice}"
 																		min="1" max="10000000" 
 																		required="required"
@@ -153,10 +149,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputNoApartments"><strong>Anzahl Wohnungen</strong></label >
+																	<label for="inputBasicNoApartments"><strong>Anzahl Wohnungen</strong></label >
 																</div>	
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputNoApartments" name="inputNoApartments" 
+																	<input type="number" id="inputBasicNoApartments" name="inputBasicNoApartments" 
 																		th:field="*{noApartments}"
 																		min="1" max="30" 
 																		required="required"
@@ -167,10 +163,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputNoParking"><strong>Anzahl PKW Stellplätze</strong></label >
+																	<label for="inputBasicNoParking"><strong>Anzahl PKW Stellplätze</strong></label >
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputNoParking" name="inputNoParking" 
+																	<input type="number" id="inputBasicNoParking" name="inputBasicNoParking" 
 																		th:field="*{noParking}"
 																		min="0" max="5" 
 																		required="required"
@@ -181,10 +177,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputLivingSpaceInQm"><strong>Wohnfläche in m²</strong></label >
+																	<label for="inputBasicLivingSpaceInQm"><strong>Wohnfläche in m²</strong></label >
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputLivingSpaceInQm" name="inputLivingSpaceInQm" 
+																	<input type="number" id="inputBasicLivingSpaceInQm" name="inputBasicLivingSpaceInQm" 
 																		th:field="*{livingSpaceInQm}"
 																		min="0" max="1000" 
 																		required="required"
@@ -195,10 +191,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputLandAreaInQm"><strong>Grundstücksfläche in m²</strong></label>
+																	<label for="inputBasicLandAreaInQm"><strong>Grundstücksfläche in m²</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputLandAreaInQm" name="inputLandAreaInQm" 
+																	<input type="number" id="inputBasicLandAreaInQm" name="inputBasicLandAreaInQm" 
 																		th:field="*{landAreaInQm}"
 																		min="0" max="10000" 
 																		required="required"
@@ -209,10 +205,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputYearOfConstruction"><strong>Baujahr</strong></label>
+																	<label for="inputBasicYearOfConstruction"><strong>Baujahr</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="month" id="inputYearOfConstruction" name="inputYearOfConstruction" 
+																	<input type="month" id="inputBasicYearOfConstruction" name="inputBasicYearOfConstruction" 
 																		th:field="*{yearOfConstruction}"
 																		required="required"
 																		class="form-control" 
@@ -222,10 +218,10 @@
 															
 															<div class="row filterRow">				
 																<div class="col-md-4">
-																	<label for="inputAdress"><strong>Adresse</strong></label>
+																	<label for="inputBasicAdress"><strong>Adresse</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="text" id="inputAdress" name="inputAdress" 
+																	<input type="text" id="inputBasicAdress" name="inputBasicAdress" 
 																		th:field="*{address.street}"
 																		required="required"
 																		class="form-control" 
@@ -235,10 +231,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputZip"><strong>Postleitzahl</strong></label>
+																	<label for="inputBasicZip"><strong>Postleitzahl</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="text" id="inputZip" name="inputZip" 
+																	<input type="text" id="inputBasicZip" name="inputBasicZip" 
 																		th:field="*{address.zip}"
 																		required="required"
 																		class="form-control" 
@@ -248,10 +244,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label for="inputCity"><strong>Ort</strong></label>
+																	<label for="inputBasicCity"><strong>Ort</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="text" id="inputCity" name="inputCity" 
+																	<input type="text" id="inputBasicCity" name="inputBasicCity" 
 																		th:field="*{address.city}"
 																		required="required"
 																		class="form-control" 
@@ -261,10 +257,10 @@
 															
 															<div class="row filterRow">
 																<div class="col-md-4">
-																	<label id="inputPurchaseDate"><strong>Erwerbsdatum</strong></label>
+																	<label id="inputBasicPurchaseDate"><strong>Erwerbsdatum</strong></label>
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="date" id="inputPurchaseDate" name="inputPurchaseDate" 
+																	<input type="date" id="inputBasicPurchaseDate" name="inputBasicPurchaseDate" 
 																		th:field="*{purchaseDate}"
 																		required="required"
 																		class="form-control" 
@@ -273,11 +269,147 @@
 															</div>
 															
 														</div>
-													
 													</div>
-													
 												</div>
+											</div> <!-- END PANEL -->
 											
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h4 class="panel-title">
+														<a data-toggle="collapse" data-parent="#accordion" href="#collapsePurchaseCost">
+															Einmalige Kosten
+														</a>
+													</h4>
+												</div>
+												<div id="collapsePurchaseCost" class="panel-collapse collapse in">
+													<div class="panel-body">
+														<div class="container-fluid">
+															
+															<!-- KAUFPREIS ... -->
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputPurchaseCostPurchasePrice"><strong>Kaufpreis</strong></label >
+																</div>	
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputPurchaseCostPurchasePrice" name="inputPurchaseCostPurchasePrice" 
+																		th:field="*{purchasePrice}"
+																		readonly="readonly"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															
+															<!-- KAUFNEBENKOSTEN ... -->
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputPurchaseCostLandAcquisition"><strong>Grunderwerbssteuer</strong></label >
+																</div>	
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputPurchaseCostLandAcquisition" name="inputPurchaseCostLandAcquisition" 
+																		th:field="*{purchaseCost.landAcquisition}"
+																		min="0" max="1000000" 
+																		required="required"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputPurchaseCostNotary"><strong>Notar</strong></label >
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputPurchaseCostNotary" name="inputPurchaseCostNotary" 
+																		th:field="*{purchaseCost.notary}"
+																		min="0" max="1000000" 
+																		required="required"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputPurchaseCostAgency"><strong>Maklerprovision</strong></label >
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputPurchaseCostAgency" name="inputPurchaseCostAgency" 
+																		th:field="*{purchaseCost.agency}"
+																		min="0" max="1000000" 
+																		required="required"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputPurchaseCostValuation"><strong>Kosten Wertgutachten</strong></label>
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputPurchaseCostValuation" name="inputPurchaseCostValuation" 
+																		th:field="*{purchaseCost.valuation}"
+																		min="0" max="1000000"
+																		required="required"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															
+															<!-- HERRICHTUGNSKOSTEN ... -->
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputCompletionCostRenovation"><strong>Renovierung</strong></label>
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputCompletionCostRenovation" name="inputCompletionCostRenovation" 
+																		th:field="*{completionCost.renovation}"
+																		min="0" max="1000000"
+																		required="required"
+																		class="form-control" 
+																/>
+																</div>
+															</div>
+															<div class="row filterRow">				
+																<div class="col-md-4">
+																	<label for="inputCompletionCostReconstruction"><strong>Umbau</strong></label>
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputCompletionCostReconstruction" name="inputCompletionCostReconstruction" 
+																		th:field="*{completionCost.renovation}"
+																		min="0" max="1000000"
+																		required="required"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															
+															<!-- TOTAL COSTS ... -->
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputTotalAttendantCost"><strong>Summe Nebenkosten</strong></label>
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
+																		th:field="*{totalAttendantCost}"
+																		readonly="readonly"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															<div class="row filterRow">
+																<div class="col-md-4">
+																	<label for="inputTotalCost"><strong>Summe Nebenkosten + Kaufpreis</strong></label>
+																</div>
+																<div class="col-md-6 col-md-offset-2">	
+																	<input type="number" id="inputTotalCost" name="inputTotalCost" 
+																		th:field="*{totalCost}"
+																		readonly="readonly"
+																		class="form-control" 
+																	/>
+																</div>				
+															</div>
+															
+														</div>
+													</div>
+												</div>
 											</div> <!-- END PANEL -->
 										
 										</div> <!-- END PANEL GROUP -->

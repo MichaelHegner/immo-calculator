@@ -32,5 +32,14 @@ public class Property {
 	
 	// Value ...
 	double purchasePrice;
-//	PurchaseCost cost;
+	PurchaseCost purchaseCost;
+	CompletionCost completionCost;
+	
+	public double getTotalAttendantCost() {
+		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
+	}
+	
+	public double getTotalCost() {
+		return purchasePrice + getTotalAttendantCost();
+	}
 }
