@@ -33,6 +33,10 @@
 		<script type="text/javascript" 
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/bootstrap.min.js" 
 			th:src="@{../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		
+		<script type="text/javascript" 
+			src="../js/urlutils.js" 
+			th:src="@{/js/urlutils.js}"></script>
 	    	
 <!-- 	    <script type="text/javascript"  -->
 <!-- 	    	src="#"  -->
@@ -40,24 +44,44 @@
 
 
 			<script>
-				
+			
 				$(document).ready(function() {
 					registerEventModalDialog();
 					registerEventTableRowClick();
+					handleModalDialog();
 				});
 				
 				function registerEventModalDialog() {
 					$("#buttonNewProperty").click(function(){
-						$("#dialogEditProperty").modal("show")
+						var params = [{name:'displayEdit', value:true}];
+						window.location = './list?' + $.param(params);
 					});
 				}
 				
+
 				function registerEventTableRowClick() {
 					$("tr.property-row").click(function(e){
-						window.location = './list?propertyId=' + $(this).find("td:first").text();
+						var params = [{name:'propertyId', value:$(this).find("td:first").text()}, {name:'displayEdit', value:true}];
+						window.location = './list?' + $.param(params);
 					});
 				}
+
 			
+				function handleModalDialog() {
+					var currentURL = $(location).attr('href');
+					var displayEdit = getParameterByName("displayEdit", currentURL);
+					
+					if(undefined !== displayEdit) {
+						if("true" === displayEdit) {
+							displayModalDialog();
+						}
+					}
+				}
+		
+				function displayModalDialog() {
+					$("#dialogEditProperty").modal("show");
+				}
+
 			</script>
 			
 	</head>
