@@ -18,6 +18,11 @@ public class PropertyServiceImpl implements PropertyService {
 	public List<Property> findAll() {
 		return repository.findAll();
 	}
+	
+	@Override
+	public Property find(Long id) {
+		return repository.findOne(id);
+	}
 
 	@Override
 	public Property save(Property property) {
