@@ -1,7 +1,5 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -9,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,20 +20,22 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("property")
 @RequiredArgsConstructor
-public class PropertyController {
+public class PropertyEditController {
 	@NonNull PropertyService service;
 
-	// TODO: Make ID more Restful url
-	@GetMapping(value={"", "list"})
-	public String list(
-			@RequestParam(value="propertyId", required=false) Long id, 
-			ModelMap modelMap
-	) {
-		modelMap.addAttribute("property", null==id ? new Property() : service.find(id));
-		return "/property/list";
+	@GetMapping("edit")
+	public String edit(ModelMap modelMap) {
+		modelMap.addAttribute("property", new Property());
+		return "property/edit";
+	}
+
+	@GetMapping("edit/{propertyId}")
+	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
+		modelMap.addAttribute("property", service.find(propertyId));
+		return "property/edit";
 	}
 	
-	@PostMapping("list")
+	@PostMapping("save")
 	public String save (
 			@RequestParam(value="propertyId", required=false) Long id, 
 			@ModelAttribute("property") @Valid Property property, 
@@ -44,16 +45,10 @@ public class PropertyController {
 		if (!errors.hasErrors()) {
 	        final Property savedProperty = service.save(property);
 			model.addAttribute("property", savedProperty);
-	        model.addAttribute("properties", allProperties());
-	    	return "redirect:/property/list?propertyId=" + savedProperty.getId() + "&displayEdit=true";
+	    	return "redirect:/property/list";
 	    } else {
 	    	model.addAttribute("errors", errors);
-	    	return "redirect:/property/list?displayEdit=true";
+	    	return "redirect:/property/list";
 	    }
-	}
-	
-	@ModelAttribute("properties")
-	public List<Property> allProperties() {
-		return service.findAll();
 	}
 }

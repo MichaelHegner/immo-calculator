@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>HEMISOFT - Property Management</title>
+		
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	    
+	    <link rel="stylesheet" type="text/css" media="screen, projection" 
+	        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/css/bootstrap.min.css" 
+	        th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+	        
+	    <link rel="stylesheet" type="text/css" media="screen, projection" 
+	    	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+	        th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css}" />
+			          
+		<link rel="stylesheet" type="text/css" media="screen" 
+	          href="/static/css/app.css" 
+	          th:href="@{/css/app.css}" />
+		
+		<script type="text/javascript" 
+			src="http://code.jquery.com/jquery-3.1.1-1.min.js" 
+			th:src="@{/webjars/jquery/3.1.1-1/jquery.min.js}"></script>
+		
+		<script type="text/javascript" 
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/bootstrap.min.js" 
+			th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		
+		<script type="text/javascript" 
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/transition.js" 
+			th:src="@{/webjars/bootstrap/3.3.7-1/js/transition.js}"></script>		
+
+		<script type="text/javascript" 
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/collapse.js" 
+			th:src="@{/webjars/bootstrap/3.3.7-1/js/collapse.js}"></script>
+	    	
+	    <script type="text/javascript" 
+	    	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
+	    	th:src="@{/webjars/jquery-validation/1.16.0/jquery.validate.min.js}"></script>
+	    	
+	    <script type="text/javascript" 
+	    	src="https://raw.githubusercontent.com/jquery-validation/jquery-validation/master/src/localization/messages_de.js" 
+	    	th:src="@{/js/messages_de.js}"></script>
+		
+		<script type="text/javascript" 
+			src="./js/jquery.form.min.js" 
+			th:src="@{/js/jquery.form.min.js}"></script>
+		
+		<script type="text/javascript" 
+			src="./js/app.js" 
+			th:src="@{/js/app.js}"></script>
+			
+		<script type="text/javascript" 
+			src="./js/urlutils.js" 
+			th:src="@{/js/urlutils.js}"></script>
+			
+	</head>
+
+	<body>
+		<h1>Immobilien Mangement - Datenerfassung</h1>
+		
+		<div class="container">
+		
+			<main id="mainPage">
+				
+				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post">
+					<ul th:if="${#fields.hasErrors('*')}">
+					 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+					</ul>
+					
+					<div class="panel-group" id="accordion">
+					
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseBasic"
+										aria-expanded="true" aria-controls="collapseBasic"
+									>
+										Stammdaten
+									</a>
+								</h4>
+							</div>
+							<div id="collapseBasic" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<div class="container-fluid">
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicId"><strong>Id</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicId" name="inputBasicId" 
+													th:field="*{id}"
+													min="0" max="1000000" 
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="selectBasicImmobilienTyp">
+													<strong>Immobilientyp</strong>
+												</label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">
+												<select id="selectBasicImmobilienTyp" 
+													th:field="*{type}"
+													class="form-control"
+												>
+													<option th:each="type : ${T(ch.hemisoft.immo.domain.PropertyType).values()}"
+												          th:value="${{type}}" 
+												          th:text="${type.name()}"
+												    />
+												</select>
+											</div>
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicPurchasePrice"><strong>Kaufpreis</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicPurchasePrice" name="inputBasicPurchasePrice" 
+													th:field="*{purchasePrice}"
+													min="1" max="10000000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicNoApartments"><strong>Anzahl Wohnungen</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicNoApartments" name="inputBasicNoApartments" 
+													th:field="*{noApartments}"
+													min="1" max="30" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicNoParking"><strong>Anzahl PKW Stellplätze</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicNoParking" name="inputBasicNoParking" 
+													th:field="*{noParking}"
+													min="0" max="5" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicLivingSpaceInQm"><strong>Wohnfläche in m²</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicLivingSpaceInQm" name="inputBasicLivingSpaceInQm" 
+													th:field="*{livingSpaceInQm}"
+													min="0" max="1000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicLandAreaInQm"><strong>Grundstücksfläche in m²</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputBasicLandAreaInQm" name="inputBasicLandAreaInQm" 
+													th:field="*{landAreaInQm}"
+													min="0" max="10000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicYearOfConstruction"><strong>Baujahr</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="month" id="inputBasicYearOfConstruction" name="inputBasicYearOfConstruction" 
+													th:field="*{yearOfConstruction}"
+													required="required"
+													class="form-control" 
+											/>
+											</div>
+										</div>
+										<div class="row filterRow">				
+											<div class="col-md-4">
+												<label for="inputBasicAdress"><strong>Adresse</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="text" id="inputBasicAdress" name="inputBasicAdress" 
+													th:field="*{address.street}"
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicZip"><strong>Postleitzahl</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="text" id="inputBasicZip" name="inputBasicZip" 
+													th:field="*{address.zip}"
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputBasicCity"><strong>Ort</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="text" id="inputBasicCity" name="inputBasicCity" 
+													th:field="*{address.city}"
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label id="inputBasicPurchaseDate"><strong>Erwerbsdatum</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="date" id="inputBasicPurchaseDate" name="inputBasicPurchaseDate" 
+													th:field="*{purchaseDate}"
+													required="required"
+													class="form-control" 
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- END PANEL -->
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapsePurchaseCost"
+										aria-expanded="false" aria-controls="collapsePurchaseCost"
+									>
+										Einmalige Kosten
+									</a>
+								</h4>
+							</div>
+							<div id="collapsePurchaseCost" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="container-fluid">
+										
+										<!-- KAUFPREIS ... -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostPurchasePrice"><strong>Kaufpreis</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostPurchasePrice" name="inputPurchaseCostPurchasePrice" 
+													th:field="*{purchasePrice}"
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+										<!-- KAUFNEBENKOSTEN ... -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostLandAcquisition"><strong>Grunderwerbssteuer</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostLandAcquisition" name="inputPurchaseCostLandAcquisition" 
+													th:field="*{purchaseCost.landAcquisition}"
+													min="0" max="1000000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostNotary"><strong>Notar</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostNotary" name="inputPurchaseCostNotary" 
+													th:field="*{purchaseCost.notary}"
+													min="0" max="1000000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostAgency"><strong>Maklerprovision</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostAgency" name="inputPurchaseCostAgency" 
+													th:field="*{purchaseCost.agency}"
+													min="0" max="1000000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostValuation"><strong>Kosten Wertgutachten</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostValuation" name="inputPurchaseCostValuation" 
+													th:field="*{purchaseCost.valuation}"
+													min="0" max="1000000"
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+										<!-- HERRICHTUGNSKOSTEN ... -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputCompletionCostRenovation"><strong>Renovierung</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputCompletionCostRenovation" name="inputCompletionCostRenovation" 
+													th:field="*{completionCost.renovation}"
+													min="0" max="1000000"
+													required="required"
+													class="form-control" 
+											/>
+											</div>
+										</div>
+										<div class="row filterRow">				
+											<div class="col-md-4">
+												<label for="inputCompletionCostReconstruction"><strong>Umbau</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputCompletionCostReconstruction" name="inputCompletionCostReconstruction" 
+													th:field="*{completionCost.renovation}"
+													min="0" max="1000000"
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+										<!-- TOTAL COSTS ... -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputTotalAttendantCost"><strong>Summe Nebenkosten</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
+													th:field="*{totalAttendantCost}"
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputTotalCost"><strong>Summe Nebenkosten + Kaufpreis</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputTotalCost" name="inputTotalCost" 
+													th:field="*{totalCost}"
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div> <!-- END PANEL -->
+					
+						<button id="buttonSubmit" type="submit" class="btn btn-primary" name="save" th:text="Speichern">SPEICHERN</button>
+						<button id="buttonReturn" type="button" class="btn btn-primary" name="save" th:text="Zurück">ZURUECK</button>
+					
+					</div> <!-- END PANEL GROUP -->
+				</form>			
+			</main>
+		</div>
+	</body>
+</html>
