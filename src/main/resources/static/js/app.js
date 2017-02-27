@@ -10,6 +10,9 @@ function registerEventModalDialog() {
 		var params = [{name:'displayEdit', value:true}];
 		window.location = './list?' + $.param(params);
 	});
+	$("#buttonCloseEditForm").click(function(){
+		window.location = './list';
+	});
 }
 
 
@@ -33,11 +36,12 @@ function handleModalDialog() {
 }
 
 function displayModalDialog() {
-	$("#dialogEditProperty").modal("show");
+	$("#dialogEditProperty").modal({"backdrop": "static"});
 }
 
 function registerFormSubmitEvent() {
-	$("#propertyEditForm").validate({
+	var $form = $("#propertyEditForm");
+	$form.validate({
 		ignore: false,
 		invalidHandler: function(form, validator) {
 			var errorList = validator.errorList;

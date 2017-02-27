@@ -2,6 +2,8 @@ package ch.hemisoft.immo.calc.web.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class PropertyController {
 	@NonNull PropertyService service;
 
+	// TODO: Make ID more Restful url
 	@GetMapping(value={"", "list"})
 	public String list(
 			@RequestParam(value="propertyId", required=false) Long id, 
@@ -31,19 +34,22 @@ public class PropertyController {
 		return "/property/list";
 	}
 	
-	@PostMapping("save")
-	public String save(
+	@PostMapping("list")
+	public String save (
 			@RequestParam(value="propertyId", required=false) Long id, 
-			@ModelAttribute("property") Property property, 
+			@ModelAttribute("property") @Valid Property property, 
 			BindingResult errors, 
 			ModelMap model
 	) {
-		if (errors.hasErrors()) {
-	        return list(id, model);
+		if (!errors.hasErrors()) {
+	        final Property savedProperty = service.save(property);
+			model.addAttribute("property", savedProperty);
+	        model.addAttribute("properties", allProperties());
+	    	return "redirect:/property/list?propertyId=" + savedProperty.getId() + "&displayEdit=true";
+	    } else {
+	    	model.addAttribute("errors", errors);
+	    	return "redirect:/property/list?displayEdit=true";
 	    }
-	    service.save(property);
-	    model.clear();
-	    return "redirect:" + list(id, model);
 	}
 	
 	@ModelAttribute("properties")

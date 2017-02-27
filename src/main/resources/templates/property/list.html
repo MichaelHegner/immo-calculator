@@ -47,13 +47,17 @@
 	    	th:src="@{/js/messages_de.js}"></script>
 		
 		<script type="text/javascript" 
+			src="../js/jquery.form.min.js" 
+			th:src="@{/js/jquery.form.min.js}"></script>
+		
+		<script type="text/javascript" 
 			src="../js/app.js" 
 			th:src="@{/js/app.js}"></script>
 			
 		<script type="text/javascript" 
 			src="../js/urlutils.js" 
 			th:src="@{/js/urlutils.js}"></script>
-
+			
 	</head>
 
 	<body>
@@ -61,7 +65,10 @@
 		
 		<div class="container">
 		
-			<main>
+			<a id="aFormSaveUrl" href="../save" th:href="@{./save}"></a> 
+		
+		
+			<main id="mainPage">
 			
 				<article> <!-- Auflistung ... -->
 					<header>
@@ -97,10 +104,7 @@
 				
 				<div id="dialogEditProperty" class="modal fade" tabindex="-1" role="dialog">
 					<div class="modal-dialog" role="document">
-						<form id="propertyEditForm" name="propertyEditForm" 
-							action="#" th:action="@{./save}" 
-							th:object="${property}" method="post"
-						>
+						<form id="propertyEditForm" name="propertyEditForm" th:action="@{./list}" th:object="${property}" method="post">
 	    					<div class="modal-content">
 	      						<div class="modal-header">
 									<h4 class="modal-title">Daten Erfassung</h4>
@@ -130,7 +134,7 @@
 																	<label for="inputBasicId"><strong>Id</strong></label >
 																</div>
 																<div class="col-md-6 col-md-offset-2">	
-																	<input type="number" id="inputBasicNoParking" name="inputBasicNoParking" 
+																	<input type="number" id="inputBasicId" name="inputBasicId" 
 																		th:field="*{id}"
 																		min="0" max="1000000" 
 																		readonly="readonly"
@@ -432,7 +436,8 @@
 										
 								</div> <!-- End Modal Body -->
 								<div class="modal-footer">
-									<button type="submit" name="save" th:text="Speichern">SPEICHERN</button>
+									<button id="buttonSubmit" type="submit" class="btn btn-primary" name="save" th:text="Speichern">SPEICHERN</button>
+									<button id="buttonCloseEditForm" type="button" class="btn btn-default" name="close" th:text="Schliessen">SCHLIESSEN</button>
 								</div>			
 							</div>
 						</form>			
