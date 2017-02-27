@@ -40,15 +40,15 @@ public class PropertyEditController {
 			@RequestParam(value="propertyId", required=false) Long id, 
 			@ModelAttribute("property") @Valid Property property, 
 			BindingResult errors, 
-			ModelMap model
+			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
 	        final Property savedProperty = service.save(property);
-			model.addAttribute("property", savedProperty);
-	    	return "redirect:/property/list";
+			modelMap.addAttribute("property", savedProperty);
+			return edit(savedProperty.getId(), modelMap);
 	    } else {
-	    	model.addAttribute("errors", errors);
-	    	return "redirect:/property/list";
+	    	modelMap.addAttribute("errors", errors);
+	    	return "property/edit";
 	    }
 	}
 }

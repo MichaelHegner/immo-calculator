@@ -17,29 +17,55 @@ import lombok.Data;
 public class Property {
 	@Id @GeneratedValue
 	Long id; 
-	long noApartments;
-	long noParking;
-	double livingSpaceInQm;
-	double landAreaInQm;
-	Address address;
 	
-	@NotNull YearMonth yearOfConstruction;
-	@NotNull PropertyType type;
+	// ==============================================================================================
+	// Basic Data ...
+	// ==============================================================================================
+
+	long 					noApartments;
+	long 					noParking;
+	double 					livingSpaceInQm;
+	double 					landAreaInQm;
+	Address 				address;
+
+	@NotNull YearMonth 		yearOfConstruction;
+	@NotNull PropertyType 	type;
 	
 	@DateTimeFormat(iso =  DateTimeFormat.ISO.DATE)
-	@NotNull LocalDate purchaseDate;
+	@NotNull LocalDate 		purchaseDate;
 
-	
-	// Value ...
-	double purchasePrice;
-	PurchaseCost purchaseCost;
-	CompletionCost completionCost;
+	// ==============================================================================================
+	// Purchase Costs ...
+	// ==============================================================================================
+
+	double 					purchasePrice;
+	PurchaseCost 			purchaseCost;
+	CompletionCost 			completionCost;
 	
 	public double getTotalAttendantCost() {
 		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
 	}
 	
-	public double getTotalCost() {
+	public double getTotalPurchaseCost() {
 		return purchasePrice + getTotalAttendantCost();
 	}
+
+	// ==============================================================================================
+	// Management Costs ...
+	// ==============================================================================================
+	
+	RunningCost 		runningCost;
+	
+	public double getTotalAdministrationCost() {
+		return runningCost.getAdministrationEachApartment() * noApartments;
+	}
+	
+	public double getTotalMaintenanceCost() {
+		return runningCost.getMaintenanceEachQm() * livingSpaceInQm;
+	}
+	
+	public double getTotalManagementCost() {
+		return getTotalAdministrationCost() + getTotalMaintenanceCost();
+	}
+
 }

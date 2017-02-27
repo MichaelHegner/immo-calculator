@@ -373,7 +373,96 @@
 											</div>
 											<div class="col-md-6 col-md-offset-2">	
 												<input type="number" id="inputTotalCost" name="inputTotalCost" 
-													th:field="*{totalCost}"
+													th:field="*{totalPurchaseCost}"
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div> <!-- END PANEL -->
+						
+						<!-- MANAGEMENT COSTS ... -->
+						<div class="panel panel-default"> <!-- PANEL -->
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseRunningCost"
+										aria-expanded="false" aria-controls="collapseRunningCost"
+									>
+										Bewirtschaftungskosten
+									</a>
+								</h4>
+							</div>
+							<div id="collapseRunningCost" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="container-fluid">
+										
+										<!-- VERWALTUNGSKOSTEN ... -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRunningCostAdministrationEachApartment"><strong>Verwaltungskosten pro Wohnung p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRunningCostAdministrationEachApartment" name="inputRunningCostAdministrationEachApartment" 
+													th:field="*{runningCost.administrationEachApartment}"
+													min="0" max="1000000" 
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRunningCostAdministrationTotal"><strong>Gesamtverwaltungskosten p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRunningCostAdministrationTotal" name="inputRunningCostAdministrationTotal" 
+													th:field="*{totalAdministrationCost}"
+													min="0" max="1000000" 
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+										<!-- MAINTENANCE COSTS P.A. -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRunningCostMaintenanceEachQm"><strong>Instandhaltungskosten pro m² p.a.</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRunningCostMaintenanceEachQm" name="inputRunningCostMaintenanceEachQm" 
+													th:field="*{runningCost.maintenanceEachQm}"
+													min="0" max="1000000" 
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRunningCostMaintenanceTotal"><strong>Maklerprovision</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRunningCostMaintenanceTotal" name="inputRunningCostMaintenanceTotal" 
+													th:field="*{totalMaintenanceCost}"
+													min="0" max="1000000" 
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										
+										<!-- MANAGEMENT COSTS TOTAL P.A. -->
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRunningCostManagement"><strong>Bewirtschaftungskosten p.a. insgesamt</strong></label>
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRunningCostManagement" name="inputRunningCostManagement" 
+													th:field="*{totalManagementCost}"
+													min="0" max="1000000"
 													readonly="readonly"
 													class="form-control" 
 												/>
@@ -386,7 +475,7 @@
 						</div> <!-- END PANEL -->
 					
 						<button id="buttonSubmit" type="submit" class="btn btn-primary" name="save" th:text="Speichern">SPEICHERN</button>
-						<button id="buttonReturn" type="button" class="btn btn-primary" name="save" th:text="Zurück">ZURUECK</button>
+						<button id="buttonReturn" type="button" class="btn btn-default" name="save" th:text="Zurück">ZURUECK</button>
 					
 					</div> <!-- END PANEL GROUP -->
 				</form>			
