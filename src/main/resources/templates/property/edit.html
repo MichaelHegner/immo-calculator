@@ -473,6 +473,52 @@
 								</div>
 							</div>
 						</div> <!-- END PANEL -->
+						
+						<!-- INCOME ... -->
+						<div class="panel panel-default"> <!-- PANEL -->
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseRental"
+										aria-expanded="false" aria-controls="collapseRental"
+									>
+										Mieteinnahmen
+									</a>
+								</h4>
+							</div>
+							<div id="collapseRental" class="panel-collapse collapse">
+								<div class="panel-body">
+								
+									<div class="container-fluid">
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRentalNet"><strong>Nettomieteinnahmen p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRentalNet" name="inputRentalNet" 
+													th:field="*{rentalNet}"
+													min="0" max="1000000" 
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputRentalNetAfterManagementCost"><strong>Mieteinnahmen nach Abzug Bewirtschaftskosten p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputRentalNetAfterManagementCost" name="inputRentalNetAfterManagementCost" 
+													th:field="*{rentalNetAfterManagementCost}"
+													min="0" max="1000000" 
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div> <!-- END PANEL -->
 					
 						<button id="buttonSubmit" type="submit" class="btn btn-primary" name="save" th:text="Speichern">SPEICHERN</button>
 						<button id="buttonReturn" type="button" class="btn btn-default" name="save" th:text="Zurück">ZURUECK</button>

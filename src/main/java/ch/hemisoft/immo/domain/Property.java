@@ -68,4 +68,14 @@ public class Property {
 		return getTotalAdministrationCost() + getTotalMaintenanceCost();
 	}
 
+	// ==============================================================================================
+	// Rental ...
+	// ==============================================================================================
+	
+	double rentalNet;
+	
+	public double getRentalNetAfterManagementCost() {
+		return rentalNet - getTotalManagementCost();
+	}
+	
 }
