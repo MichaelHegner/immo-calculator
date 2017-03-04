@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>HEMISOFT - Object Management</title>
+		<title>HEMISOFT - Immobilienmanagement - Liste</title>
 		
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	    
@@ -62,7 +62,11 @@
 
 	<body>
 		<h1>Immobilien Mangement - Basic Formular</h1>
-		
+		<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h2>
+		<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+        
 		<div class="container">
 		
 			<main id="mainPage">
