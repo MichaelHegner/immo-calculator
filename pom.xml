@@ -58,6 +58,12 @@
 		</dependency>
 
 		<!-- DATABASE -->
+		<!-- Support LocalDate for Hibernate to use Type DATE in DB instead of blob -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>

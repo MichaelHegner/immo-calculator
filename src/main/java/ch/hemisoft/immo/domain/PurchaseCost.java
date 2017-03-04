@@ -11,8 +11,9 @@ public class PurchaseCost {
 	double notary;
 	double agency;
 	double valuation;
+	double court;
 	
 	public double getTotalCompletionCost() {
-		return landAcquisition + notary + agency + valuation;
+		return landAcquisition + notary + agency + valuation + court;
 	}
 }

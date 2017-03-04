@@ -1,11 +1,15 @@
 package ch.hemisoft.immo.domain;
 
+import static javax.persistence.EnumType.STRING;
+
 import java.time.LocalDate;
-import java.time.YearMonth;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,14 +26,16 @@ public class Property {
 	// Basic Data ...
 	// ==============================================================================================
 
-	long 					noApartments;
-	long 					noParking;
-	double 					livingSpaceInQm;
-	double 					landAreaInQm;
-	Address 				address;
+							long 			noApartments;
+							long 			noParking;
+							double 			livingSpaceInQm;
+							double 			landAreaInQm;
+							Address 		address;
 
-	@NotNull YearMonth 		yearOfConstruction;
-	@NotNull PropertyType 	type;
+	@NotNull 
+	@Min(1800) @Max(2100)	Integer 		yearOfConstruction;
+	@NotNull 
+	@Enumerated(STRING)		PropertyType 	type;
 	
 	@DateTimeFormat(iso =  DateTimeFormat.ISO.DATE)
 	@NotNull LocalDate 		purchaseDate;

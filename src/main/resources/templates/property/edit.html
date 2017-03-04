@@ -184,8 +184,9 @@
 												<label for="inputBasicYearOfConstruction"><strong>Baujahr</strong></label>
 											</div>
 											<div class="col-md-6 col-md-offset-2">	
-												<input type="month" id="inputBasicYearOfConstruction" name="inputBasicYearOfConstruction" 
+												<input type="number" id="inputBasicYearOfConstruction" name="inputBasicYearOfConstruction" 
 													th:field="*{yearOfConstruction}"
+													min="1800" max="2100" 
 													required="required"
 													class="form-control" 
 											/>
@@ -193,10 +194,10 @@
 										</div>
 										<div class="row filterRow">				
 											<div class="col-md-4">
-												<label for="inputBasicAdress"><strong>Adresse</strong></label>
+												<label for="inputBasicAdressStreet"><strong>Adresse</strong></label>
 											</div>
 											<div class="col-md-6 col-md-offset-2">	
-												<input type="text" id="inputBasicAdress" name="inputBasicAdress" 
+												<input type="text" id="inputBasicAdressStreet" name="inputBasicAdressStreet" 
 													th:field="*{address.street}"
 													required="required"
 													class="form-control" 
@@ -306,6 +307,19 @@
 											<div class="col-md-6 col-md-offset-2">	
 												<input type="number" id="inputPurchaseCostAgency" name="inputPurchaseCostAgency" 
 													th:field="*{purchaseCost.agency}"
+													min="0" max="1000000" 
+													required="required"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputPurchaseCostCourt"><strong>Bezirksgericht</strong></label >
+											</div>
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputPurchaseCostCourt" name="inputPurchaseCostCourt" 
+													th:field="*{purchaseCost.court}"
 													min="0" max="1000000" 
 													required="required"
 													class="form-control" 
