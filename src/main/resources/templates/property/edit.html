@@ -456,7 +456,7 @@
 										</div>
 										<div class="row filterRow">
 											<div class="col-md-4">
-												<label for="inputRunningCostMaintenanceTotal"><strong>Maklerprovision</strong></label >
+												<label for="inputRunningCostMaintenanceTotal"><strong>Gesamtkosten Instandhaltung pro m² p.a.</strong></label >
 											</div>
 											<div class="col-md-6 col-md-offset-2">	
 												<input type="number" id="inputRunningCostMaintenanceTotal" name="inputRunningCostMaintenanceTotal" 
@@ -492,10 +492,55 @@
 						<div class="panel panel-default"> <!-- PANEL -->
 							<div class="panel-heading">
 								<h4 class="panel-title">
+									<a data-toggle="collapse" data-parent="#accordion" href="#collapseIncome"
+										aria-expanded="false" aria-controls="collapseIncome"
+									>
+										Mieteinnahmen
+									</a>
+								</h4>
+							</div>
+							<div id="collapseIncome" class="panel-collapse collapse">
+								<div class="panel-body">
+								
+									<div class="container-fluid">
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputIncomeNet"><strong>Nettomieteinnahmen p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputIncomeNet" name="inputIncomeNet" 
+													th:field="*{rentalNet}"
+													min="0" max="1000000" 
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+										<div class="row filterRow">
+											<div class="col-md-4">
+												<label for="inputIncomeNetAfterManagementCost"><strong>Mieteinnahmen nach Abzug Bewirtschaftskosten p.a.</strong></label >
+											</div>	
+											<div class="col-md-6 col-md-offset-2">	
+												<input type="number" id="inputIncomeNetAfterManagementCost" name="inputIncomeNetAfterManagementCost" 
+													th:field="*{rentalNetAfterManagementCost}"
+													readonly="readonly"
+													class="form-control" 
+												/>
+											</div>				
+										</div>
+									</div>
+									
+								</div>
+							</div>
+						</div> <!-- END PANEL -->
+						
+						<!-- PURCHASE_FACTOR AND RENTAL ... -->
+						<div class="panel panel-default"> <!-- PANEL -->
+							<div class="panel-heading">
+								<h4 class="panel-title">
 									<a data-toggle="collapse" data-parent="#accordion" href="#collapseRental"
 										aria-expanded="false" aria-controls="collapseRental"
 									>
-										Mieteinnahmen
+										Einkaufsfaktor und Rendite
 									</a>
 								</h4>
 							</div>
@@ -505,24 +550,23 @@
 									<div class="container-fluid">
 										<div class="row filterRow">
 											<div class="col-md-4">
-												<label for="inputRentalNet"><strong>Nettomieteinnahmen p.a.</strong></label >
+												<label for="inputPurchaseFactor"><strong>Einkaufsfaktor</strong></label >
 											</div>	
 											<div class="col-md-6 col-md-offset-2">	
-												<input type="number" id="inputRentalNet" name="inputRentalNet" 
-													th:field="*{rentalNet}"
-													min="0" max="1000000" 
+												<input type="number" id="inputPurchaseFactor" name="inputPurchaseFactor" 
+													th:field="*{purchaseFactor}"
+													readonly="readonly" 
 													class="form-control" 
 												/>
 											</div>				
 										</div>
 										<div class="row filterRow">
 											<div class="col-md-4">
-												<label for="inputRentalNetAfterManagementCost"><strong>Mieteinnahmen nach Abzug Bewirtschaftskosten p.a.</strong></label >
+												<label for="inputFirstRental"><strong>Anfangsrendite p.a.</strong></label >
 											</div>	
 											<div class="col-md-6 col-md-offset-2">	
-												<input type="number" id="inputRentalNetAfterManagementCost" name="inputRentalNetAfterManagementCost" 
-													th:field="*{rentalNetAfterManagementCost}"
-													min="0" max="1000000" 
+												<input type="number" id="inputFirstRental" name="inputFirstRental" 
+													th:field="*{firstRental}"
 													readonly="readonly"
 													class="form-control" 
 												/>

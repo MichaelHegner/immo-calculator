@@ -83,5 +83,16 @@ public class Property {
 	public double getRentalNetAfterManagementCost() {
 		return rentalNet - getTotalManagementCost();
 	}
+
+	// ==============================================================================================
+	// Purchase Factor & Rental ...
+	// ==============================================================================================
 	
+	public double getPurchaseFactor() {
+		return getTotalPurchaseCost() / getRentalNetAfterManagementCost();
+	}
+	
+	public double getFirstRental() {
+		return getRentalNetAfterManagementCost() / getTotalPurchaseCost() * 100;
+	}
 }
