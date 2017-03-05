@@ -20,9 +20,15 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequestMapping("property")
 @RequiredArgsConstructor
-public class PropertyEditController {
+public class PropertyController {
 	@NonNull PropertyService service;
 
+	@GetMapping(value={"", "list"})
+	public String list(ModelMap modelMap) {
+		modelMap.addAttribute("properties", service.findAll());
+		return "/property/list";
+	}
+	
 	@GetMapping("edit")
 	public String edit(ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
@@ -50,5 +56,10 @@ public class PropertyEditController {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";
 	    }
+	}
+	
+	@ModelAttribute("activeTab")
+	public String activeTab() {
+		return MvcKey.TAB_PROPERTY;
 	}
 }

@@ -1,79 +1,23 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8" />
+	
 		<title>HEMISOFT - Immobilienmanagement - Liste</title>
-		
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	    
-	    <link rel="stylesheet" type="text/css" media="screen, projection" 
-	        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/css/bootstrap.min.css" 
-	        th:href="@{../webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
-	        
-	    <link rel="stylesheet" type="text/css" media="screen, projection" 
-	    	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
-	        th:href="@{../webjars/bootstrap/3.3.7-1/css/bootstrap-theme.min.css}" />
-			          
-		<link rel="stylesheet" type="text/css" media="screen" 
-	          href="/static/css/app.css" 
-	          th:href="@{/css/app.css}" />
-		
-		<script type="text/javascript" 
-			src="http://code.jquery.com/jquery-3.1.1-1.min.js" 
-			th:src="@{../webjars/jquery/3.1.1-1/jquery.min.js}"></script>
-		
-		<script type="text/javascript" 
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/bootstrap.min.js" 
-			th:src="@{../webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
-		
-		<script type="text/javascript" 
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/modal.js" 
-			th:src="@{../webjars/bootstrap/3.3.7-1/js/modal.js}"></script>		
-
-		<script type="text/javascript" 
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/transition.js" 
-			th:src="@{../webjars/bootstrap/3.3.7-1/js/transition.js}"></script>		
-
-		<script type="text/javascript" 
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/collapse.js" 
-			th:src="@{../webjars/bootstrap/3.3.7-1/js/collapse.js}"></script>
-	    	
-	    <script type="text/javascript" 
-	    	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js" 
-	    	th:src="@{../webjars/jquery-validation/1.16.0/jquery.validate.min.js}"></script>
-	    	
-	    <script type="text/javascript" 
-	    	src="https://raw.githubusercontent.com/jquery-validation/jquery-validation/master/src/localization/messages_de.js" 
-	    	th:src="@{/js/messages_de.js}"></script>
-		
-		<script type="text/javascript" 
-			src="../js/jquery.form.min.js" 
-			th:src="@{/js/jquery.form.min.js}"></script>
-		
-		<script type="text/javascript" 
-			src="../js/app.js" 
-			th:src="@{/js/app.js}"></script>
-			
-		<script type="text/javascript" 
-			src="../js/urlutils.js" 
-			th:src="@{/js/urlutils.js}"></script>
+		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
 			
 	</head>
 
 	<body>
-		<h1>Immobilien Mangement - Basic Formular</h1>
-		<h2 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h2>
-		<form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-        
 		<div class="container">
+
+			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
 			<main id="mainPage">
-			
+
+				<h1>Immobilien Auflistung</h1>
+
 				<article> <!-- Auflistung ... -->
 					<header>
-						<h3>Immobilien Auflistung</h3>
 						<button id="buttonNewProperty" type="button" class="btn btn-primary">
 							ADD NEW PROPERTY
 						</button>
