@@ -17,6 +17,11 @@ public class SecurityUser extends User implements UserDetails {
 	public SecurityUser(User user) {
 		super(user);
 	}
+	
+	private SecurityUser() {
+		// Needed from Framework
+		super(null);
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
