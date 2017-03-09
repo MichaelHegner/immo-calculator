@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class SecurityUserServiceImpl implements UserDetailsService {
 	@NonNull UserRepository userRepository;
 	
 	@Override
