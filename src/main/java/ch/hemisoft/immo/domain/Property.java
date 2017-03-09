@@ -1,6 +1,7 @@
 package ch.hemisoft.immo.domain;
 
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDate;
 
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -95,4 +97,11 @@ public class Property {
 	public double getFirstRental() {
 		return getRentalNetAfterManagementCost() / getTotalPurchaseCost() * 100;
 	}
+	
+	// ==============================================================================================
+	// Relations ...
+	// ==============================================================================================
+	
+	@ManyToOne(fetch = LAZY, optional = false)		User  	owner;
+	
 }
