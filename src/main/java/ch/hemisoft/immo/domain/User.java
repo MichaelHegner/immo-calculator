@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.domain;
 
+import static javax.persistence.FetchType.EAGER;
 import static lombok.AccessLevel.PACKAGE;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class User {
 	@NonNull @NotNull	private String 	email;
 	@NonNull @NotNull	private Boolean enabled;
 
-	@ManyToMany
+	@ManyToMany(fetch = EAGER)
 	private Collection<UserRole> userRoles = new ArrayList<>();
 	
 	public User(User user) {
