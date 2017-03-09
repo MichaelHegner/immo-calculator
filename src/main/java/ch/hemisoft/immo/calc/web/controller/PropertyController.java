@@ -57,9 +57,4 @@ public class PropertyController {
 	    	return "property/edit";
 	    }
 	}
-	
-	@ModelAttribute("activeTab")
-	public String activeTab() {
-		return MvcKey.TAB_PROPERTY;
-	}
 }
