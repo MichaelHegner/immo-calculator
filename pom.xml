@@ -60,15 +60,21 @@
 			<artifactId>jquery-validation</artifactId>
 			<version>1.16.0</version>
 		</dependency>
+		
+		<!-- COMMONS ... -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.5</version>
+		</dependency>
+		
 
 		<!-- DATABASE -->
-		<!-- Support LocalDate for Hibernate to use Type DATE in DB instead of 
-			blob -->
+		<!-- Support LocalDate for Hibernate to use Type DATE in DB instead of blob -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
