@@ -20,7 +20,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Property {
+public class Property implements Ownable{
 	@Id @GeneratedValue
 	Long id; 
 	

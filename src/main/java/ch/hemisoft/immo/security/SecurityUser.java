@@ -18,9 +18,9 @@ public class SecurityUser extends User implements UserDetails {
 		super(user);
 	}
 	
-	private SecurityUser() {
-		// Needed from Framework
-		super(null);
+	SecurityUser() {
+		// Needed by Framework
+		super();
 	}
 
 	@Override

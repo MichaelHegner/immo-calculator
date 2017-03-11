@@ -1,4 +1,4 @@
-package ch.hemisoft.immo.aspect.logging;
+package ch.hemisoft.immo.aspect;
 
 public final class ExecutionKey {
 	private static final String APP_PACKAGE 		= "ch.hemisoft.immo";

@@ -1,9 +1,9 @@
 package ch.hemisoft.immo.aspect.logging;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
+@Configuration
 public class LoggingConfig {
 
 	@Bean

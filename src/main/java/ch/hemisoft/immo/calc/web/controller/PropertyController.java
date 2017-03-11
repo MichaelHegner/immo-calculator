@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -24,34 +26,35 @@ public class PropertyController {
 	@NonNull PropertyService service;
 
 	@GetMapping(value={"", "list"})
-	public String list(ModelMap modelMap) {
-		modelMap.addAttribute("properties", service.findAll());
+	public String list(Principal principal, ModelMap modelMap) {
+		modelMap.addAttribute("properties", service.findAll(principal));
 		return "/property/list";
 	}
 	
 	@GetMapping("edit")
-	public String edit(ModelMap modelMap) {
+	public String edit(Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
 		return "property/edit";
 	}
 
 	@GetMapping("edit/{propertyId}")
-	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
-		modelMap.addAttribute("property", service.find(propertyId));
+	public String edit(@PathVariable Long propertyId, Principal principal, ModelMap modelMap) {
+		modelMap.addAttribute("property", service.find(principal, propertyId));
 		return "property/edit";
 	}
 	
 	@PostMapping("save")
 	public String save (
-			@RequestParam(value="propertyId", required=false) Long id, 
+			@RequestParam(value="propertyId", required=false) Long id,
 			@ModelAttribute("property") @Valid Property property, 
 			BindingResult errors, 
+			Principal principal, 
 			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
-	        final Property savedProperty = service.save(property);
+	        final Property savedProperty = service.save(principal, property);
 			modelMap.addAttribute("property", savedProperty);
-			return edit(savedProperty.getId(), modelMap);
+			return edit(savedProperty.getId(), principal, modelMap);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";

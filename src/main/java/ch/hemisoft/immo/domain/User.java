@@ -1,7 +1,7 @@
 package ch.hemisoft.immo.domain;
 
 import static javax.persistence.FetchType.EAGER;
-import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 @Data
 @Entity
 @Table(name="users")
-@NoArgsConstructor(access=PACKAGE)
+@NoArgsConstructor(access=PROTECTED)
 @RequiredArgsConstructor
 public class User {
 	@Id @GeneratedValue	private Long 	id;

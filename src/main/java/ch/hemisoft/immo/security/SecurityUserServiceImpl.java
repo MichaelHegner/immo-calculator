@@ -1,6 +1,5 @@
 package ch.hemisoft.immo.security;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ public class SecurityUserServiceImpl implements UserDetailsService {
 	@NonNull UserRepository userRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+	public SecurityUser loadUserByUsername(String userName) throws UsernameNotFoundException {
 		User user = userRepository.findByUserName(userName);
 		if(null == user) {
 			throw new UsernameNotFoundException("No user present with username: " + userName);

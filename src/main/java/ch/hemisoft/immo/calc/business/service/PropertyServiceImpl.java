@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.calc.business.service;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -15,17 +16,17 @@ public class PropertyServiceImpl implements PropertyService {
 	@NonNull PropertyRepository repository;
 	
 	@Override
-	public List<Property> findAll() {
+	public List<Property> findAll(Principal principal) {
 		return repository.findAll();
 	}
 	
 	@Override
-	public Property find(Long id) {
+	public Property find(Principal principal, Long id) {
 		return repository.findOne(id);
 	}
 
 	@Override
-	public Property save(Property property) {
+	public Property save(Principal principal, Property property) {
 		return repository.save(property);
 	}
 }

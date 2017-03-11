@@ -13,6 +13,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ch.hemisoft.immo.aspect.ExecutionKey;
+
 @Aspect
 public class BusinessServiceLogger extends _AbstractLogger{
 	private static final Logger LOGGER = LoggerFactory.getLogger(BusinessServiceLogger.class);
