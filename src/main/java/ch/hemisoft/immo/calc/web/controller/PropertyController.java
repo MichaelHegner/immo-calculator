@@ -25,25 +25,25 @@ import lombok.RequiredArgsConstructor;
 public class PropertyController {
 	@NonNull PropertyService service;
 
-	@GetMapping("list")
+	@GetMapping("/list")
 	public String list(Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("properties", service.findAll(principal));
-		return "/property/list";
+		return "property/list";
 	}
 	
-	@GetMapping("edit")
+	@GetMapping("/edit")
 	public String edit(Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
 		return "property/edit";
 	}
 
-	@GetMapping("edit/{propertyId}")
+	@GetMapping("/edit/{propertyId}")
 	public String edit(@PathVariable Long propertyId, Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("property", service.find(principal, propertyId));
 		return "property/edit";
 	}
 	
-	@PostMapping("save")
+	@PostMapping("/save")
 	public String save (
 			@RequestParam(value="propertyId", required=false) Long id,
 			@ModelAttribute("property") @Valid Property property, 

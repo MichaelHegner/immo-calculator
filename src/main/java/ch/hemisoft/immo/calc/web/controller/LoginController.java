@@ -10,8 +10,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 	
-	@GetMapping("login")
+	@GetMapping({"/", "/login"})
 	public String list(ModelMap modelMap) {
-		return "/security/login";
+		return "security/login";
 	}
 }
