@@ -12,10 +12,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import ch.hemisoft.immo.aspect.ExecutionKey;
 
 @Aspect
+@Component
 public class BackendServiceLogger extends _AbstractLogger{
 	private static final Logger LOGGER = LoggerFactory.getLogger(BackendServiceLogger.class);
 	private static final String ALL = ExecutionKey.BACKEND_SERVICE_EXECUTION;
