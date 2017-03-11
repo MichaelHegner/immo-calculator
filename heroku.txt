@@ -1,0 +1,5 @@
+Create Heroku App
+https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin
+
+Deploy the app
+https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
