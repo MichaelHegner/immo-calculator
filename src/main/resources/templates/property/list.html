@@ -13,39 +13,42 @@
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
 			<main id="mainPage">
-
-				<h1>Immobilien Auflistung</h1>
-
-				<article> <!-- Auflistung ... -->
-					<header>
-						<button id="buttonNewProperty" type="button" class="btn btn-primary">
-							ADD NEW PROPERTY
-						</button>
-					</header>
-					<section>
-						<table id="propertyTable" class="table table-striped table-hover">
-							<tr>
-								<th>Id</th>
-								<th>Immobilientyp</th>
-								<th>Adresse/Ort</th>
-								<th>Wohnfläche</th>
-								<th>Grundstücksfläche</th>
-								<th>Erwerbsdatum</th>
-							</tr>
-							<tr th:if="${#lists.isEmpty(properties)}">
-								<td colspan="6">Keine Einträge vorhanden.</td>
-							</tr>
-							<tr th:each="property : ${properties}" class="property-row">
-								<td th:text="${property.id}">PROPERTY_ID</td>
-								<td th:text="${property.type}">PROPERTY_TYP</td>
-								<td th:text="${property.address}">ADDRESS</td>
-								<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
-								<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
-								<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
-							</tr>
-						</table>
-					</section>				
-				</article> <!-- ... Auflistung -->
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h1 class="panel-title pull-left">Immobilien Management - Übersicht</h1>
+						<div class="btn-group pull-right">
+							<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="'Neue Immobilie'">ADD NEW PROPERTY</button>
+						</div>
+        				<div class="clearfix"></div>
+					</div>
+					<div class="panel-body">
+						<article> <!-- Auflistung ... -->
+							<section>
+								<table id="propertyTable" class="table table-striped table-hover">
+									<tr>
+										<th>Id</th>
+										<th>Immobilientyp</th>
+										<th>Adresse/Ort</th>
+										<th>Wohnfläche</th>
+										<th>Grundstücksfläche</th>
+										<th>Erwerbsdatum</th>
+									</tr>
+									<tr th:if="${#lists.isEmpty(properties)}">
+										<td colspan="6">Keine Einträge vorhanden.</td>
+									</tr>
+									<tr th:each="property : ${properties}" class="property-row">
+										<td th:text="${property.id}">PROPERTY_ID</td>
+										<td th:text="${property.type}">PROPERTY_TYP</td>
+										<td th:text="${property.address}">ADDRESS</td>
+										<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
+										<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
+										<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
+									</tr>
+								</table>
+							</section>				
+						</article> <!-- ... Auflistung -->
+					</div>
+				</div>
 			</main>
 		</div>
 	</body>
