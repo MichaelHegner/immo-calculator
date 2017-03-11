@@ -28,18 +28,18 @@
 		
 			<main id="mainPage">
 			
-				<div class="panel panel-primary">
-					<div class="panel-heading">
-						<h1 class="panel-title pull-left">Immobilien Mangement - Datenerfassung</h1>
-						<div class="btn-group pull-right">
-							<button id="buttonReturn" type="button" class="btn btn-default pull-right" name="save" th:text="Zurück">ZURUECK</button>
-							<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="Speichern">SPEICHERN</button>
+				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title pull-left">Immobilien Mangement - Datenerfassung</h1>
+							<div class="btn-group pull-right">
+								<button id="buttonReturn" type="button" class="btn btn-default pull-right" name="save" th:text="Zurück">ZURUECK</button>
+								<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="Speichern">SPEICHERN</button>
+							</div>
+	        				<div class="clearfix"></div>
 						</div>
-        				<div class="clearfix"></div>
-					</div>
-					<div class="panel-body">
+						<div class="panel-body">
 						
-						<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post">
 							<ul th:if="${#fields.hasErrors('*')}">
 							 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
 							</ul>
@@ -554,9 +554,9 @@
 									</div>
 								</div> <!-- END PANEL -->
 							</div> <!-- END PANEL GROUP -->
-						</form>
-					</div>			
-				</div>
+						</div>			
+					</div>
+				</form>
 			</main>
 		</div>
 	</body>
