@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class PropertyController {
 	@NonNull PropertyService service;
 
-	@GetMapping(value={"", "list"})
+	@GetMapping("list")
 	public String list(Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("properties", service.findAll(principal));
 		return "/property/list";
