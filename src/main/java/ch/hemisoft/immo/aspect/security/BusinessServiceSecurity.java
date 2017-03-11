@@ -11,6 +11,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
@@ -70,7 +71,10 @@ public class BusinessServiceSecurity {
 	}
 
 	private Ownable filterOwnable(Principal principal, Ownable ownable) {
-		return isPrincipalOwner(principal, ownable) ? ownable : null;
+		if (isPrincipalOwner(principal, ownable)) {
+			return ownable;
+		}
+		throw new AccessDeniedException("The access to the requested data has been denied.");
 	}
 
 	//
