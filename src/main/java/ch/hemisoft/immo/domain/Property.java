@@ -91,11 +91,15 @@ public class Property implements Ownable{
 	// ==============================================================================================
 	
 	public double getPurchaseFactor() {
-		return getTotalPurchaseCost() / getRentalNetAfterManagementCost();
+		double rentalNetAfterManagementCost = getRentalNetAfterManagementCost();
+		double totalPurchaseCost = getTotalPurchaseCost();
+		return rentalNetAfterManagementCost > 0.0 ? totalPurchaseCost / rentalNetAfterManagementCost : 0.0;
 	}
 	
 	public double getFirstRental() {
-		return getRentalNetAfterManagementCost() / getTotalPurchaseCost() * 100;
+		double rentalNetAfterManagementCost = getRentalNetAfterManagementCost();
+		double totalPurchaseCost = getTotalPurchaseCost();
+		return totalPurchaseCost > 0.0 ? (rentalNetAfterManagementCost / totalPurchaseCost * 100) : 0.0;
 	}
 	
 	// ==============================================================================================
