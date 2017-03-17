@@ -54,8 +54,9 @@
 						
 							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
 								<div class="panel panel-danger">
-									<div class="panel-heading">>
+									<div class="panel-heading">
 										<h1 class="panel-title pull-left">Daten nicht vollständig</h1>
+										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">
 										<ul>
@@ -127,7 +128,7 @@
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicNoApartments" name="inputBasicNoApartments" 
 															th:field="*{noApartments}"
-															min="1" max="30" 
+															min="1" max="100" 
 															required="required"
 															class="form-control" 
 														/>
@@ -140,7 +141,7 @@
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicNoParking" name="inputBasicNoParking" 
 															th:field="*{noParking}"
-															min="0" max="5" 
+															min="0" max="100" 
 															required="required"
 															class="form-control" 
 														/>
@@ -153,7 +154,7 @@
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicLivingSpaceInQm" name="inputBasicLivingSpaceInQm" 
 															th:field="*{livingSpaceInQm}"
-															min="0" max="1000" 
+															min="0" max="10000" 
 															required="required"
 															class="form-control" 
 														/>

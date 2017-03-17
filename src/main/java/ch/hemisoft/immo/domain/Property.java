@@ -10,12 +10,14 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ch.hemisoft.immo.validation.PastLocalDate;
 import lombok.Data;
 
 @Entity
@@ -28,11 +30,11 @@ public class Property implements Ownable{
 	// Basic Data ...
 	// ==============================================================================================
 
-							long 			noApartments;
-							long 			noParking;
-							double 			livingSpaceInQm;
-							double 			landAreaInQm;
-							Address 		address;
+	@Min(1) @Max(100)		long 			noApartments;
+	@Min(0) @Max(100)		long 			noParking;
+	@Min(1) @Max(10000)		double 			livingSpaceInQm;
+	@Min(0) @Max(10000)		double 			landAreaInQm;
+	@NotNull 				Address 		address;
 
 	@NotNull 
 	@Min(1800) @Max(2100)	Integer 		yearOfConstruction;
@@ -40,15 +42,15 @@ public class Property implements Ownable{
 	@Enumerated(STRING)		PropertyType 	type;
 	
 	@DateTimeFormat(iso =  DateTimeFormat.ISO.DATE)
-	@NotNull LocalDate 		purchaseDate;
+	@NotNull @PastLocalDate LocalDate 		purchaseDate;
 
 	// ==============================================================================================
 	// Purchase Costs ...
 	// ==============================================================================================
 
-	double 					purchasePrice;
-	PurchaseCost 			purchaseCost;
-	CompletionCost 			completionCost;
+	@Min(1) @Max(10000000)	double 			purchasePrice;
+	@NotNull @Valid			PurchaseCost 	purchaseCost;
+	@NotNull @Valid			CompletionCost 	completionCost;
 	
 	public double getTotalAttendantCost() {
 		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
@@ -62,7 +64,7 @@ public class Property implements Ownable{
 	// Management Costs ...
 	// ==============================================================================================
 	
-	RunningCost 		runningCost;
+	@NotNull @Valid			RunningCost 	runningCost;
 	
 	public double getTotalAdministrationCost() {
 		return runningCost.getAdministrationEachApartment() * noApartments;
@@ -80,7 +82,7 @@ public class Property implements Ownable{
 	// Rental ...
 	// ==============================================================================================
 	
-	double rentalNet;
+	@Min(0)					double 			rentalNet;
 	
 	public double getRentalNetAfterManagementCost() {
 		return rentalNet - getTotalManagementCost();
@@ -107,5 +109,4 @@ public class Property implements Ownable{
 	// ==============================================================================================
 	
 	@ManyToOne(fetch = LAZY, optional = false)		User  	owner;
-	
 }
