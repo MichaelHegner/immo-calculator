@@ -40,7 +40,7 @@
 		
 			<main id="mainPage">
 			
-				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post">
+				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post" novalidate="novalidate">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h1 class="panel-title pull-left">Immobilien Mangement - Datenerfassung</h1>
@@ -52,9 +52,18 @@
 						</div>
 						<div class="panel-body">
 						
-<!-- 							<ul th:if="${#fields.hasErrors('*')}"> -->
-<!-- 							 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li> -->
-<!-- 							</ul> -->
+							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
+								<div class="panel panel-danger">
+									<div class="panel-heading">>
+										<h1 class="panel-title pull-left">Daten nicht vollständig</h1>
+									</div>
+									<div class="panel-body">
+										<ul>
+										 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+										</ul>
+									</div>
+								</div>
+							</div>
 							
 							<div class="row equal-height-panels">
 							
