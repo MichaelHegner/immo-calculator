@@ -19,7 +19,19 @@
 	    <script type="text/javascript" 
 	    	src="https://raw.githubusercontent.com/jquery-validation/jquery-validation/master/src/localization/messages_de.js" 
 	    	th:src="@{/js/messages_de.js}"></script>
-		
+	    	
+	    <script type="text/javascript" 
+	    	src="./js/jquery.matchHeight.js" 
+	    	th:src="@{/js/jquery.matchHeight.js}"></script>
+	    	
+	    <script type="text/javascript">
+		    
+		    $(function() {
+		        $('.equal-height-panels .panel').matchHeight();
+		    });
+	    
+	    </script>
+	    	
 	</head>
 
 	<body>
@@ -40,26 +52,22 @@
 						</div>
 						<div class="panel-body">
 						
-							<ul th:if="${#fields.hasErrors('*')}">
-							 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
-							</ul>
+<!-- 							<ul th:if="${#fields.hasErrors('*')}"> -->
+<!-- 							 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li> -->
+<!-- 							</ul> -->
 							
-							<div class="panel-group" id="accordion">
+							<div class="row equal-height-panels">
 							
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseBasic"
-												aria-expanded="true" aria-controls="collapseBasic"
-											>
-												Stammdaten
-											</a>
-										</h4>
-									</div>
-									<div id="collapseBasic" class="panel-collapse collapse in">
+								<!-- BASIC DATA -->
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h1 class="panel-title pull-left">Stammdaten</h1>
+											<div class="clearfix"></div>
+										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
-												<div class="row filterRow">
+												<div class="row filterRow ">
 													<div class="col-md-4">
 														<label for="inputBasicId"><strong>Id</strong></label >
 													</div>
@@ -218,20 +226,15 @@
 												</div>
 											</div>
 										</div>
-									</div>
-								</div> <!-- END PANEL -->
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
 								
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapsePurchaseCost"
-												aria-expanded="false" aria-controls="collapsePurchaseCost"
-											>
-												Einmalige Kosten
-											</a>
-										</h4>
-									</div>
-									<div id="collapsePurchaseCost" class="panel-collapse collapse">
+								<!-- PURCHASE COSTS -->
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h4 class="panel-title">Einmalige Kosten</h4>
+										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
 												
@@ -372,21 +375,15 @@
 												
 											</div>
 										</div>
-									</div>
-								</div> <!-- END PANEL -->
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
 								
-								<!-- MANAGEMENT COSTS ... -->
-								<div class="panel panel-default"> <!-- PANEL -->
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseRunningCost"
-												aria-expanded="false" aria-controls="collapseRunningCost"
-											>
-												Bewirtschaftungskosten
-											</a>
-										</h4>
-									</div>
-									<div id="collapseRunningCost" class="panel-collapse collapse">
+								<!-- RUNNING COSTS -->
+								<div class="col-md-4">
+									<div class="panel panel-default"> 
+										<div class="panel-heading">
+											<h4 class="panel-title">Bewirtschaftungskosten</h4>
+										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
 												
@@ -461,21 +458,21 @@
 												
 											</div>
 										</div>
-									</div>
-								</div> <!-- END PANEL -->
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
 								
-								<!-- INCOME ... -->
-								<div class="panel panel-default"> <!-- PANEL -->
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseIncome"
-												aria-expanded="false" aria-controls="collapseIncome"
-											>
-												Mieteinnahmen
-											</a>
-										</h4>
-									</div>
-									<div id="collapseIncome" class="panel-collapse collapse">
+							</div> <!-- END PANEL GROUP -->	
+							
+							<div class="clearfix"></div>
+							
+							<div class="panel-group row equal-height-panels">	
+							
+								<!-- INCOME -->	
+								<div class="col-md-4">
+									<div class="panel panel-default"> <!-- PANEL -->
+										<div class="panel-heading">
+											<h4 class="panel-title">Mieteinnahmen</h4>
+										</div>
 										<div class="panel-body">
 										
 											<div class="container-fluid">
@@ -506,21 +503,15 @@
 											</div>
 											
 										</div>
-									</div>
-								</div> <!-- END PANEL -->
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
 								
 								<!-- PURCHASE_FACTOR AND RENTAL ... -->
-								<div class="panel panel-default"> <!-- PANEL -->
-									<div class="panel-heading">
-										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion" href="#collapseRental"
-												aria-expanded="false" aria-controls="collapseRental"
-											>
-												Einkaufsfaktor und Rendite
-											</a>
-										</h4>
-									</div>
-									<div id="collapseRental" class="panel-collapse collapse">
+								<div class="col-md-4">
+									<div class="panel panel-default"> <!-- PANEL -->
+										<div class="panel-heading">
+											<h4 class="panel-title">Einkaufsfaktor und Rendite</h4>
+										</div>
 										<div class="panel-body">
 										
 											<div class="container-fluid">
@@ -551,13 +542,15 @@
 											</div>
 											
 										</div>
-									</div>
-								</div> <!-- END PANEL -->
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
+								
 							</div> <!-- END PANEL GROUP -->
 						</div>			
 					</div>
 				</form>
 			</main>
 		</div>
+	
 	</body>
 </html>
