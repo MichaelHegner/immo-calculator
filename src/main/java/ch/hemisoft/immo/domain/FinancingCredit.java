@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 @Embeddable
 public class FinancingCredit {
-	Double interestRateNominalInPercent;
-	Double redemptionAtBeginInPercent;
-	Double specialRedemptionEachYearInPercent;
-	Double specialRedemptionEachYearAbsolut;
+	double interestRateNominalInPercent;
+	double redemptionAtBeginInPercent;
+	double specialRedemptionEachYearInPercent;
+	double specialRedemptionEachYearAbsolut;
 }
