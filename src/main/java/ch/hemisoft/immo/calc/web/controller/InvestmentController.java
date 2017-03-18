@@ -2,16 +2,14 @@ package ch.hemisoft.immo.calc.web.controller;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.domain.Property;
@@ -32,7 +30,7 @@ public class InvestmentController {
 	}
 
 	@GetMapping("/edit/{propertyId}")
-	public String edit(@RequestParam(value="propertyId", required=true) Long propertyId, Principal principal, ModelMap modelMap) {
+	public String edit(@PathVariable Long propertyId, Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("properties", service.findAll(principal));
 		modelMap.addAttribute("property", service.find(principal, propertyId));
 		return "investment/edit";

@@ -4,6 +4,10 @@
 		<title>HEMISOFT - Immobilienmanagement - Finanzierung</title>
 		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
 		
+		<script type="text/javascript" 
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/dropdown.js" 
+			th:src="@{/webjars/bootstrap/3.3.7-1/js/dropdown.js}"></script>		
+		
 	</head>
 
 	<body>
@@ -18,8 +22,24 @@
 							<h1 class="panel-title pull-left">Immobilien Mangement - Finanzierung</h1>
 							<div class="btn-group pull-right">
 								<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="Speichern">SPEICHERN</button>
-								**** SELECT BOX ****
+
+								<div class="dropdown pull-right">
+									<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<span th:if="${null == property}">SELECT PROPERTY</span>  
+										<span th:if="${null != property}" th:text="'Immobilie:' + ${property.address.street}">SELECTED PROPERTY</span>  
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li th:each="property : ${properties}">
+											<a href="#" th:href="@{/investment/edit/} + ${property.id}" >
+												<span th:text="${property.address.street}">ADRESSE</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+								
 							</div>
+	
 	        				<div class="clearfix"></div>
 						</div>
 						<div class="panel-body">
