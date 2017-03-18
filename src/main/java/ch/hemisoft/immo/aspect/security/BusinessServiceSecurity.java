@@ -46,9 +46,11 @@ public class BusinessServiceSecurity {
 	//
 	
 	private void populatePrincipalToOwnable(Principal principal, Ownable ownable) {
-		String username = principal.getName();
-		SecurityUser userDetails = (SecurityUser) userDetailService.loadUserByUsername(username);
-		ownable.setOwner(userDetails);
+		if(null == ownable.getOwner()) {
+			String username = principal.getName();
+			SecurityUser userDetails = (SecurityUser) userDetailService.loadUserByUsername(username);
+			ownable.setOwner(userDetails);
+		}
 	}
 	
 	//

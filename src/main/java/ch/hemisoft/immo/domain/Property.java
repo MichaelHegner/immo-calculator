@@ -23,8 +23,7 @@ import lombok.Data;
 @Entity
 @Data
 public class Property implements Ownable{
-	@Id @GeneratedValue
-	Long id; 
+	@Id @GeneratedValue		Long 			id; 
 	
 	// ==============================================================================================
 	// Basic Data ...
@@ -102,6 +101,16 @@ public class Property implements Ownable{
 		double rentalNetAfterManagementCost = getRentalNetAfterManagementCost();
 		double totalPurchaseCost = getTotalPurchaseCost();
 		return totalPurchaseCost > 0.0 ? (rentalNetAfterManagementCost / totalPurchaseCost * 100) : 0.0;
+	}
+	
+	// ==============================================================================================
+	// Financial Needs ...
+	// ==============================================================================================
+
+	@Min(0) 				double		netAssets;
+	
+	public double getFinancialNeedsTotal() {
+		return getTotalPurchaseCost() - netAssets;
 	}
 	
 	// ==============================================================================================

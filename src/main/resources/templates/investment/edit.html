@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>HEMISOFT - Immobilienmanagement - Finanzierung</title>
+		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
+		
+	</head>
+
+	<body>
+		<div class="container">
+			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
+		
+			<main id="mainPage">
+			
+				<form id="investmentDataEditForm" name="investmentDataEditForm" th:action="@{/investment/save}" th:object="${property}" method="post" novalidate="novalidate">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h1 class="panel-title pull-left">Immobilien Mangement - Finanzierung</h1>
+							<div class="btn-group pull-right">
+								<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="Speichern">SPEICHERN</button>
+								**** SELECT BOX ****
+							</div>
+	        				<div class="clearfix"></div>
+						</div>
+						<div class="panel-body">
+						
+							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
+								<div class="panel panel-danger">
+									<div class="panel-heading">
+										<h1 class="panel-title pull-left">Daten nicht vollständig</h1>
+										<div class="clearfix"></div>
+									</div>
+									<div class="panel-body">
+										<ul>
+										 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row equal-height-panels">
+							
+								<!-- FINANCING NEEDS -->
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h1 class="panel-title pull-left">Berechnung des Finanzierungsbedarfs</h1>
+											<div class="clearfix"></div>
+										</div>
+										<div class="panel-body">
+											<div class="container-fluid">
+												
+												<input type="hidden" th:field="*{id}" />
+											
+												<div class="row filterRow ">
+													<div class="col-md-4">
+														<label for="inputPurchasePrice"><strong>Kaufpreis</strong></label >
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
+															th:field="*{purchasePrice}"
+															min="1" max="10000000" 
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputTotalAttendantCost"><strong>Einmalige Kosten beim Kauf</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
+															th:field="*{totalAttendantCost}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputTotalCost"><strong>Gesamtsumme der Kosten</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputTotalCost" name="inputTotalCost" 
+															th:field="*{totalPurchaseCost}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputNetAssets"><strong>Eigenkapital</strong></label >
+													</div>	
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputNetAssets" name="inputNetAssets" 
+															th:field="*{netAssets}"
+															min="1" max="10000000" 
+															required="required"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label id="inputFinancingNeedsTotal"><strong>Kreditbedarf</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputFinancingNeedsTotal" name="inputFinancingNeedsTotal" 
+															th:field="*{financialNeedsTotal}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
+								
+							</div> <!-- END PANEL GROUP -->
+						</div>			
+					</div>
+				</form>
+			</main>
+		</div>
+	
+	</body>
+</html>
