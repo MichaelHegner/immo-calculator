@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
@@ -29,17 +30,21 @@ public class BusinessServiceSecurity {
 
 	@Around(ALL + " && args(principal, ownable)")
 	public Object secureMethod(final ProceedingJoinPoint point, Principal principal, Ownable ownable) throws Throwable {
+		handleNotAuthenticatedPrinciple(principal);
+
 		populatePrincipalToOwnable(principal, ownable);
 		return filterOwnedByPrincipleObjects(principal, point.proceed());
 	}
 
 	@Around(ALL + " && args(principal, ownableId)")
 	public Object secureMethod(final ProceedingJoinPoint point, Principal principal, Long ownableId) throws Throwable {
+		handleNotAuthenticatedPrinciple(principal);
 		return filterOwnedByPrincipleObjects(principal, point.proceed());
 	}
 	
 	@Around(ALL + " && args(principal)")
 	public Object secureMethod(final ProceedingJoinPoint point, Principal principal) throws Throwable {
+		handleNotAuthenticatedPrinciple(principal);
 		return filterOwnedByPrincipleObjects(principal, point.proceed());
 	}
 
@@ -83,5 +88,13 @@ public class BusinessServiceSecurity {
 	
 	private Boolean isPrincipalOwner(Principal principal, Ownable ownable) {
 		return StringUtils.equalsIgnoreCase(ownable.getOwner().getUserName(), principal.getName());
+	}
+	
+	//
+	
+	private void handleNotAuthenticatedPrinciple(Principal principal) {
+		if(null == principal.getName()) {
+			throw new AuthenticationCredentialsNotFoundException("Username is null!");
+		}
 	}
 }
