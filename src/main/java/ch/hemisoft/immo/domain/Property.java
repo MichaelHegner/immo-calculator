@@ -4,7 +4,10 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -107,11 +110,15 @@ public class Property implements Ownable{
 	// Financial Needs ...
 	// ==============================================================================================
 
-	@Min(0) 				double		netAssets;
+	@Min(0) 				double			netAssets;
 	
 	public double getFinancialNeedsTotal() {
 		return getTotalPurchaseCost() - netAssets;
 	}
+	
+							FinancingCredit 			selectedCredit;
+	@ElementCollection		Collection<FinancingCredit> creditOptions = new ArrayList<>();						
+	
 	
 	// ==============================================================================================
 	// Relations ...
