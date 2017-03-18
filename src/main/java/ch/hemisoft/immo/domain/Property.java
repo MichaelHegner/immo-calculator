@@ -33,7 +33,7 @@ public class Property implements Ownable{
 	@Min(0) @Max(100)		long 			noParking;
 	@Min(1) @Max(10000)		double 			livingSpaceInQm;
 	@Min(0) @Max(10000)		double 			landAreaInQm;
-	@NotNull 				Address 		address;
+	@NotNull @Valid			Address 		address;
 
 	@NotNull 
 	@Min(1800) @Max(2100)	Integer 		yearOfConstruction;

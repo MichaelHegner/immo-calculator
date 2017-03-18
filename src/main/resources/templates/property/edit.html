@@ -188,11 +188,23 @@
 												</div>
 												<div class="row filterRow">				
 													<div class="col-md-4">
-														<label for="inputBasicAdressStreet"><strong>Adresse</strong></label>
+														<label for="inputBasicAdressStreet"><strong>Strasse</strong></label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="text" id="inputBasicAdressStreet" name="inputBasicAdressStreet" 
 															th:field="*{address.street}"
+															required="required"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">				
+													<div class="col-md-4">
+														<label for="inputBasicAdressStreetNumber"><strong>Hausnummer</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="text" id="inputBasicAdressStreetNumber" name="inputBasicAdressStreetNumber" 
+															th:field="*{address.streetNumber}"
 															required="required"
 															class="form-control" 
 														/>
