@@ -140,6 +140,91 @@
 								</div> <!-- END PANEL CONTAINER -->
 								
 							</div> <!-- END PANEL GROUP -->
+							
+							
+							
+							<div class="row equal-height-panels">
+							
+								<!-- FINANCING NEEDS -->
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h1 class="panel-title pull-left">Eckdaten der Kreditfinanzierung</h1>
+											<div class="clearfix"></div>
+										</div>
+										<div class="panel-body">
+											<div class="container-fluid">
+												
+												<input type="hidden" th:field="*{id}" />
+												<span th:value="${property.selectedCredit}"></span>
+											
+												<div class="row filterRow ">
+													<div class="col-md-4">
+														<label for="inputInterestRateNominalInPercent"><strong>Zinssatz nominal (%)</strong></label >
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputInterestRateNominalInPercent" name="inputInterestRateNominalInPercent" 
+															th:field="*{selectedCredit.interestRateNominalInPercent}"
+															min="0" max="100"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRedemptionAtBeginInPercent"><strong>Anfängliche Tilgung (%)</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRedemptionAtBeginInPercent" name="inputRedemptionAtBeginInPercent" 
+															th:field="*{selectedCredit.redemptionAtBeginInPercent}"
+															min="0" max="100"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputSpecialRedemptionEachYearInPercent"><strong>jährliche Sondertilgung (% vom Darlehensbetrag)</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
+															th:field="*{selectedCredit.specialRedemptionEachYearInPercent}"
+															min="0" max="100"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputSpecialRedemptionEachYearAbsolut"><strong>Jährliche Sondertilgungsbetrag (€)</strong></label >
+													</div>	
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
+															th:field="*{selectedCredit.specialRedemptionEachYearAbsolut}"
+															min="1" max="10000000" 
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label id="inputSpecialRedemptionTotal"><strong>Summe Sondertilgung (€)</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
+															th:field="*{specialRedemptionTotal}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->
+								
+							</div> <!-- END PANEL GROUP -->
+							
 						</div>			
 					</div>
 				</form>
