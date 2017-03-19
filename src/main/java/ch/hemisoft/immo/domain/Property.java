@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.domain;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
@@ -25,9 +26,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import ch.hemisoft.immo.validation.PastLocalDate;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Data
+@ToString(of={"purchaseDate", "address"})
+@EqualsAndHashCode(of={"purchaseDate", "address"})
 public class Property implements Ownable{
 	@Id @GeneratedValue		Long 			id; 
 	
@@ -118,7 +123,7 @@ public class Property implements Ownable{
 		return getTotalPurchaseCost() - netAssets;
 	}
 	
-	@OneToOne(fetch=LAZY)
+	@OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	@JoinTable(
 			name 				= "PROPERTY_CREDIT",
 			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
@@ -140,4 +145,5 @@ public class Property implements Ownable{
 	// ==============================================================================================
 	
 	@ManyToOne(fetch = LAZY, optional = false)		User  	owner;
+	
 }

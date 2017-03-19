@@ -156,7 +156,6 @@
 											<div class="container-fluid">
 												
 												<input type="hidden" th:field="*{id}" />
-												<span th:value="${property.selectedCredit}"></span>
 											
 												<div class="row filterRow ">
 													<div class="col-md-4">
@@ -213,6 +212,18 @@
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
 															th:field="*{specialRedemptionTotal}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label id="inputMonthlyRate"><strong>Monatliche Rate (Belastung)</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
+															th:field="*{selectedCredit.monthlyRate}"
 															readonly="readonly"
 															class="form-control" 
 														/>

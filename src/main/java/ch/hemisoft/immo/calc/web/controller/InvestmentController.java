@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
+import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +39,14 @@ public class InvestmentController {
 
 	@PostMapping("/save")
 	public String save (
-			@ModelAttribute("property") Property property, 
+			@ModelAttribute("property") Property formProperty, 
 			BindingResult errors, 
 			Principal principal, 
 			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
-			final Property dbProperty = mapChangedValues(property, principal);
+			final Property dbProperty = service.find(principal, formProperty.getId());
+			mapChangedValues(formProperty, dbProperty, principal);
 	        final Property savedProperty = service.save(principal, dbProperty);
 			modelMap.addAttribute("property", savedProperty);
 			return edit(savedProperty.getId(), principal, modelMap);
@@ -54,9 +56,17 @@ public class InvestmentController {
 	    }
 	}
 
-	private Property mapChangedValues(Property property, Principal principal) {
-		final Property dbProperty = service.find(principal, property.getId());
-		dbProperty.setNetAssets(property.getNetAssets());
+	private Property mapChangedValues(Property formProperty, Property dbProperty, Principal principal) {
+		dbProperty.setNetAssets(formProperty.getNetAssets());
+		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
 		return dbProperty;
+	}
+
+	private void mapChangedValues(Credit formCredit, Credit dbCredit) {
+		dbCredit.setInterestRateNominalInPercent(formCredit.getInterestRateNominalInPercent());
+		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
+		dbCredit.setRedemptionAtBeginInPercent(formCredit.getRedemptionAtBeginInPercent());
+		dbCredit.setSpecialRedemptionEachYearAbsolut(formCredit.getSpecialRedemptionEachYearAbsolut());
+		dbCredit.setSpecialRedemptionEachYearInPercent(formCredit.getSpecialRedemptionEachYearInPercent());
 	}
 }

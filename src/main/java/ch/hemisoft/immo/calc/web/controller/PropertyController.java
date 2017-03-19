@@ -46,18 +46,37 @@ public class PropertyController {
 	@PostMapping("/save")
 	public String save (
 			@RequestParam(value="propertyId", required=false) Long id,
-			@ModelAttribute("property") @Valid Property property, 
+			@ModelAttribute("property") @Valid Property formProperty, 
 			BindingResult errors, 
 			Principal principal, 
 			ModelMap modelMap
 	) {
-		if (!errors.hasErrors()) {
-	        final Property savedProperty = service.save(principal, property);
+		if (!errors.hasErrors()) { 
+			final Property dbProperty = service.find(principal, formProperty.getId());
+			mapChangedValues(formProperty, dbProperty);
+			final Property savedProperty = service.save(principal, dbProperty);
 			modelMap.addAttribute("property", savedProperty);
 			return edit(savedProperty.getId(), principal, modelMap);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";
 	    }
+	}
+	
+	private void mapChangedValues(Property formProperty, Property dbProperty) {
+		dbProperty.setAddress(formProperty.getAddress());
+		dbProperty.setCompletionCost(formProperty.getCompletionCost());
+		dbProperty.setCreditOptions(formProperty.getCreditOptions()); 
+		dbProperty.setLandAreaInQm(formProperty.getLandAreaInQm());
+		dbProperty.setLivingSpaceInQm(formProperty.getLivingSpaceInQm());
+		dbProperty.setNetAssets(formProperty.getNetAssets());
+		dbProperty.setNoApartments(formProperty.getNoApartments());
+		dbProperty.setNoParking(formProperty.getNoParking());
+		dbProperty.setPurchaseCost(formProperty.getPurchaseCost());
+		dbProperty.setPurchaseDate(formProperty.getPurchaseDate());
+		dbProperty.setPurchasePrice(formProperty.getPurchasePrice());
+		dbProperty.setRentalNet(formProperty.getRentalNet());
+		dbProperty.setRunningCost(formProperty.getRunningCost());
+		dbProperty.setType(formProperty.getType());
 	}
 }
