@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("investment")
 @RequiredArgsConstructor
 public class InvestmentController {
-	@NonNull PropertyService service;
+	@NonNull final PropertyService service;
 
 	@GetMapping("/edit")
 	public String edit(Principal principal, ModelMap modelMap) {
@@ -44,8 +44,7 @@ public class InvestmentController {
 			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
-			Property dbProperty = service.find(principal, property.getId());
-			dbProperty.setNetAssets(property.getNetAssets());
+			final Property dbProperty = mapChangedValues(property, principal);
 	        final Property savedProperty = service.save(principal, dbProperty);
 			modelMap.addAttribute("property", savedProperty);
 			return edit(savedProperty.getId(), principal, modelMap);
@@ -53,5 +52,11 @@ public class InvestmentController {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "investment/edit";
 	    }
+	}
+
+	private Property mapChangedValues(Property property, Principal principal) {
+		final Property dbProperty = service.find(principal, property.getId());
+		dbProperty.setNetAssets(property.getNetAssets());
+		return dbProperty;
 	}
 }

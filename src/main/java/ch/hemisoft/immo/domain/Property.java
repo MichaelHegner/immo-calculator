@@ -7,12 +7,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -109,15 +112,22 @@ public class Property implements Ownable{
 	// ==============================================================================================
 	// Financial Needs ...
 	// ==============================================================================================
-
 	@Min(0) 				double			netAssets;
 	
 	public double getFinancialNeedsTotal() {
 		return getTotalPurchaseCost() - netAssets;
 	}
 	
-							FinancingCredit 			selectedCredit;
-	@ElementCollection		Collection<FinancingCredit> creditOptions = new ArrayList<>();						
+	@OneToOne(fetch=LAZY)
+	@JoinTable(
+			name 				= "PROPERTY_CREDIT",
+			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
+			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
+	)
+	Credit 			selectedCredit;
+	
+	@OneToMany		
+	Collection<Credit> creditOptions = new ArrayList<>();						
 	
 	
 	// ==============================================================================================
