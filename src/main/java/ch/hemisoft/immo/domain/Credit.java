@@ -23,15 +23,43 @@ import lombok.ToString;
 public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
 	@Size(min=1, max=255)								String		nameOfInstitution;
-	@Min(0)												double 		interestRateNominalInPercent;
-	@Min(0)												double 		redemptionAtBeginInPercent;
-	@Min(0)												double 		specialRedemptionEachYearInPercent;
-	@Min(0)												double 		specialRedemptionEachYearAbsolut;
+	@Min(0)												Double 		interestRateNominalInPercent 			= 0.0;
+	@Min(0)												Double 		redemptionAtBeginInPercent 				= 0.0;
+	@Min(0)												Double 		specialRedemptionEachYearInPercent 		= 0.0;
 	
 	@OneToOne(mappedBy="selectedCredit", fetch=LAZY)	Property 	property;
 	
-	public double getMonthlyRate() {
-		double sumTilgungAndInterestQuote = (interestRateNominalInPercent + redemptionAtBeginInPercent) / 100;
-		return property.getFinancialNeedsTotal() * sumTilgungAndInterestQuote / 12;
+	public double getTerm() {
+		double financialNeedsTotal = property.getFinancialNeedsTotal();
+		double rateEachYear = getRateEachYear() + getSpecialRedemptionEachYearAbsolut();
+		return (Math.log(rateEachYear) - Math.log(rateEachYear - financialNeedsTotal * interestRateNominalAsQuote())) / Math.log(1 + interestRateNominalAsQuote());
+	}
+	
+	public double getRateEachMonth() {
+		return getRateEachYear() / 12;
+	}
+
+	private double getRateEachYear() {
+		return property.getFinancialNeedsTotal() * sumTilgungAndInterestAsQuote();
+	}
+	
+	private double sumTilgungAndInterestAsQuote() {
+		return sumTilgungAndInterestInPercent() / 100;
+	}
+
+	private double sumTilgungAndInterestInPercent() {
+		return interestRateNominalInPercent + redemptionAtBeginInPercent;
+	}
+	
+	private double redemptionAtBeginAsQuote() {
+		return redemptionAtBeginInPercent / 100;
+	}
+	
+	private double interestRateNominalAsQuote() {
+		return interestRateNominalInPercent / 100;
+	}
+	
+	public double getSpecialRedemptionEachYearAbsolut() {
+		return property.getFinancialNeedsTotal() * specialRedemptionEachYearInPercent / 100;
 	}
 }

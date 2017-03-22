@@ -223,7 +223,19 @@
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
-															th:field="*{selectedCredit.monthlyRate}"
+															th:field="*{selectedCredit.rateEachMonth}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label id="inputTerm"><strong>Laufzeit in Jahren bis Volltilgung</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputTerm" name="inputTerm" 
+															th:field="*{selectedCredit.term}"
 															readonly="readonly"
 															class="form-control" 
 														/>

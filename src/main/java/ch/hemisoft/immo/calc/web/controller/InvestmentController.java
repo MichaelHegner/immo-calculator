@@ -66,7 +66,6 @@ public class InvestmentController {
 		dbCredit.setInterestRateNominalInPercent(formCredit.getInterestRateNominalInPercent());
 		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
 		dbCredit.setRedemptionAtBeginInPercent(formCredit.getRedemptionAtBeginInPercent());
-		dbCredit.setSpecialRedemptionEachYearAbsolut(formCredit.getSpecialRedemptionEachYearAbsolut());
 		dbCredit.setSpecialRedemptionEachYearInPercent(formCredit.getSpecialRedemptionEachYearInPercent());
 	}
 }
