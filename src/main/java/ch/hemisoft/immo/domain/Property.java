@@ -129,7 +129,7 @@ public class Property implements Ownable{
 			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
 			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
 	)
-	Credit 			selectedCredit;
+	Credit 			selectedCredit = new Credit();
 	
 	@OneToMany		
 	Collection<Credit> creditOptions = new ArrayList<>();	

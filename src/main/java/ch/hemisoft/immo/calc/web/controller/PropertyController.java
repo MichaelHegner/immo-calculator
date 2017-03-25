@@ -45,19 +45,27 @@ public class PropertyController {
 	
 	@PostMapping("/save")
 	public String save (
-			@RequestParam(value="propertyId", required=false) Long id,
+//			@RequestParam(value="propertyId", required=false) Long id,
 			@ModelAttribute("property") @Valid Property formProperty, 
 			BindingResult errors, 
 			Principal principal, 
 			ModelMap modelMap
 	) {
-		if (!errors.hasErrors()) { 
-			final Property dbProperty = service.find(principal, formProperty.getId());
-			mapChangedValues(formProperty, dbProperty);
-			final Property savedProperty = service.save(principal, dbProperty);
+		if (!errors.hasErrors()) {
+			Long id = formProperty.getId();
+			final Property savedProperty;
+
+			if (null == id) {
+				savedProperty = service.save(principal, formProperty);
+			} else {
+				final Property dbProperty = service.find(principal, id);
+				mapChangedValues(formProperty, dbProperty);
+				savedProperty = service.save(principal, dbProperty);
+			}
+			
 			modelMap.addAttribute("property", savedProperty);
 			return edit(savedProperty.getId(), principal, modelMap);
-	    } else {
+		} else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";
 	    }
