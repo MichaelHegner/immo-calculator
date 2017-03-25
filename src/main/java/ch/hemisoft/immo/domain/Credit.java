@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.springframework.util.Assert;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -31,17 +33,80 @@ public class Credit {
 	
 	public double getTerm() {
 		double financialNeedsTotal = property.getFinancialNeedsTotal();
-		double rateEachYear = getRateEachYear() + getSpecialRedemptionEachYearAbsolut();
+		double rateEachYear = getAnnuityEachYear() + getSpecialRedemptionEachYearAbsolut();
 		return (Math.log(rateEachYear) - Math.log(rateEachYear - financialNeedsTotal * interestRateNominalAsQuote())) / Math.log(1 + interestRateNominalAsQuote());
 	}
 	
-	public double getRateEachMonth() {
-		return getRateEachYear() / 12;
+	public double getSpecialRedemptionEachYearAbsolut() {
+		return property.getFinancialNeedsTotal() * specialRedemptionEachYearInPercent / 100;
 	}
+	
+	//
+	
+	public double getRestLoanIn5Years() {
+		return getRestLoanInYear(5);
+	}	
+	
+	public double getRestLoanIn10Years() {
+		return getRestLoanInYear(10);
+	}
+	
+	public double getRestLoanIn15Years() {
+		return getRestLoanInYear(15);
+	}
+	
+	public double getRestLoanIn20Years() {
+		return getRestLoanInYear(20);
+	}
+	
+	public double getRestLoanIn25Years() {
+		return getRestLoanInYear(25);
+	}
+	
+	public double getRestLoanIn30Years() {
+		return getRestLoanInYear(30);
+	}
+	
+	private double getRestLoanInYear(int afterNumberOfYears) {
+		Assert.notNull(afterNumberOfYears, "Parameter afterNumberOfYears must not be null.");
+		double K = property.getFinancialNeedsTotal();
+		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsolut();
+		double q = 1 + interestRateNominalAsQuote();
+		double qPowN = Math.pow(q, afterNumberOfYears + 1);
+		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
+		return Math.max(result, 0);
+	}
+	
+	// 
+	
+	private double getRedemptionOfFirstYear() {
+		return getAnnuityEachYear() - getInterestOfFirstYear();
+	}
+	
+	private double getInterestOfFirstYear() {
+		return property.getFinancialNeedsTotal() * interestRateNominalAsQuote();
+	}
+	
+	/*-
+	private double getAnnuityEndOfYear() {
+		double K = property.getFinancialNeedsTotal();
+		double q = 1 + interestRateNominalAsQuote();
+		double qPowN = Math.pow(q, getTerm() + 1);
+		return ( K * qPowN * (q - 1) ) / ( q - 1 );
+	}
+	*/
 
-	private double getRateEachYear() {
+	//
+	
+	public double getAnnuityEachMonth() {
+		return getAnnuityEachYear() / 12;
+	}
+	
+	private double getAnnuityEachYear() {
 		return property.getFinancialNeedsTotal() * sumTilgungAndInterestAsQuote();
 	}
+	
+	//
 	
 	private double sumTilgungAndInterestAsQuote() {
 		return sumTilgungAndInterestInPercent() / 100;
@@ -59,7 +124,4 @@ public class Credit {
 		return interestRateNominalInPercent / 100;
 	}
 	
-	public double getSpecialRedemptionEachYearAbsolut() {
-		return property.getFinancialNeedsTotal() * specialRedemptionEachYearInPercent / 100;
-	}
 }

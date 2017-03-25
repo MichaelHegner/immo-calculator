@@ -142,9 +142,7 @@
 							</div> <!-- END PANEL GROUP -->
 							
 							
-							
 							<div class="row equal-height-panels">
-							
 								<!-- FINANCING NEEDS -->
 								<div class="col-md-4">
 									<div class="panel panel-default">
@@ -223,7 +221,7 @@
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
-															th:field="*{selectedCredit.rateEachMonth}"
+															th:field="*{selectedCredit.annuityEachMonth}"
 															readonly="readonly"
 															class="form-control" 
 														/>
@@ -244,8 +242,99 @@
 											</div>
 										</div>
 									</div> <!-- END PANEL -->
-								</div> <!-- END PANEL CONTAINER -->
-								
+								</div> <!-- END PANEL CONTAINER -->							
+							</div> <!-- END PANEL GROUP -->		
+							
+												
+							<div class="row equal-height-panels">
+								<!-- TERMS IN YEARS -->
+								<div class="col-md-4">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h1 class="panel-title pull-left">Laufzeit in Jahren bis Volltilgung</h1>
+											<div class="clearfix"></div>
+										</div>
+										<div class="panel-body">
+											<div class="container-fluid">
+												
+												<input type="hidden" th:field="*{id}" />
+											
+												<div class="row filterRow ">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter5Years"><strong>Restschuld nach 5 Jahren</strong></label >
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter5Years" name="inputRestLoanAfter5Years" 
+															th:field="*{selectedCredit.restLoanIn5Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter10Years"><strong>Restschuld nach 10 Jahren</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter10Years" name="inputRestLoanAfter10Years" 
+															th:field="*{selectedCredit.restLoanIn10Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter15Years"><strong>Restschuld nach 15 Jahren</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter15Years" name="inputRestLoanAfter15Years" 
+															th:field="*{selectedCredit.restLoanIn15Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter10Years"><strong>Restschuld nach 20 Jahren</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter20Years" name="inputRestLoanAfter20Years" 
+															th:field="*{selectedCredit.restLoanIn20Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter10Years"><strong>Restschuld nach 25 Jahren</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter25Years" name="inputRestLoanAfter25Years" 
+															th:field="*{selectedCredit.restLoanIn25Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="inputRestLoanAfter10Years"><strong>Restschuld nach 30 Jahren</strong></label>
+													</div>
+													<div class="col-md-6 col-md-offset-2">	
+														<input type="number" id="inputRestLoanAfter30Years" name="inputRestLoanAfter30Years" 
+															th:field="*{selectedCredit.restLoanIn30Years}"
+															readonly="readonly"
+															class="form-control" 
+														/>
+													</div>				
+												</div>
+											</div>
+										</div>
+									</div> <!-- END PANEL -->
+								</div> <!-- END PANEL CONTAINER -->							
 							</div> <!-- END PANEL GROUP -->
 							
 						</div>			
