@@ -68,17 +68,70 @@ public class Credit {
 	}
 	
 	private double getRestLoanInYear(int afterNumberOfYears) {
-		Assert.notNull(afterNumberOfYears, "Parameter afterNumberOfYears must not be null.");
 		double K = property.getFinancialNeedsTotal();
 		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsolut();
 		double q = 1 + interestRateNominalAsQuote();
-		double qPowN = Math.pow(q, afterNumberOfYears + 1);
+		double qPowN = getQPowN(afterNumberOfYears + 1);
 		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
 		return Math.max(result, 0);
 	}
 	
 	// 
 	
+	public double getSumInterestIn5Years() {
+		return getSumInterestInYear(5);
+	}	
+	
+	public double getSumInterestIn10Years() {
+		return getSumInterestInYear(10);
+	}
+	
+	public double getSumInterestIn15Years() {
+		return getSumInterestInYear(15);
+	}
+	
+	public double getSumInterestIn20Years() {
+		return getSumInterestInYear(20);
+	}
+	
+	public double getSumInterestIn25Years() {
+		return getSumInterestInYear(25);
+	}
+	
+	public double getSumInterestIn30Years() {
+		return getSumInterestInYear(30);
+	}
+	
+	private double getSumInterestInYear(int numberOfYears) {
+		double sum = 0;
+		
+		int year = 0;
+		do {
+			double K = property.getFinancialNeedsTotal();
+			double q = 1 + interestRateNominalAsQuote();
+			double qn = getQPowN();
+			double qt = getQPowN(++year - 1);
+			double result = K * ( (qn - qt) * (q - 1) ) / ( qn - 1 );
+			sum += Math.max(result, 0);
+		} while(year <= numberOfYears);
+		
+		return sum;
+	}
+
+	
+	//
+
+	private double getQPowN() {
+		return getQPowN(getTerm());
+	}
+
+	private double getQPowN(double years) {
+		double q = 1 + interestRateNominalAsQuote();
+		return Math.pow(q, years + 1);
+	}
+
+	//
+
 	private double getRedemptionOfFirstYear() {
 		return getAnnuityEachYear() - getInterestOfFirstYear();
 	}
