@@ -134,11 +134,6 @@ public class Property implements Ownable{
 	@OneToMany		
 	Collection<Credit> creditOptions = new ArrayList<>();	
 	
-	public double getSpecialRedemptionTotal() {
-		return getFinancialNeedsTotal() * getSelectedCredit().getSpecialRedemptionEachYearInPercent() / 100 
-				+ getSelectedCredit().getSpecialRedemptionEachYearAbsolut();
-	}
-	
 	
 	// ==============================================================================================
 	// Relations ...

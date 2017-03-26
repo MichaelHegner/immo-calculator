@@ -10,8 +10,6 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-import org.springframework.util.Assert;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -39,6 +37,10 @@ public class Credit {
 	
 	public double getSpecialRedemptionEachYearAbsolut() {
 		return property.getFinancialNeedsTotal() * specialRedemptionEachYearInPercent / 100;
+	}
+
+	public double getSpecialRedemptionTotal() {
+		return getSpecialRedemptionEachYearAbsolut() * getTerm();
 	}
 	
 	//
@@ -71,7 +73,7 @@ public class Credit {
 		double K = property.getFinancialNeedsTotal();
 		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsolut();
 		double q = 1 + interestRateNominalAsQuote();
-		double qPowN = getQPowN(afterNumberOfYears + 1);
+		double qPowN = getQPowN(afterNumberOfYears - 1);
 		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
 		return Math.max(result, 0);
 	}
@@ -107,10 +109,11 @@ public class Credit {
 		
 		int year = 0;
 		do {
+			++year;
 			double K = property.getFinancialNeedsTotal();
 			double q = 1 + interestRateNominalAsQuote();
 			double qn = getQPowN();
-			double qt = getQPowN(++year - 1);
+			double qt = getQPowN(year - 1);
 			double result = K * ( (qn - qt) * (q - 1) ) / ( qn - 1 );
 			sum += Math.max(result, 0);
 		} while(year <= numberOfYears);
@@ -139,15 +142,6 @@ public class Credit {
 	private double getInterestOfFirstYear() {
 		return property.getFinancialNeedsTotal() * interestRateNominalAsQuote();
 	}
-	
-	/*-
-	private double getAnnuityEndOfYear() {
-		double K = property.getFinancialNeedsTotal();
-		double q = 1 + interestRateNominalAsQuote();
-		double qPowN = Math.pow(q, getTerm() + 1);
-		return ( K * qPowN * (q - 1) ) / ( q - 1 );
-	}
-	*/
 
 	//
 	
@@ -167,10 +161,6 @@ public class Credit {
 
 	private double sumTilgungAndInterestInPercent() {
 		return interestRateNominalInPercent + redemptionAtBeginInPercent;
-	}
-	
-	private double redemptionAtBeginAsQuote() {
-		return redemptionAtBeginInPercent / 100;
 	}
 	
 	private double interestRateNominalAsQuote() {
