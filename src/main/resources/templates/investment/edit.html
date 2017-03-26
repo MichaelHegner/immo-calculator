@@ -105,7 +105,7 @@
 														<input type="number" id="inputTotalCost" name="inputTotalCost" 
 															th:field="*{totalPurchaseCost}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>				
 												</div>
@@ -130,7 +130,7 @@
 														<input type="number" id="inputFinancingNeedsTotal" name="inputFinancingNeedsTotal" 
 															th:field="*{financialNeedsTotal}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>
 												</div>
@@ -191,7 +191,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputSpecialRedemptionEachYearAbsolut">ährliche Sondertilgungsbetrag (€)</label >
+														<label for="inputSpecialRedemptionEachYearAbsolut">jährliche Sondertilgungsbetrag (€)</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
@@ -209,7 +209,7 @@
 														<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
 															th:field="*{selectedCredit.specialRedemptionTotal}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>
 												</div>
@@ -221,7 +221,7 @@
 														<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
 															th:field="*{selectedCredit.annuityEachMonth}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>
 												</div>
@@ -233,7 +233,7 @@
 														<input type="number" id="inputTerm" name="inputTerm" 
 															th:field="*{selectedCredit.term}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>
 												</div>
@@ -424,7 +424,7 @@
 														<input type="number" id="inputSumInterestTotal" name="inputSumInterestTotal" 
 															th:field="*{selectedCredit.sumInterestTotal}"
 															readonly="readonly"
-															class="form-control" 
+															class="form-control summarizeInput" 
 														/>
 													</div>				
 												</div>

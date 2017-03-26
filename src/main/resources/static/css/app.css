@@ -28,3 +28,7 @@
 .panel-container {
 	margin: 10px 0px;	
 }	
+
+.summarizeInput {
+	font-weight: bold;
+}
