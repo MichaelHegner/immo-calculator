@@ -80,6 +80,10 @@ public class Credit {
 	
 	// 
 	
+	public double getSumInterestTotal() {
+		return getSumInterestInYear(((int) getTerm()) + 1);
+	}	
+	
 	public double getSumInterestIn5Years() {
 		return getSumInterestInYear(5);
 	}	
