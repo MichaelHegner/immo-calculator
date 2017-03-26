@@ -3,6 +3,8 @@ package ch.hemisoft.immo.domain;
 import static javax.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PUBLIC;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,55 +26,60 @@ import lombok.ToString;
 public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
 	@Size(min=1, max=255)								String		nameOfInstitution;
-	@Min(0)												Double 		interestRateNominalInPercent 			= 0.0;
-	@Min(0)												Double 		redemptionAtBeginInPercent 				= 0.0;
-	@Min(0)												Double 		specialRedemptionEachYearInPercent 		= 0.0;
+	@Min(0)												BigDecimal 	interestRateNominalInPercent;
+	@Min(0)												BigDecimal	redemptionAtBeginInPercent;
+	@Min(0)												BigDecimal	specialRedemptionEachYearInPercent;
 	
 	@OneToOne(mappedBy="selectedCredit", fetch=LAZY)	Property 	property;
 	
-	public double getTerm() {
-		double financialNeedsTotal = property.getFinancialNeedsTotal();
-		double rateEachYear = getAnnuityEachYear() + getSpecialRedemptionEachYearAbsolut();
-		return (Math.log(rateEachYear) - Math.log(rateEachYear - financialNeedsTotal * interestRateNominalAsQuote())) / Math.log(1 + interestRateNominalAsQuote());
+	public BigDecimal getTerm() {
+		double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
+		double rateEachYear = getAnnuityEachYear() + getSpecialRedemptionEachYearAbsoluteAsDouble();
+		double term = (Math.log(rateEachYear) - Math.log(rateEachYear - financialNeedsTotal * interestRateNominalAsQuote())) / Math.log(1 + interestRateNominalAsQuote());
+		return BigDecimalUtils.convert(term);
 	}
 	
-	public double getSpecialRedemptionEachYearAbsolut() {
-		return property.getFinancialNeedsTotal() * specialRedemptionEachYearInPercent / 100;
+	public BigDecimal getSpecialRedemptionEachYearAbsolut() {
+		return BigDecimalUtils.convert(getSpecialRedemptionEachYearAbsoluteAsDouble());
 	}
 
-	public double getSpecialRedemptionTotal() {
-		return getSpecialRedemptionEachYearAbsolut() * getTerm();
+	private double getSpecialRedemptionEachYearAbsoluteAsDouble() {
+		return property.getFinancialNeedsTotal().doubleValue() * specialRedemptionEachYearInPercent.doubleValue() / 100;
+	}
+
+	public BigDecimal getSpecialRedemptionTotal() {
+		return BigDecimalUtils.convert(getSpecialRedemptionEachYearAbsoluteAsDouble() * getTerm().doubleValue());
 	}
 	
 	//
 	
-	public double getRestLoanIn5Years() {
-		return getRestLoanInYear(5);
+	public BigDecimal getRestLoanIn5Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(5));
 	}	
 	
-	public double getRestLoanIn10Years() {
-		return getRestLoanInYear(10);
+	public BigDecimal getRestLoanIn10Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(10));
 	}
 	
-	public double getRestLoanIn15Years() {
-		return getRestLoanInYear(15);
+	public BigDecimal getRestLoanIn15Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(15));
 	}
 	
-	public double getRestLoanIn20Years() {
-		return getRestLoanInYear(20);
+	public BigDecimal getRestLoanIn20Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(20));
 	}
 	
-	public double getRestLoanIn25Years() {
-		return getRestLoanInYear(25);
+	public BigDecimal getRestLoanIn25Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(25));
 	}
 	
-	public double getRestLoanIn30Years() {
-		return getRestLoanInYear(30);
+	public BigDecimal getRestLoanIn30Years() {
+		return BigDecimalUtils.convert(getRestLoanInYear(30));
 	}
 	
 	private double getRestLoanInYear(int afterNumberOfYears) {
-		double K = property.getFinancialNeedsTotal();
-		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsolut();
+		double K = property.getFinancialNeedsTotal().doubleValue();
+		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsoluteAsDouble();
 		double q = 1 + interestRateNominalAsQuote();
 		double qPowN = getQPowN(afterNumberOfYears - 1);
 		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
@@ -80,32 +88,32 @@ public class Credit {
 	
 	// 
 	
-	public double getSumInterestTotal() {
-		return getSumInterestInYear(((int) getTerm()) + 1);
+	public BigDecimal getSumInterestTotal() {
+		return BigDecimalUtils.convert(getSumInterestInYear((getTerm().intValue()) + 1));
 	}	
 	
-	public double getSumInterestIn5Years() {
-		return getSumInterestInYear(5);
+	public BigDecimal getSumInterestIn5Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(5));
 	}	
 	
-	public double getSumInterestIn10Years() {
-		return getSumInterestInYear(10);
+	public BigDecimal getSumInterestIn10Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(10));
 	}
 	
-	public double getSumInterestIn15Years() {
-		return getSumInterestInYear(15);
+	public BigDecimal getSumInterestIn15Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(15));
 	}
 	
-	public double getSumInterestIn20Years() {
-		return getSumInterestInYear(20);
+	public BigDecimal getSumInterestIn20Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(20));
 	}
 	
-	public double getSumInterestIn25Years() {
-		return getSumInterestInYear(25);
+	public BigDecimal getSumInterestIn25Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(25));
 	}
 	
-	public double getSumInterestIn30Years() {
-		return getSumInterestInYear(30);
+	public BigDecimal getSumInterestIn30Years() {
+		return BigDecimalUtils.convert(getSumInterestInYear(30));
 	}
 	
 	private double getSumInterestInYear(int numberOfYears) {
@@ -114,7 +122,7 @@ public class Credit {
 		int year = 0;
 		do {
 			++year;
-			double K = property.getFinancialNeedsTotal();
+			double K = property.getFinancialNeedsTotal().doubleValue();
 			double q = 1 + interestRateNominalAsQuote();
 			double qn = getQPowN();
 			double qt = getQPowN(year - 1);
@@ -129,7 +137,7 @@ public class Credit {
 	//
 
 	private double getQPowN() {
-		return getQPowN(getTerm());
+		return getQPowN(getTerm().doubleValue());
 	}
 
 	private double getQPowN(double years) {
@@ -144,17 +152,17 @@ public class Credit {
 	}
 	
 	private double getInterestOfFirstYear() {
-		return property.getFinancialNeedsTotal() * interestRateNominalAsQuote();
+		return property.getFinancialNeedsTotal().doubleValue() * interestRateNominalAsQuote();
 	}
 
 	//
 	
-	public double getAnnuityEachMonth() {
-		return getAnnuityEachYear() / 12;
+	public BigDecimal getAnnuityEachMonth() {
+		return BigDecimalUtils.convert(getAnnuityEachYear() / 12);
 	}
 	
 	private double getAnnuityEachYear() {
-		return property.getFinancialNeedsTotal() * sumTilgungAndInterestAsQuote();
+		return property.getFinancialNeedsTotal().doubleValue() * sumTilgungAndInterestAsQuote();
 	}
 	
 	//
@@ -164,11 +172,11 @@ public class Credit {
 	}
 
 	private double sumTilgungAndInterestInPercent() {
-		return interestRateNominalInPercent + redemptionAtBeginInPercent;
+		return interestRateNominalInPercent.doubleValue() + redemptionAtBeginInPercent.doubleValue();
 	}
 	
 	private double interestRateNominalAsQuote() {
-		return interestRateNominalInPercent / 100;
+		return interestRateNominalInPercent.doubleValue() / 100;
 	}
 	
 }

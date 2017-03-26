@@ -4,6 +4,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +25,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import ch.hemisoft.immo.utils.BigDecimalUtils;
 import ch.hemisoft.immo.validation.PastLocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -42,8 +44,8 @@ public class Property implements Ownable{
 
 	@Min(1) @Max(100)		long 			noApartments;
 	@Min(0) @Max(100)		long 			noParking;
-	@Min(1) @Max(10000)		double 			livingSpaceInQm;
-	@Min(0) @Max(10000)		double 			landAreaInQm;
+	@Min(1) @Max(10000)		BigDecimal		livingSpaceInQm;
+	@Min(0) @Max(10000)		BigDecimal 		landAreaInQm;
 	@NotNull @Valid			Address 		address;
 
 	@NotNull 
@@ -58,16 +60,24 @@ public class Property implements Ownable{
 	// Purchase Costs ...
 	// ==============================================================================================
 
-	@Min(1) @Max(10000000)	double 			purchasePrice;
+	@Min(1) @Max(10000000)	BigDecimal 		purchasePrice;
 	@NotNull @Valid			PurchaseCost 	purchaseCost;
 	@NotNull @Valid			CompletionCost 	completionCost;
 	
-	public double getTotalAttendantCost() {
+	public BigDecimal getTotalAttendantCost() {
+		return BigDecimalUtils.convert(getTotalAttendantCostAsDouble());
+	}
+	
+	private double getTotalAttendantCostAsDouble() {
 		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
 	}
 	
-	public double getTotalPurchaseCost() {
-		return purchasePrice + getTotalAttendantCost();
+	public BigDecimal getTotalPurchaseCost() {
+		return BigDecimalUtils.convert(getTotalPurchaseCostAsDouble());
+	}
+
+	private double getTotalPurchaseCostAsDouble() {
+		return purchasePrice.doubleValue() + getTotalAttendantCostAsDouble();
 	}
 
 	// ==============================================================================================
@@ -76,51 +86,66 @@ public class Property implements Ownable{
 	
 	@NotNull @Valid			RunningCost 	runningCost;
 	
-	public double getTotalAdministrationCost() {
-		return runningCost.getAdministrationEachApartment() * noApartments;
+	public BigDecimal getTotalAdministrationCost() {
+		double administrationEachApartment = runningCost.getAdministrationEachApartment().doubleValue();
+		return BigDecimalUtils.convert(administrationEachApartment * noApartments);
 	}
 	
-	public double getTotalMaintenanceCost() {
-		return runningCost.getMaintenanceEachQm() * livingSpaceInQm;
+	public BigDecimal getTotalMaintenanceCost() {
+		double dLivingSpaceInQm = livingSpaceInQm.doubleValue();
+		double dMaintenanceEachQm = runningCost.getMaintenanceEachQm().doubleValue();
+		return BigDecimalUtils.convert(dLivingSpaceInQm * dMaintenanceEachQm);
 	}
 	
-	public double getTotalManagementCost() {
-		return getTotalAdministrationCost() + getTotalMaintenanceCost();
+	public BigDecimal getTotalManagementCost() {
+		double totalAdministrationCost = getTotalAdministrationCost().doubleValue();
+		double totalMaintenanceCost = getTotalMaintenanceCost().doubleValue();
+		return BigDecimalUtils.convert(totalAdministrationCost + totalMaintenanceCost);
 	}
 
 	// ==============================================================================================
 	// Rental ...
 	// ==============================================================================================
 	
-	@Min(0)					double 			rentalNet;
+	@Min(0)					BigDecimal		rentalNet;
 	
-	public double getRentalNetAfterManagementCost() {
-		return rentalNet - getTotalManagementCost();
+	public BigDecimal getRentalNetAfterManagementCost() {
+		return BigDecimalUtils.convert(getRentalNetAfterManagementCostAsDouble());
+	}
+
+	private double getRentalNetAfterManagementCostAsDouble() {
+		return rentalNet.doubleValue() - getTotalManagementCost().doubleValue();
 	}
 
 	// ==============================================================================================
 	// Purchase Factor & Rental ...
 	// ==============================================================================================
 	
-	public double getPurchaseFactor() {
-		double rentalNetAfterManagementCost = getRentalNetAfterManagementCost();
-		double totalPurchaseCost = getTotalPurchaseCost();
-		return rentalNetAfterManagementCost > 0.0 ? totalPurchaseCost / rentalNetAfterManagementCost : 0.0;
+	public BigDecimal getPurchaseFactor() {
+		double rentalNetAfterManagementCost = getRentalNetAfterManagementCostAsDouble();
+		double totalPurchaseCost = getTotalPurchaseCostAsDouble();
+		double purchaseFactor = rentalNetAfterManagementCost > 0.0 ? totalPurchaseCost / rentalNetAfterManagementCost : 0.0;
+		return BigDecimalUtils.convert(purchaseFactor);
 	}
 	
-	public double getFirstRental() {
-		double rentalNetAfterManagementCost = getRentalNetAfterManagementCost();
-		double totalPurchaseCost = getTotalPurchaseCost();
-		return totalPurchaseCost > 0.0 ? (rentalNetAfterManagementCost / totalPurchaseCost * 100) : 0.0;
+	public BigDecimal getFirstRental() {
+		double rentalNetAfterManagementCost = getRentalNetAfterManagementCostAsDouble();
+		double totalPurchaseCost = getTotalPurchaseCostAsDouble();
+		double firstRental = totalPurchaseCost > 0.0 ? (rentalNetAfterManagementCost / totalPurchaseCost * 100) : 0.0;
+		return BigDecimalUtils.convert(firstRental);
 	}
 	
 	// ==============================================================================================
 	// Financial Needs ...
 	// ==============================================================================================
-	@Min(0) 				double			netAssets;
+	@Min(0) 				double		netAssets;
 	
-	public double getFinancialNeedsTotal() {
-		return getTotalPurchaseCost() - netAssets;
+	public BigDecimal getFinancialNeedsTotal() {
+		return BigDecimalUtils.convert(getFinancialNeedsTotalAsDouble());
+	}
+
+	private double getFinancialNeedsTotalAsDouble() {
+		return getTotalPurchaseCostAsDouble() - netAssets;
 	}
 	
 	@OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
