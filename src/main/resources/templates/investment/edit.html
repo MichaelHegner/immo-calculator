@@ -7,6 +7,14 @@
 		<script type="text/javascript" 
 			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7-1/js/dropdown.js" 
 			th:src="@{/webjars/bootstrap/3.3.7-1/js/dropdown.js}"></script>		
+			
+		<script type="text/javascript">
+		    
+			$(function() {
+		        $('.equal-height-panels .panel').matchHeight();
+		    });
+	    
+	    </script>
 		
 	</head>
 
@@ -60,385 +68,380 @@
 							
 							<input type="hidden" th:field="*{id}" />
 							
-							<div class="row equal-height-panels">
-							
-								<!-- FINANCING NEEDS -->
-								<div class="col-md-4">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h1 class="panel-title pull-left">Berechnung des Finanzierungsbedarfs</h1>
-											<div class="clearfix"></div>
-										</div>
-										<div class="panel-body">
-											<div class="container-fluid">
-												
-												<div class="row filterRow ">
-													<div class="col-md-4">
-														<label for="inputPurchasePrice">Kaufpreis</label >
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
-															th:field="*{purchasePrice}"
-															min="1" max="10000000" 
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
+							<!-- FINANCING NEEDS -->
+							<div class="col-md-4 col-md-offset-0">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h1 class="panel-title pull-left">Berechnung des Finanzierungsbedarfs</h1>
+										<div class="clearfix"></div>
+									</div>
+									<div class="panel-body">
+										<div class="container-fluid">
+											
+											<div class="row filterRow ">
+												<div class="col-md-4">
+													<label for="inputPurchasePrice">Kaufpreis</label >
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputTotalAttendantCost">Einmalige Kosten beim Kauf</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
-															th:field="*{totalAttendantCost}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
+												<div class="col-md-6 col-md-offset-2">	
+													<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
+														th:field="*{purchasePrice}"
+														min="1" max="10000000" 
+														readonly="readonly"
+														class="form-control text-right" 
+													/>
+												</div>				
+											</div>
+											<div class="row filterRow">
+												<div class="col-md-4">
+													<label for="inputTotalAttendantCost">Einmalige Kosten beim Kauf</label>
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputTotalCost">Gesamtsumme der Kosten</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputTotalCost" name="inputTotalCost" 
-															th:field="*{totalPurchaseCost}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
-													</div>				
+												<div class="col-md-6 col-md-offset-2">	
+													<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
+														th:field="*{totalAttendantCost}"
+														readonly="readonly"
+														class="form-control text-right" 
+													/>
+												</div>				
+											</div>
+											<div class="row filterRow">
+												<div class="col-md-4">
+													<label for="inputTotalCost">Gesamtsumme der Kosten</label>
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputNetAssets">Eigenkapital</label >
-													</div>	
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputNetAssets" name="inputNetAssets" 
-															th:field="*{netAssets}"
-															min="1" max="10000000" 
-															required="required"
-															class="form-control text-right" 
-														/>
-													</div>				
+												<div class="col-md-6 col-md-offset-2">	
+													<input type="number" id="inputTotalCost" name="inputTotalCost" 
+														th:field="*{totalPurchaseCost}"
+														readonly="readonly"
+														class="form-control text-right summarizeInput" 
+													/>
+												</div>				
+											</div>
+											<div class="row filterRow">
+												<div class="col-md-4">
+													<label for="inputNetAssets">Eigenkapital</label >
+												</div>	
+												<div class="col-md-6 col-md-offset-2">	
+													<input type="number" id="inputNetAssets" name="inputNetAssets" 
+														th:field="*{netAssets}"
+														min="1" max="10000000" 
+														required="required"
+														class="form-control text-right" 
+													/>
+												</div>				
+											</div>
+											<div class="row filterRow">
+												<div class="col-md-4">
+													<label id="inputFinancingNeedsTotal">Kreditbedarf</label>
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label id="inputFinancingNeedsTotal">Kreditbedarf</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputFinancingNeedsTotal" name="inputFinancingNeedsTotal" 
-															th:field="*{financialNeedsTotal}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
-													</div>
+												<div class="col-md-6 col-md-offset-2">	
+													<input type="number" id="inputFinancingNeedsTotal" name="inputFinancingNeedsTotal" 
+														th:field="*{financialNeedsTotal}"
+														readonly="readonly"
+														class="form-control text-right summarizeInput" 
+													/>
 												</div>
 											</div>
 										</div>
-									</div> <!-- END PANEL -->
-								</div> <!-- END PANEL CONTAINER -->
+									</div>
+								</div> <!-- END PANEL -->
+							</div> <!-- END PANEL CONTAINER -->
+							
+							<div class="clearfix"></div>
+							
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h1 class="panel-title pull-left"><span th:text="${property.selectedCredit.nameOfInstitution}">CREDIT_INSTITUTE_NAME</span></h1>
+									<div class="clearfix"></div>
+								</div>
+								<div class="panel-body">
+									<div class="row equal-height-panels">
+										<div class="col-md-4"> <!-- FINANCING NEEDS -->
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h1 class="panel-title pull-left">Eckdaten der Kreditfinanzierung</h1>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-body">
+													<div class="container-fluid">
+													
+														<div class="row filterRow ">
+															<div class="col-md-4">
+																<label for="inputInterestRateNominalInPercent">Zinssatz nominal (%)</label >
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputInterestRateNominalInPercent" name="inputInterestRateNominalInPercent" 
+																	th:field="*{selectedCredit.interestRateNominalInPercent}"
+																	min="0" max="100"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRedemptionAtBeginInPercent">Anfängliche Tilgung (%)</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRedemptionAtBeginInPercent" name="inputRedemptionAtBeginInPercent" 
+																	th:field="*{selectedCredit.redemptionAtBeginInPercent}"
+																	min="0" max="100"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSpecialRedemptionEachYearInPercent">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
+																	th:field="*{selectedCredit.specialRedemptionEachYearInPercent}"
+																	min="0" max="100"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSpecialRedemptionEachYearAbsolut">jährliche Sondertilgungsbetrag (€)</label >
+															</div>	
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
+																	th:field="*{selectedCredit.specialRedemptionEachYearAbsolut}"
+																	min="1" max="10000000" 
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label id="inputSpecialRedemptionTotal">Summe Sondertilgung (€)</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
+																	th:field="*{selectedCredit.specialRedemptionTotal}"
+																	readonly="readonly"
+																	class="form-control text-right summarizeInput" 
+																/>
+															</div>
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label id="inputMonthlyRate">Monatliche Rate (Belastung)</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
+																	th:field="*{selectedCredit.annuityEachMonth}"
+																	readonly="readonly"
+																	class="form-control text-right summarizeInput" 
+																/>
+															</div>
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label id="inputTerm">Laufzeit in Jahren bis Volltilgung</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputTerm" name="inputTerm" 
+																	th:field="*{selectedCredit.term}"
+																	readonly="readonly"
+																	class="form-control text-right summarizeInput" 
+																/>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div> <!-- END PANEL -->
+										</div> <!-- END FINANCING NEEDS -->							
 								
-							</div> <!-- END PANEL GROUP -->
-							
-							
-							<div class="row equal-height-panels">
-								<!-- FINANCING NEEDS -->
-								<div class="col-md-4">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h1 class="panel-title pull-left">Eckdaten der Kreditfinanzierung</h1>
-											<div class="clearfix"></div>
-										</div>
-										<div class="panel-body">
-											<div class="container-fluid">
-											
-												<div class="row filterRow ">
-													<div class="col-md-4">
-														<label for="inputInterestRateNominalInPercent">Zinssatz nominal (%)</label >
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputInterestRateNominalInPercent" name="inputInterestRateNominalInPercent" 
-															th:field="*{selectedCredit.interestRateNominalInPercent}"
-															min="0" max="100"
-															class="form-control text-right" 
-														/>
-													</div>				
+										<div class="col-md-4"> <!-- TERMS IN YEARS -->
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h1 class="panel-title pull-left">Laufzeit in Jahren bis Volltilgung</h1>
+													<div class="clearfix"></div>
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRedemptionAtBeginInPercent">Anfängliche Tilgung (%)</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRedemptionAtBeginInPercent" name="inputRedemptionAtBeginInPercent" 
-															th:field="*{selectedCredit.redemptionAtBeginInPercent}"
-															min="0" max="100"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSpecialRedemptionEachYearInPercent">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
-															th:field="*{selectedCredit.specialRedemptionEachYearInPercent}"
-															min="0" max="100"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSpecialRedemptionEachYearAbsolut">jährliche Sondertilgungsbetrag (€)</label >
-													</div>	
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
-															th:field="*{selectedCredit.specialRedemptionEachYearAbsolut}"
-															min="1" max="10000000" 
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label id="inputSpecialRedemptionTotal">Summe Sondertilgung (€)</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
-															th:field="*{selectedCredit.specialRedemptionTotal}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
-													</div>
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label id="inputMonthlyRate">Monatliche Rate (Belastung)</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
-															th:field="*{selectedCredit.annuityEachMonth}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
+												<div class="panel-body">
+													<div class="container-fluid">
+													
+														<div class="row filterRow ">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter5Years">Restschuld nach 5 Jahren</label >
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter5Years" name="inputRestLoanAfter5Years" 
+																	th:field="*{selectedCredit.restLoanIn5Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter10Years">Restschuld nach 10 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter10Years" name="inputRestLoanAfter10Years" 
+																	th:field="*{selectedCredit.restLoanIn10Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter15Years">Restschuld nach 15 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter15Years" name="inputRestLoanAfter15Years" 
+																	th:field="*{selectedCredit.restLoanIn15Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter20Years">Restschuld nach 20 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter20Years" name="inputRestLoanAfter20Years" 
+																	th:field="*{selectedCredit.restLoanIn20Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter25Years">Restschuld nach 25 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter25Years" name="inputRestLoanAfter25Years" 
+																	th:field="*{selectedCredit.restLoanIn25Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputRestLoanAfter30Years">Restschuld nach 30 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputRestLoanAfter30Years" name="inputRestLoanAfter30Years" 
+																	th:field="*{selectedCredit.restLoanIn30Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
 													</div>
 												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label id="inputTerm">Laufzeit in Jahren bis Volltilgung</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputTerm" name="inputTerm" 
-															th:field="*{selectedCredit.term}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
+											</div> <!-- END PANEL -->
+										</div> <!-- END TERMS IN YEARS -->							
+										
+										<div class="col-md-4"> <!-- INTEREST SUMMARIZED -->
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h1 class="panel-title pull-left">Ergebnisse Zinsbelastung</h1>
+													<div class="clearfix"></div>
+												</div>
+												<div class="panel-body">
+													<div class="container-fluid">
+													
+														<div class="row filterRow ">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter5Years">nach 5 Jahren</label >
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter5Years" name="inputSumInterestAfter5Years" 
+																	th:field="*{selectedCredit.sumInterestIn5Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter10Years">nach 10 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter10Years" name="inputSumInterestAfter10Years" 
+																	th:field="*{selectedCredit.sumInterestIn10Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter15Years">nach 15 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter15Years" name="inputSumInterestAfter15Years" 
+																	th:field="*{selectedCredit.sumInterestIn15Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter20Years">nach 20 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter20Years" name="inputSumInterestAfter20Years" 
+																	th:field="*{selectedCredit.sumInterestIn20Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter25Years">nach 25 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter25Years" name="inputSumInterestAfter25Years" 
+																	th:field="*{selectedCredit.sumInterestIn25Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestAfter30Years">nach 30 Jahren</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestAfter30Years" name="inputSumInterestAfter30Years" 
+																	th:field="*{selectedCredit.sumInterestIn30Years}"
+																	readonly="readonly"
+																	class="form-control text-right" 
+																/>
+															</div>				
+														</div>
+														<div class="row filterRow">
+															<div class="col-md-4">
+																<label for="inputSumInterestTotal">Gesamtlast bis Volltilgung</label>
+															</div>
+															<div class="col-md-6 col-md-offset-2">	
+																<input type="number" id="inputSumInterestTotal" name="inputSumInterestTotal" 
+																	th:field="*{selectedCredit.sumInterestTotal}"
+																	readonly="readonly"
+																	class="form-control text-right summarizeInput" 
+																/>
+															</div>				
+														</div>
 													</div>
 												</div>
-											</div>
-										</div>
-									</div> <!-- END PANEL -->
-								</div> <!-- END PANEL CONTAINER -->							
-							</div> <!-- END PANEL GROUP -->		
-							
-												
-							<div class="row equal-height-panels">
-								<!-- TERMS IN YEARS -->
-								<div class="col-md-4">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h1 class="panel-title pull-left">Laufzeit in Jahren bis Volltilgung</h1>
-											<div class="clearfix"></div>
-										</div>
-										<div class="panel-body">
-											<div class="container-fluid">
-											
-												<div class="row filterRow ">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter5Years">Restschuld nach 5 Jahren</label >
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter5Years" name="inputRestLoanAfter5Years" 
-															th:field="*{selectedCredit.restLoanIn5Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter10Years">Restschuld nach 10 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter10Years" name="inputRestLoanAfter10Years" 
-															th:field="*{selectedCredit.restLoanIn10Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter15Years">Restschuld nach 15 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter15Years" name="inputRestLoanAfter15Years" 
-															th:field="*{selectedCredit.restLoanIn15Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter20Years">Restschuld nach 20 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter20Years" name="inputRestLoanAfter20Years" 
-															th:field="*{selectedCredit.restLoanIn20Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter25Years">Restschuld nach 25 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter25Years" name="inputRestLoanAfter25Years" 
-															th:field="*{selectedCredit.restLoanIn25Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputRestLoanAfter30Years">Restschuld nach 30 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputRestLoanAfter30Years" name="inputRestLoanAfter30Years" 
-															th:field="*{selectedCredit.restLoanIn30Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-											</div>
-										</div>
-									</div> <!-- END PANEL -->
-								</div> <!-- END PANEL CONTAINER -->							
-							</div> <!-- END PANEL GROUP -->
-																			
-							<div class="row equal-height-panels">
-								<!-- TERMS IN YEARS -->
-								<div class="col-md-4">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h1 class="panel-title pull-left">Ergebnisse Zinsbelastung</h1>
-											<div class="clearfix"></div>
-										</div>
-										<div class="panel-body">
-											<div class="container-fluid">
-											
-												<div class="row filterRow ">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter5Years">nach 5 Jahren</label >
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter5Years" name="inputSumInterestAfter5Years" 
-															th:field="*{selectedCredit.sumInterestIn5Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter10Years">nach 10 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter10Years" name="inputSumInterestAfter10Years" 
-															th:field="*{selectedCredit.sumInterestIn10Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter15Years">nach 15 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter15Years" name="inputSumInterestAfter15Years" 
-															th:field="*{selectedCredit.sumInterestIn15Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter20Years">nach 20 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter20Years" name="inputSumInterestAfter20Years" 
-															th:field="*{selectedCredit.sumInterestIn20Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter25Years">nach 25 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter25Years" name="inputSumInterestAfter25Years" 
-															th:field="*{selectedCredit.sumInterestIn25Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestAfter30Years">nach 30 Jahren</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestAfter30Years" name="inputSumInterestAfter30Years" 
-															th:field="*{selectedCredit.sumInterestIn30Years}"
-															readonly="readonly"
-															class="form-control text-right" 
-														/>
-													</div>				
-												</div>
-												<div class="row filterRow">
-													<div class="col-md-4">
-														<label for="inputSumInterestTotal">Gesamtlast bis Volltilgung</label>
-													</div>
-													<div class="col-md-6 col-md-offset-2">	
-														<input type="number" id="inputSumInterestTotal" name="inputSumInterestTotal" 
-															th:field="*{selectedCredit.sumInterestTotal}"
-															readonly="readonly"
-															class="form-control text-right summarizeInput" 
-														/>
-													</div>				
-												</div>
-											</div>
-										</div>
-									</div> <!-- END PANEL -->
-								</div> <!-- END PANEL CONTAINER -->							
-							</div> <!-- END PANEL GROUP -->
-							
-						</div>			
+											</div> <!-- END PANEL -->
+										</div> <!-- END INTEREST SUMMARIZED -->							
+									</div> <!-- END PANEL BODY -->
+								</div>
+							</div>			
+						</div>
 					</div>
 				</form>
 			</main>
 		</div>
-	
 	</body>
 </html>

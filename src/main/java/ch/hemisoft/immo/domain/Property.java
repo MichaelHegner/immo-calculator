@@ -69,7 +69,9 @@ public class Property implements Ownable{
 	}
 	
 	private double getTotalAttendantCostAsDouble() {
-		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
+		if (null != purchaseCost && null != completionCost)
+			return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
+		return 0.0;
 	}
 	
 	public BigDecimal getTotalPurchaseCost() {
