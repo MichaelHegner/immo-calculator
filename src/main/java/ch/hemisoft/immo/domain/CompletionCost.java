@@ -14,8 +14,8 @@ public class CompletionCost {
 	@Min(0)		BigDecimal reconstruction;
 	
 	public Double getTotalCompletionCost() {
-		if(null == renovation || null == reconstruction)
-			return null;
-		return renovation.doubleValue() + reconstruction.doubleValue();
+		double renovation = this.renovation == null ? 0.0 : this.renovation.doubleValue();
+		double reconstruction = this.reconstruction == null ? 0.0 : this.reconstruction.doubleValue();
+		return renovation + reconstruction;
 	}
 }
