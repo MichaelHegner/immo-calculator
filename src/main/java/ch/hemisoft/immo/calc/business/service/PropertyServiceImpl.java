@@ -3,14 +3,18 @@ package ch.hemisoft.immo.calc.business.service;
 import java.security.Principal;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.immo.calc.backend.repository.PropertyRepository;
+import ch.hemisoft.immo.domain.ActiveCredit;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PropertyServiceImpl implements PropertyService {
 	@NonNull PropertyRepository repository;
@@ -27,6 +31,8 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public Property save(Principal principal, Property property) {
-		return repository.save(property);
+		Property persistentProperty = repository.save(property);
+		if(persistentProperty.getSelectedCredit() == null) persistentProperty.setSelectedCredit(new ActiveCredit(property));
+		return persistentProperty;
 	}
 }

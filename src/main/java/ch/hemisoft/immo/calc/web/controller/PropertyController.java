@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.domain.Property;
@@ -74,7 +73,6 @@ public class PropertyController {
 	private void mapChangedValues(Property formProperty, Property dbProperty) {
 		dbProperty.setAddress(formProperty.getAddress());
 		dbProperty.setCompletionCost(formProperty.getCompletionCost());
-		dbProperty.setCreditOptions(formProperty.getCreditOptions()); 
 		dbProperty.setLandAreaInQm(formProperty.getLandAreaInQm());
 		dbProperty.setLivingSpaceInQm(formProperty.getLivingSpaceInQm());
 		dbProperty.setNetAssets(formProperty.getNetAssets());

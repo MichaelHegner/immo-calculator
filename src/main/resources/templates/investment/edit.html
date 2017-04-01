@@ -149,7 +149,13 @@
 
 							<div class="panel panel-primary">
 								<div class="panel-heading">
-									<h1 class="panel-title pull-left"><span th:text="*{selectedCredit.nameOfInstitution}">CREDIT_INSTITUTE_NAME</span></h1>
+									<h1 class="panel-title pull-left">
+										<input type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
+											th:field="*{selectedCredit.nameOfInstitution}"
+											required="required"
+											class="form-control" 
+										/>
+									</h1>
 									<div class="clearfix"></div>
 								</div>
 								<div class="panel-body">
@@ -163,8 +169,6 @@
 												<div class="panel-body">
 													<div class="container-fluid">
 														
-														<input type="hidden" th:field="*{selectedCredit.nameOfInstitution}" />
-													
 														<div class="row filterRow ">
 															<div class="col-md-4">
 																<label for="inputInterestRateNominalInPercent">Zinssatz nominal (%)</label >

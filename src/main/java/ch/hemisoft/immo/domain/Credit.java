@@ -168,11 +168,16 @@ public abstract class Credit {
 	}
 
 	private double sumTilgungAndInterestInPercent() {
-		return interestRateNominalInPercent.doubleValue() + redemptionAtBeginInPercent.doubleValue();
+		double dRedemptionAtBeginInPercent = null == redemptionAtBeginInPercent ? 0.0 : redemptionAtBeginInPercent.doubleValue();
+		return getDInterestRateNominalInPercent() + dRedemptionAtBeginInPercent;
 	}
 	
 	private double interestRateNominalAsQuote() {
-		return interestRateNominalInPercent.doubleValue() / 100;
+		return getDInterestRateNominalInPercent() / 100;
+	}
+
+	private double getDInterestRateNominalInPercent() {
+		return null == interestRateNominalInPercent ? 0.0 : interestRateNominalInPercent.doubleValue();
 	}
 	
 	//

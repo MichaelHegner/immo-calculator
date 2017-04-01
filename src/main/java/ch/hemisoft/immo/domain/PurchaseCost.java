@@ -17,6 +17,11 @@ public class PurchaseCost {
 	@Min(0)		BigDecimal court;
 	
 	public double getTotalCompletionCost() {
-		return landAcquisition.doubleValue() + notary.doubleValue() + agency.doubleValue() + valuation.doubleValue() + court.doubleValue();
+		double dLandAcquisition 	= null == landAcquisition 	? 0.0 : landAcquisition.doubleValue();
+		double dNotary 				= null == notary 			? 0.0 : notary.doubleValue();
+		double dAgency 				= null == agency 			? 0.0 : agency.doubleValue();
+		double dValuation 			= null == valuation 		? 0.0 : valuation.doubleValue();
+		double dCourt 				= null == court 			? 0.0 : court.doubleValue();
+		return dLandAcquisition + dNotary + dAgency + dValuation + dCourt;
 	}
 }

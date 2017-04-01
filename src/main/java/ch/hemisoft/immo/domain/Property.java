@@ -71,9 +71,8 @@ public class Property implements Ownable{
 	}
 	
 	private double getTotalAttendantCostAsDouble() {
-		if (null != purchaseCost && null != completionCost)
-			return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
-		return 0.0;
+		if (null == purchaseCost || null == completionCost) return 0.0;
+		return purchaseCost.getTotalCompletionCost() + completionCost.getTotalCompletionCost();
 	}
 	
 	public BigDecimal getTotalPurchaseCost() {
@@ -81,7 +80,8 @@ public class Property implements Ownable{
 	}
 
 	private double getTotalPurchaseCostAsDouble() {
-		return purchasePrice.doubleValue() + getTotalAttendantCostAsDouble();
+		double dPurchasePrice = null == purchasePrice ? 0.0 : purchasePrice.doubleValue();
+		return dPurchasePrice + getTotalAttendantCostAsDouble();
 	}
 
 	// ==============================================================================================
@@ -91,13 +91,13 @@ public class Property implements Ownable{
 	@NotNull @Valid			RunningCost 	runningCost;
 	
 	public BigDecimal getTotalAdministrationCost() {
-		double administrationEachApartment = runningCost.getAdministrationEachApartment().doubleValue();
+		double administrationEachApartment = null == runningCost || null == runningCost.getAdministrationEachApartment() ? 0.0 : runningCost.getAdministrationEachApartment().doubleValue();
 		return BigDecimalUtils.convert(administrationEachApartment * noApartments);
 	}
 	
 	public BigDecimal getTotalMaintenanceCost() {
-		double dLivingSpaceInQm = livingSpaceInQm.doubleValue();
-		double dMaintenanceEachQm = runningCost.getMaintenanceEachQm().doubleValue();
+		double dLivingSpaceInQm = null == livingSpaceInQm ? 0.0 : livingSpaceInQm.doubleValue();
+		double dMaintenanceEachQm = null == runningCost || null == runningCost.getMaintenanceEachQm() ? 0.0 : runningCost.getMaintenanceEachQm().doubleValue();
 		return BigDecimalUtils.convert(dLivingSpaceInQm * dMaintenanceEachQm);
 	}
 	
@@ -118,7 +118,8 @@ public class Property implements Ownable{
 	}
 
 	private double getRentalNetAfterManagementCostAsDouble() {
-		return rentalNet.doubleValue() - getTotalManagementCost().doubleValue();
+		double dRentalNet = null == rentalNet ? 0.0 : rentalNet.doubleValue();
+		return dRentalNet - getTotalManagementCost().doubleValue();
 	}
 
 	// ==============================================================================================
@@ -158,7 +159,7 @@ public class Property implements Ownable{
 			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
 			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
 	)
-	ActiveCredit 			selectedCredit = new ActiveCredit(this);
+	ActiveCredit 			selectedCredit;
 	
 	@Getter @Setter
 	@OneToMany(fetch = LAZY, cascade = ALL, orphanRemoval = true)
