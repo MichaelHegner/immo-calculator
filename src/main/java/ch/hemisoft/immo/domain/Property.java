@@ -29,6 +29,8 @@ import ch.hemisoft.immo.utils.BigDecimalUtils;
 import ch.hemisoft.immo.validation.PastLocalDate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -156,10 +158,16 @@ public class Property implements Ownable{
 			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
 			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
 	)
-	Credit 			selectedCredit = new Credit();
+	ActiveCredit 			selectedCredit = new ActiveCredit(this);
 	
-	@OneToMany		
-	Collection<Credit> creditOptions = new ArrayList<>();	
+	@Getter @Setter
+	@OneToMany(fetch = LAZY, cascade = ALL, orphanRemoval = true)
+	@JoinTable(
+			name 				= "PROPERTY_CREDIT_OPTIONS",
+			joinColumns 		= @JoinColumn(name="PROPERTY_ID", nullable = false), 
+			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
+	)
+	Collection<NotActiveCredit> 	creditOptions = new ArrayList<>();	
 	
 	
 	// ==============================================================================================

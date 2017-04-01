@@ -1,6 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
 import java.security.Principal;
+import java.util.Collection;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -59,10 +60,22 @@ public class InvestmentController {
 	private Property mapChangedValues(Property formProperty, Property dbProperty, Principal principal) {
 		dbProperty.setNetAssets(formProperty.getNetAssets());
 		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
+		mapChangedValues(formProperty.getCreditOptions(), dbProperty.getCreditOptions());
 		return dbProperty;
 	}
-
+	
+	private void mapChangedValues(Collection<? extends Credit> formCreditOptions, Collection<? extends Credit> dbCreditOptions) {
+		for(Credit dbCreditOption : dbCreditOptions) {
+			for(Credit formCreditOption : formCreditOptions) {
+				if(dbCreditOption.getNameOfInstitution().equals(formCreditOption.getNameOfInstitution())) {
+					mapChangedValues(formCreditOption, dbCreditOption);
+				}
+			}
+		}
+	}
+	
 	private void mapChangedValues(Credit formCredit, Credit dbCredit) {
+		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
 		dbCredit.setInterestRateNominalInPercent(formCredit.getInterestRateNominalInPercent());
 		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
 		dbCredit.setRedemptionAtBeginInPercent(formCredit.getRedemptionAtBeginInPercent());
