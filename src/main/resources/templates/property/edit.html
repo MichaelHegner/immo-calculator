@@ -40,9 +40,8 @@
 					<div th:with="baseUrl=('/property/edit')" class="panel panel-primary">
 						<div class="panel-heading">
 							<h1 class="panel-title pull-left">Immobilien Mangement - Datenerfassung</h1>
-
 							<!--/*/ <th:block th:replace="fragments/edit/property-selector :: primary-panel-header-edit"></th:block> /*/-->
-
+							<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="'Neue Immobilie'">ADD NEW PROPERTY</button>
 	        				<div class="clearfix"></div>
 						</div>
 						<div class="panel-body">
