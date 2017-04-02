@@ -16,24 +16,24 @@
 					      <ul class="nav navbar-nav">
 						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/property/list') ? 'active':''}">
 						        	<a th:href="@{/property/list}" href="/property/list">
-						        		Überblick <span class="sr-only">(current)</span>
+						        		<span th:text="#{gui.navbar.overview}">ÜBERBLICK</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
 						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/property/edit') ? 'active':''}">
 						        	<a th:href="@{/property/edit}" href="/property/edit">
-						        		Mangement <span class="sr-only">(current)</span>
+						        		<span th:text="#{gui.navbar.management}">MANGEMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
 						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/investment') ? 'active':''}">
 						        	<a th:href="@{/investment/edit}" href="/investment/edit">
-						        		Investment <span class="sr-only">(current)</span>
+						        		<span th:text="#{gui.navbar.investment}">INVESTMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
 					      </ul>
 					      <form th:action="@{/logout}" method="post" class="navbar-form navbar-right">
 						        <button type="submit" class="btn btn-default">
 						      		<span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>
-						        	Abmelden
+						        	<span th:text="#{gui.button.logout}">ABMELDEN</span>
 						        </button>
 					      </form>
 				    </div><!-- /.navbar-collapse -->

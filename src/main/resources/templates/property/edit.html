@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>HEMISOFT - Immobilienmanagement - Formular</title>
+		<title th:text="#{gui.title.hemisoft} + ' - ' + #{gui.title.property.management} + ' - ' + #{gui.tilte.property.data.input}">HEMISOFT - IMMOBILIENMANAGEMENT - DATENERFASSUNG</title>
 		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
 		
 		<script type="text/javascript" 
@@ -39,9 +39,9 @@
 				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post" novalidate="novalidate">
 					<div th:with="baseUrl=('/property/edit')" class="panel panel-primary">
 						<div class="panel-heading">
-							<h1 class="panel-title pull-left">Immobilien Mangement - Datenerfassung</h1>
+							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.tilte.property.data.input}">IMMOBILIEN MANGEMENT - DATENERFASSUNG</h1>
 							<!--/*/ <th:block th:replace="fragments/edit/property-selector :: primary-panel-header-edit"></th:block> /*/-->
-							<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="'Neue Immobilie'">ADD NEW PROPERTY</button>
+							<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="#{gui.button.property.new}">ADD NEW PROPERTY</button>
 	        				<div class="clearfix"></div>
 						</div>
 						<div class="panel-body">
@@ -49,7 +49,7 @@
 							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
 								<div class="panel panel-danger">
 									<div class="panel-heading">
-										<h1 class="panel-title pull-left">Daten nicht vollständig</h1>
+										<h1 class="panel-title pull-left" th:text="${gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
 										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">
@@ -66,14 +66,14 @@
 								<div class="col-md-4">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h1 class="panel-title pull-left">Stammdaten</h1>
+											<h1 class="panel-title pull-left" th:text="#{gui.property.panel.basic.data}">STAMMDATEN</h1>
 											<div class="clearfix"></div>
 										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
 												<div class="row filterRow ">
 													<div class="col-md-4">
-														<label for="inputBasicId">Id</label >
+														<label for="inputBasicId" th:text="#{property.id }">ID</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicId" name="inputBasicId" 
@@ -86,9 +86,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="selectBasicImmobilienTyp">
-															Immobilientyp
-														</label >
+														<label for="selectBasicImmobilienTyp" th:text="#{property.propertyType}">IMMOBILIENTYP</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">
 														<select id="selectBasicImmobilienTyp" 
@@ -104,7 +102,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicPurchasePrice">Kaufpreis</label >
+														<label for="inputBasicPurchasePrice" th:text="#{property.purchasePrice}">KAUFPREIS</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicPurchasePrice" name="inputBasicPurchasePrice" 
@@ -117,7 +115,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicNoApartments">Anzahl Wohnungen</label >
+														<label for="inputBasicNoApartments" th:text="#{property.noApartments}">ANZAHL WOHNUNGEN</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicNoApartments" name="inputBasicNoApartments" 
@@ -130,7 +128,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicNoParking">Anzahl PKW Stellplätze</label >
+														<label for="inputBasicNoParking" th:text="#{property.noParking}">ANZAHL PKW STELLPLÄTZE</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicNoParking" name="inputBasicNoParking" 
@@ -143,7 +141,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicLivingSpaceInQm">Wohnfläche in m²</label >
+														<label for="inputBasicLivingSpaceInQm" th:text="#{property.livingSpaceInQm}">WOHNFLÄCHE IN M²</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicLivingSpaceInQm" name="inputBasicLivingSpaceInQm" 
@@ -156,7 +154,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicLandAreaInQm">Grundstücksfläche in m²</label>
+														<label for="inputBasicLandAreaInQm" th:text="#{property.landAreaInQm}">GRUNDSTÜCKSFLÄCHE IN M²</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicLandAreaInQm" name="inputBasicLandAreaInQm" 
@@ -169,7 +167,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicYearOfConstruction">Baujahr</label>
+														<label for="inputBasicYearOfConstruction" th:text="#{property.yearOfConstruction}">BAUJAHR</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputBasicYearOfConstruction" name="inputBasicYearOfConstruction" 
@@ -182,7 +180,7 @@
 												</div>
 												<div class="row filterRow">				
 													<div class="col-md-4">
-														<label for="inputBasicAdressStreet">Strasse</label>
+														<label for="inputBasicAdressStreet" th:text="#{property.address.street}">STRASSE</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="text" id="inputBasicAdressStreet" name="inputBasicAdressStreet" 
@@ -194,7 +192,7 @@
 												</div>
 												<div class="row filterRow">				
 													<div class="col-md-4">
-														<label for="inputBasicAdressStreetNumber">Hausnummer</label>
+														<label for="inputBasicAdressStreetNumber" th:text="#{property.address.streetNumber}">HAUSNUMMER</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="text" id="inputBasicAdressStreetNumber" name="inputBasicAdressStreetNumber" 
@@ -206,7 +204,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicZip">Postleitzahl</label>
+														<label for="inputBasicZip" th:text="#{property.address.zip}">POSTLEITZAHL</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="text" id="inputBasicZip" name="inputBasicZip" 
@@ -218,7 +216,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputBasicCity">Ort</label>
+														<label for="inputBasicCity" th:text="#{property.address.city}">ORT</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="text" id="inputBasicCity" name="inputBasicCity" 
@@ -230,7 +228,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label id="inputBasicPurchaseDate">Erwerbsdatum</label>
+														<label id="inputBasicPurchaseDate" th:text="#{property.purchaseDate}">ERWERBSDATUM</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="date" id="inputBasicPurchaseDate" name="inputBasicPurchaseDate" 
@@ -249,7 +247,7 @@
 								<div class="col-md-4">
 									<div class="panel panel-default">
 										<div class="panel-heading">
-											<h4 class="panel-title">Einmalige Kosten</h4>
+											<h4 class="panel-title" th:text="#{gui.property.panel.cost.purchase}">Einmalige Kosten</h4>
 										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
@@ -257,7 +255,7 @@
 												<!-- KAUFPREIS ... -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostPurchasePrice">Kaufpreis</label >
+														<label for="inputPurchaseCostPurchasePrice" th:text="#{property.purchasePrice}">KAUFPREIS</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostPurchasePrice" name="inputPurchaseCostPurchasePrice" 
@@ -271,7 +269,7 @@
 												<!-- KAUFNEBENKOSTEN ... -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostLandAcquisition">Grunderwerbssteuer</label >
+														<label for="inputPurchaseCostLandAcquisition" th:text="#{property.cost.purchase.landAcquisition}">GRUNDERWERBSSTEUER</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostLandAcquisition" name="inputPurchaseCostLandAcquisition" 
@@ -284,7 +282,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostNotary">Notar</label >
+														<label for="inputPurchaseCostNotary" th:text="#{property.cost.purchase.notary}">NOTAR</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostNotary" name="inputPurchaseCostNotary" 
@@ -297,7 +295,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostAgency">Maklerprovision</label >
+														<label for="inputPurchaseCostAgency" th:text="#{property.cost.purchase.agency }">MAKLERPROVISION</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostAgency" name="inputPurchaseCostAgency" 
@@ -310,7 +308,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostCourt">Bezirksgericht</label >
+														<label for="inputPurchaseCostCourt" th:text="#{property.cost.purchase.court}">Bezirksgericht</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostCourt" name="inputPurchaseCostCourt" 
@@ -323,7 +321,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseCostValuation">Kosten Wertgutachten</label>
+														<label for="inputPurchaseCostValuation" th:text="#{property.cost.purchase.valuation}">WERTGUTACHTEN</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseCostValuation" name="inputPurchaseCostValuation" 
@@ -338,7 +336,7 @@
 												<!-- HERRICHTUGNSKOSTEN ... -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputCompletionCostRenovation">Renovierung</label>
+														<label for="inputCompletionCostRenovation" th:text="#{property.cost.completion.renovation}">RENOVIERUNG</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputCompletionCostRenovation" name="inputCompletionCostRenovation" 
@@ -351,7 +349,7 @@
 												</div>
 												<div class="row filterRow">				
 													<div class="col-md-4">
-														<label for="inputCompletionCostReconstruction">Umbau</label>
+														<label for="inputCompletionCostReconstruction" th:text="#{property.cost.completion.reconstruction}">UMBAU</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputCompletionCostReconstruction" name="inputCompletionCostReconstruction" 
@@ -366,7 +364,7 @@
 												<!-- TOTAL COSTS ... -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputTotalAttendantCost">Summe Nebenkosten</label>
+														<label for="inputTotalAttendantCost" th:text="#{property.cost.total.attendant}">SUMME NEBENKOSTEN</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
@@ -378,7 +376,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputTotalCost">Summe Nebenkosten + Kaufpreis</label>
+														<label for="inputTotalCost" th:text="#{property.cost.total}">SUMME NEBENKOSTEN + KAUFPREIS</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputTotalCost" name="inputTotalCost" 
@@ -398,7 +396,7 @@
 								<div class="col-md-4">
 									<div class="panel panel-default"> 
 										<div class="panel-heading">
-											<h4 class="panel-title">Bewirtschaftungskosten</h4>
+											<h4 class="panel-title" th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</h4>
 										</div>
 										<div class="panel-body">
 											<div class="container-fluid">
@@ -406,7 +404,7 @@
 												<!-- VERWALTUNGSKOSTEN ... -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputRunningCostAdministrationEachApartment">Verwaltungskosten pro Wohnung p.a.</label >
+														<label for="inputRunningCostAdministrationEachApartment" th:text="#{property.cost.running.administrationEachApartment}">VERWALTUNGSKOSTEN PRO WOHNUNG P.A.</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputRunningCostAdministrationEachApartment" name="inputRunningCostAdministrationEachApartment" 
@@ -418,7 +416,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputRunningCostAdministrationTotal">Gesamtverwaltungskosten p.a.</label >
+														<label for="inputRunningCostAdministrationTotal" th:text="#{property.cost.running.administrationEachApartment.total}">GESAMTVERWALTUNGSKOSTEN P.A.</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputRunningCostAdministrationTotal" name="inputRunningCostAdministrationTotal" 
@@ -433,7 +431,7 @@
 												<!-- MAINTENANCE COSTS P.A. -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputRunningCostMaintenanceEachQm">Instandhaltungskosten pro m² p.a.</label >
+														<label for="inputRunningCostMaintenanceEachQm" th:text="#{property.cost.running.maintenanceEachQm}">INSTANDHALTUNGSKOSTEN PRO M² P.A.</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputRunningCostMaintenanceEachQm" name="inputRunningCostMaintenanceEachQm" 
@@ -445,7 +443,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputRunningCostMaintenanceTotal">Gesamtkosten Instandhaltung pro m² p.a.</label >
+														<label for="inputRunningCostMaintenanceTotal" th:text="#{property.cost.running.maintenanceEachQm.total}">GESAMTKOSTEN INSTANDHALTUNG PRO M² P.A.</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputRunningCostMaintenanceTotal" name="inputRunningCostMaintenanceTotal" 
@@ -460,7 +458,7 @@
 												<!-- MANAGEMENT COSTS TOTAL P.A. -->
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputRunningCostManagement">Bewirtschaftungskosten p.a. insgesamt</label>
+														<label for="inputRunningCostManagement" th:text="#{property.cost.running.management}">BEWIRTSCHAFTUNGSKOSTEN P.A. INSGESAMT</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputRunningCostManagement" name="inputRunningCostManagement" 
@@ -487,14 +485,14 @@
 								<div class="col-md-4">
 									<div class="panel panel-default"> <!-- PANEL -->
 										<div class="panel-heading">
-											<h4 class="panel-title">Mieteinnahmen</h4>
+											<h4 class="panel-title" th:text="#{gui.title.property.income}">MIETEINNAHMEN</h4>
 										</div>
 										<div class="panel-body">
 										
 											<div class="container-fluid">
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputIncomeNet">Nettomieteinnahmen p.a.</label >
+														<label for="inputIncomeNet" th:text="#{property.incomeNet}">NETTOMIETEINNAHMEN P.A.</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputIncomeNet" name="inputIncomeNet" 
@@ -506,7 +504,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputIncomeNetAfterManagementCost">Mieteinnahmen nach Abzug Bewirtschaftskosten p.a.</label >
+														<label for="inputIncomeNetAfterManagementCost" th:text="#{property.incomeNet.afterManagementCost}">MIETEINNAHMEN NACH ABZUG BEWIRTSCHAFTSKOSTEN P.A.</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputIncomeNetAfterManagementCost" name="inputIncomeNetAfterManagementCost" 
@@ -526,14 +524,14 @@
 								<div class="col-md-4">
 									<div class="panel panel-default"> <!-- PANEL -->
 										<div class="panel-heading">
-											<h4 class="panel-title">Einkaufsfaktor und Rendite</h4>
+											<h4 class="panel-title" th:text="#{gui.title.purchase.factor.and.rental}">EINKAUFSFAKTOR UND RENDITE</h4>
 										</div>
 										<div class="panel-body">
 										
 											<div class="container-fluid">
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputPurchaseFactor">Einkaufsfaktor</label >
+														<label for="inputPurchaseFactor" th:text="#{property.purchase.factor}">EINKAUFSFAKTOR</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputPurchaseFactor" name="inputPurchaseFactor" 
@@ -545,7 +543,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="inputFirstRental">Anfangsrendite p.a.</label >
+														<label for="inputFirstRental" th:text="#{property.rental.first}">ANFANGSRENDITE P.A.</label >
 													</div>	
 													<div class="col-md-6 col-md-offset-2">	
 														<input type="number" id="inputFirstRental" name="inputFirstRental" 

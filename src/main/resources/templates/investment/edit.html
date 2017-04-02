@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>HEMISOFT - Immobilienmanagement - Finanzierung</title>
+		<title th:text="#{gui.title.hemisoft} + ' - ' + #{gui.title.property.management} + ' - ' + #{gui.tilte.property.financial}">HEMISOFT - IMMOBILIENMANAGEMENT - FINANZIERUNG</title>
 		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
 		
 		<script type="text/javascript">
@@ -23,7 +23,7 @@
 				<form id="investmentDataEditForm" name="investmentDataEditForm" th:action="@{/investment/save}" th:object="${property}" method="post" novalidate="novalidate">
 					<div class="panel panel-primary">
 						<div th:with="baseUrl=('/investment/edit')" class="panel-heading">
-							<h1 class="panel-title pull-left">Immobilien Mangement - Finanzierung</h1>
+							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.tilte.property.financial}">IMMOBILIEN MANGEMENT - FINANZIERUNG</h1>
 
 							<!--/*/ <th:block th:replace="fragments/edit/property-selector :: primary-panel-header-edit"></th:block> /*/-->
 
@@ -34,12 +34,12 @@
 							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
 								<div class="panel panel-danger">
 									<div class="panel-heading">
-										<h1 class="panel-title pull-left">Daten nicht vollständig</h1>
+										<h1 class="panel-title pull-left" th:text="${gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
 										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">
 										<ul>
-										 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input is incorrect</li>
+										 	<li th:each="err : ${#fields.errors('*')}" th:text="${err}">INPUT IS INCORRECT</li>
 										</ul>
 									</div>
 								</div>
@@ -51,7 +51,7 @@
 							<div class="col-md-4 col-md-offset-0">
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<h1 class="panel-title pull-left">Berechnung des Finanzierungsbedarfs</h1>
+										<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.needs}">BERECHNUNG DES FINANZIERUNGSBEDARFS</h1>
 										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">
@@ -59,7 +59,7 @@
 											
 											<div class="row filterRow ">
 												<div class="col-md-4">
-													<label for="inputPurchasePrice">Kaufpreis</label >
+													<label for="inputPurchasePrice" th:text="#{property.purchasePrice}">KAUFPREIS</label >
 												</div>
 												<div class="col-md-6 col-md-offset-2">	
 													<input type="number" id="inputPurchasePrice" name="inputPurchasePrice" 
@@ -72,7 +72,7 @@
 											</div>
 											<div class="row filterRow">
 												<div class="col-md-4">
-													<label for="inputTotalAttendantCost">Einmalige Kosten beim Kauf</label>
+													<label for="inputTotalAttendantCost" th:text="#{property.totalAttendantCost}">EINMALIGE KOSTEN BEIM KAUF</label>
 												</div>
 												<div class="col-md-6 col-md-offset-2">	
 													<input type="number" id="inputTotalAttendantCost" name="inputTotalAttendantCost" 
@@ -84,7 +84,7 @@
 											</div>
 											<div class="row filterRow">
 												<div class="col-md-4">
-													<label for="inputTotalCost">Gesamtsumme der Kosten</label>
+													<label for="inputTotalCost" th:text="#{property.totalCost}">GESAMTSUMME DER KOSTEN</label>
 												</div>
 												<div class="col-md-6 col-md-offset-2">	
 													<input type="number" id="inputTotalCost" name="inputTotalCost" 
@@ -96,7 +96,7 @@
 											</div>
 											<div class="row filterRow">
 												<div class="col-md-4">
-													<label for="inputNetAssets">Eigenkapital</label >
+													<label for="inputNetAssets" th:text="#{property.netAssets}">EIGENKAPITAL</label >
 												</div>	
 												<div class="col-md-6 col-md-offset-2">	
 													<input type="number" id="inputNetAssets" name="inputNetAssets" 
@@ -109,7 +109,7 @@
 											</div>
 											<div class="row filterRow">
 												<div class="col-md-4">
-													<label id="inputFinancingNeedsTotal">Kreditbedarf</label>
+													<label id="inputFinancingNeedsTotal" th:text="#{property.financingNeedsTotal}">KREDITBEDARF</label>
 												</div>
 												<div class="col-md-6 col-md-offset-2">	
 													<input type="number" id="inputFinancingNeedsTotal" name="inputFinancingNeedsTotal" 
@@ -142,7 +142,7 @@
 										<div class="col-md-4"> <!-- FINANCING NEEDS -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Eckdaten der Kreditfinanzierung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.needs}">ECKDATEN DER KREDITFINANZIERUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -150,7 +150,7 @@
 														
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputInterestRateNominalInPercent">Zinssatz nominal (%)</label >
+																<label for="inputInterestRateNominalInPercent" th:text="#{property.interestRateNominalInPercent}">ZINSSATZ NOMINAL (%)</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputInterestRateNominalInPercent" name="inputInterestRateNominalInPercent" 
@@ -162,7 +162,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRedemptionAtBeginInPercent">Anfängliche Tilgung (%)</label>
+																<label for="inputRedemptionAtBeginInPercent" th:text="#{property.redemptionAtBeginInPercent}">ANFÄNGLICHE TILGUNG (%)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRedemptionAtBeginInPercent" name="inputRedemptionAtBeginInPercent" 
@@ -174,7 +174,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSpecialRedemptionEachYearInPercent">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
+																<label for="inputSpecialRedemptionEachYearInPercent" th:text="#{property.specialRedemptionEachYearInPercent}">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
@@ -186,10 +186,10 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSpecialRedemptionEachYearAbsolut">jährliche Sondertilgungsbetrag (€)</label >
+																<label for="inputSpecialRedemptionEachYearAbsolute" th:text="#{property.specialRedemptionEachYearAbsolute}">JÄHRLICHE SONDERTILGUNGSBETRAG (€)</label >
 															</div>	
 															<div class="col-md-6 col-md-offset-2">	
-																<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
+																<input type="number" id="inputSpecialRedemptionEachYearAbsolute" name="inputSpecialRedemptionEachYearAbsolute" 
 																	th:field="*{selectedCredit.specialRedemptionEachYearAbsolut}"
 																	min="1" max="10000000" 
 																	class="form-control text-right" 
@@ -198,7 +198,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputSpecialRedemptionTotal">Summe Sondertilgung (€)</label>
+																<label id="inputSpecialRedemptionTotal" th:text="#{property.specialRedemptionTotal}">SUMME SONDERTILGUNG (€)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
@@ -210,7 +210,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputMonthlyRate">Monatliche Rate (Belastung)</label>
+																<label id="inputMonthlyRate" th:text="#{property.monthlyRate}">MONATLICHE RATE (BELASTUNG)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
@@ -222,7 +222,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputTerm">Laufzeit in Jahren bis Volltilgung</label>
+																<label id="inputTerm" th:text="#{property.term}">LAUFZEIT IN JAHREN BIS VOLLTILGUNG</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputTerm" name="inputTerm" 
@@ -240,7 +240,7 @@
 										<div class="col-md-4"> <!-- TERMS IN YEARS -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Laufzeit in Jahren bis Volltilgung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.term}">LAUFZEIT IN JAHREN BIS VOLLTILGUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -248,7 +248,7 @@
 													
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter5Years">Restschuld nach 5 Jahren</label >
+																<label for="inputRestLoanAfter5Years" th:text="#{property.restLoanInYears.5}">RESTSCHULD NACH 5 JAHREN</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter5Years" name="inputRestLoanAfter5Years" 
@@ -260,7 +260,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter10Years">Restschuld nach 10 Jahren</label>
+																<label for="inputRestLoanAfter10Years" th:text="#{property.restLoanInYears.10}">RESTSCHULD NACH 10 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter10Years" name="inputRestLoanAfter10Years" 
@@ -272,7 +272,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter15Years">Restschuld nach 15 Jahren</label>
+																<label for="inputRestLoanAfter15Years" th:text="#{property.restLoanInYears.15}">RESTSCHULD NACH 15 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter15Years" name="inputRestLoanAfter15Years" 
@@ -284,7 +284,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter20Years">Restschuld nach 20 Jahren</label>
+																<label for="inputRestLoanAfter20Years" th:text="#{property.restLoanInYears.20}">RESTSCHULD NACH 20 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter20Years" name="inputRestLoanAfter20Years" 
@@ -296,7 +296,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter25Years">Restschuld nach 25 Jahren</label>
+																<label for="inputRestLoanAfter25Years" th:text="#{property.restLoanInYears.25}">RESTSCHULD NACH 25 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter25Years" name="inputRestLoanAfter25Years" 
@@ -308,7 +308,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter30Years">Restschuld nach 30 Jahren</label>
+																<label for="inputRestLoanAfter30Years" th:text="#{property.restLoanInYears.30}">RESTSCHULD NACH 30 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter30Years" name="inputRestLoanAfter30Years" 
@@ -326,7 +326,7 @@
 										<div class="col-md-4"> <!-- INTEREST SUMMARIZED -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Ergebnisse Zinsbelastung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.interest}">ERGEBNISSE ZINSBELASTUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -334,7 +334,7 @@
 													
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter5Years">nach 5 Jahren</label >
+																<label for="inputSumInterestAfter5Years" th:text="#{property.sumInterestInYears.5}">NACH 5 JAHREN</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter5Years" name="inputSumInterestAfter5Years" 
@@ -346,7 +346,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter10Years">nach 10 Jahren</label>
+																<label for="inputSumInterestAfter10Years" th:text="#{property.sumInterestInYears.10}">NACH 10 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter10Years" name="inputSumInterestAfter10Years" 
@@ -358,7 +358,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter15Years">nach 15 Jahren</label>
+																<label for="inputSumInterestAfter15Years" th:text="#{property.sumInterestInYears.15}">NACH 15 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter15Years" name="inputSumInterestAfter15Years" 
@@ -370,7 +370,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter20Years">nach 20 Jahren</label>
+																<label for="inputSumInterestAfter20Years" th:text="#{property.sumInterestInYears.20}">NACH 20 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter20Years" name="inputSumInterestAfter20Years" 
@@ -382,7 +382,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter25Years">nach 25 Jahren</label>
+																<label for="inputSumInterestAfter25Years" th:text="#{property.sumInterestInYears.25}">NACH 25 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter25Years" name="inputSumInterestAfter25Years" 
@@ -394,7 +394,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter30Years">nach 30 Jahren</label>
+																<label for="inputSumInterestAfter30Years" th:text="#{property.sumInterestInYears.30}">NACH 30 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter30Years" name="inputSumInterestAfter30Years" 
@@ -406,7 +406,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestTotal">Gesamtlast bis Volltilgung</label>
+																<label for="inputSumInterestTotal" th:text="#{property.sumInterestTotal}">GESAMTLAST BIS VOLLTILGUNG</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestTotal" name="inputSumInterestTotal" 
@@ -434,7 +434,7 @@
 										<div class="col-md-4"> <!-- FINANCING NEEDS -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Eckdaten der Kreditfinanzierung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.basic}">ECKDATEN DER KREDITFINANZIERUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -443,7 +443,7 @@
 
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputInterestRateNominalInPercent">Zinssatz nominal (%)</label >
+																<label for="inputInterestRateNominalInPercent" th:text="#{property.interestRateNominalInPercent}">ZINSSATZ NOMINAL (%)</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputInterestRateNominalInPercent" name="inputInterestRateNominalInPercent" 
@@ -455,7 +455,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRedemptionAtBeginInPercent">Anfängliche Tilgung (%)</label>
+																<label for="inputRedemptionAtBeginInPercent" th:text="#{property.redemptionAtBeginInPercent}">ANFÄNGLICHE TILGUNG (%)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRedemptionAtBeginInPercent" name="inputRedemptionAtBeginInPercent" 
@@ -467,7 +467,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSpecialRedemptionEachYearInPercent">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
+																<label for="inputSpecialRedemptionEachYearInPercent" th:text="#{property.specialRedemptionEachYearInPercent}">JÄHRLICHE SONDERTILGUNG (% VOM DARLEHENSBETRAG)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
@@ -479,7 +479,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSpecialRedemptionEachYearAbsolut">jährliche Sondertilgungsbetrag (€)</label >
+																<label for="inputSpecialRedemptionEachYearAbsolut" th:text="#{property.specialRedemptionEachYearAbsolute}">JÄHRLICHE SONDERTILGUNGSBETRAG (€)</label >
 															</div>	
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionEachYearAbsolut" name="inputSpecialRedemptionEachYearAbsolut" 
@@ -491,7 +491,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputSpecialRedemptionTotal">Summe Sondertilgung (€)</label>
+																<label id="inputSpecialRedemptionTotal" th:text="#{property.specialRedemptionTotal}">SUMME SONDERTILGUNG (€)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionTotal" name="inputSpecialRedemptionTotal" 
@@ -503,7 +503,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputMonthlyRate">Monatliche Rate (Belastung)</label>
+																<label id="inputMonthlyRate" th:text="#{property.monthlyRate}">MONATLICHE RATE (BELASTUNG)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputMonthlyRate" name="inputMonthlyRate" 
@@ -515,7 +515,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label id="inputTerm">Laufzeit in Jahren bis Volltilgung</label>
+																<label id="inputTerm" th:text="#{property.term}">LAUFZEIT IN JAHREN BIS VOLLTILGUNG</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputTerm" name="inputTerm" 
@@ -533,7 +533,7 @@
 										<div class="col-md-4"> <!-- TERMS IN YEARS -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Laufzeit in Jahren bis Volltilgung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.term}">LAUFZEIT IN JAHREN BIS VOLLTILGUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -541,7 +541,7 @@
 													
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter5Years">Restschuld nach 5 Jahren</label >
+																<label for="inputRestLoanAfter5Years" th:text="#{property.restLoanInYears.5}">RESTSCHULD NACH 5 JAHREN</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter5Years" name="inputRestLoanAfter5Years" 
@@ -553,7 +553,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter10Years">Restschuld nach 10 Jahren</label>
+																<label for="inputRestLoanAfter10Years" th:text="#{property.restLoanInYears.10}">RESTSCHULD NACH 10 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter10Years" name="inputRestLoanAfter10Years" 
@@ -565,7 +565,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter15Years">Restschuld nach 15 Jahren</label>
+																<label for="inputRestLoanAfter15Years" th:text="#{property.restLoanInYears.15}">RESTSCHULD NACH 15 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter15Years" name="inputRestLoanAfter15Years" 
@@ -577,7 +577,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter20Years">Restschuld nach 20 Jahren</label>
+																<label for="inputRestLoanAfter20Years" th:text="#{property.restLoanInYears.20}">RESTSCHULD NACH 20 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter20Years" name="inputRestLoanAfter20Years" 
@@ -589,7 +589,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter25Years">Restschuld nach 25 Jahren</label>
+																<label for="inputRestLoanAfter25Years" th:text="#{property.restLoanInYears.25}">RESTSCHULD NACH 25 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter25Years" name="inputRestLoanAfter25Years" 
@@ -601,7 +601,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputRestLoanAfter30Years">Restschuld nach 30 Jahren</label>
+																<label for="inputRestLoanAfter30Years" th:text="#{property.restLoanInYears.30}">RESTSCHULD NACH 30 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputRestLoanAfter30Years" name="inputRestLoanAfter30Years" 
@@ -619,7 +619,7 @@
 										<div class="col-md-4"> <!-- INTEREST SUMMARIZED -->
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h1 class="panel-title pull-left">Ergebnisse Zinsbelastung</h1>
+													<h1 class="panel-title pull-left" th:text="#{gui.property.panel.financial.interest}">ERGEBNISSE ZINSBELASTUNG</h1>
 													<div class="clearfix"></div>
 												</div>
 												<div class="panel-body">
@@ -627,7 +627,7 @@
 													
 														<div class="row filterRow ">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter5Years">nach 5 Jahren</label >
+																<label for="inputSumInterestAfter5Years" th:text="#{property.sumInterestInYears.5}">NACH 5 JAHREN</label >
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter5Years" name="inputSumInterestAfter5Years" 
@@ -639,7 +639,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter10Years">nach 10 Jahren</label>
+																<label for="inputSumInterestAfter10Years" th:text="#{property.sumInterestInYears.5}">NACH 10 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter10Years" name="inputSumInterestAfter10Years" 
@@ -651,7 +651,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter15Years">nach 15 Jahren</label>
+																<label for="inputSumInterestAfter15Years" th:text="#{property.sumInterestInYears.5}">NACH 15 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter15Years" name="inputSumInterestAfter15Years" 
@@ -663,7 +663,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter20Years">nach 20 Jahren</label>
+																<label for="inputSumInterestAfter20Years" th:text="#{property.sumInterestInYears.5}">NACH 20 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter20Years" name="inputSumInterestAfter20Years" 
@@ -675,7 +675,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter25Years">nach 25 Jahren</label>
+																<label for="inputSumInterestAfter25Years" th:text="#{property.sumInterestInYears.5}">NACH 25 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter25Years" name="inputSumInterestAfter25Years" 
@@ -687,7 +687,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestAfter30Years">nach 30 Jahren</label>
+																<label for="inputSumInterestAfter30Years" th:text="#{property.sumInterestInYears.5}">NACH 30 JAHREN</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestAfter30Years" name="inputSumInterestAfter30Years" 
@@ -699,7 +699,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSumInterestTotal">Gesamtlast bis Volltilgung</label>
+																<label for="inputSumInterestTotal" th:text="#{property.sumInterestTotal}">Gesamtlast bis Volltilgung</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSumInterestTotal" name="inputSumInterestTotal" 
