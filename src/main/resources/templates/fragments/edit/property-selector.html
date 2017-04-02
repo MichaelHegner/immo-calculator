@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+	
+		<div th:fragment="primary-panel-header-edit" class="btn-group pull-right">
+			
+			<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="Speichern">SPEICHERN</button>
+			
+			<div th:if="${null != property.address}" class="dropdown pull-right">
+				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span th:if="${null == property}">SELECT PROPERTY</span>  
+					<span th:if="${null != property}" th:text="'Immobilie:' + ${property.address.street}">SELECTED PROPERTY</span>  
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li th:each="property : ${properties}">
+						<a href="#" th:href="@{${baseUrl}  + '/' + ${property.id}}" >
+							<span th:text="${property.address.street}">ADRESSE</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+	</body>
+</html>

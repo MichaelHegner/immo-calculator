@@ -1,6 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -26,7 +27,6 @@ public class PropertyController {
 
 	@GetMapping("/list")
 	public String list(Principal principal, ModelMap modelMap) {
-		modelMap.addAttribute("properties", service.findAll(principal));
 		return "property/list";
 	}
 	
@@ -40,6 +40,11 @@ public class PropertyController {
 	public String edit(@PathVariable Long propertyId, Principal principal, ModelMap modelMap) {
 		modelMap.addAttribute("property", service.find(principal, propertyId));
 		return "property/edit";
+	}
+	
+	@ModelAttribute("properties")
+	public List<Property> properties(Principal principal) {
+		return service.findAll(principal);
 	}
 	
 	@PostMapping("/save")
