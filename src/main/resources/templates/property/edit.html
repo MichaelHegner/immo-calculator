@@ -99,7 +99,7 @@
 														>
 															<option th:each="type : ${T(ch.hemisoft.immo.domain.PropertyType).values()}"
 														          th:value="${{type}}" 
-														          th:text="${type.name()}"
+														          th:text="#{property.propertyType. + ${type.name()}}"
 														    />
 														</select>
 													</div>
