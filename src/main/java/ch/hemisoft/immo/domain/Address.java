@@ -16,4 +16,9 @@ public class Address {
 	@NotNull @Size(min=1, max=5)			private String streetNumber;
 	@NotNull @Pattern(regexp = "\\d{4,5}")	private String zip;
 	@NotNull @Size(min=2, max=50)			private String city;
+	
+	@Override
+	public String toString() {
+		return street + " " + streetNumber + ", " + zip + " " + city;
+	}
 }
