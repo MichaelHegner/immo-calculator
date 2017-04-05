@@ -56,8 +56,11 @@ public class Property implements Ownable{
 	@Enumerated(STRING)		PropertyType 	type;
 	
 	@DateTimeFormat(iso =  DateTimeFormat.ISO.DATE)
-	@NotNull @PastLocalDate LocalDate 		purchaseDate;
+	@PastLocalDate 			LocalDate 		purchaseDate; // TODO: Combined Check Constained with status
 
+	@NotNull 
+	@Enumerated(STRING)		PropertyStatus 	status;
+	
 	// ==============================================================================================
 	// Purchase Costs ...
 	// ==============================================================================================

@@ -49,7 +49,6 @@ public class PropertyController {
 	
 	@PostMapping("/save")
 	public String save (
-//			@RequestParam(value="propertyId", required=false) Long id,
 			@ModelAttribute("property") @Valid Property formProperty, 
 			BindingResult errors, 
 			Principal principal, 
@@ -89,5 +88,6 @@ public class PropertyController {
 		dbProperty.setRentalNet(formProperty.getRentalNet());
 		dbProperty.setRunningCost(formProperty.getRunningCost());
 		dbProperty.setType(formProperty.getType());
+		dbProperty.setStatus(formProperty.getStatus());
 	}
 }

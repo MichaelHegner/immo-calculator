@@ -28,10 +28,12 @@
 									<tr>
 										<th>Id</th>
 										<th>Immobilientyp</th>
+										<th>Number of Apartments</th>
 										<th>Adresse/Ort</th>
 										<th>Wohnfläche</th>
 										<th>Grundstücksfläche</th>
-										<th>Erwerbsdatum</th>
+										<th>Bauhjahr</th>
+										<th>Status</th>
 									</tr>
 									<tr th:if="${#lists.isEmpty(properties)}">
 										<td colspan="6">Keine Einträge vorhanden.</td>
@@ -39,10 +41,12 @@
 									<tr th:each="property : ${properties}" class="property-row">
 										<td th:text="${property.id}">PROPERTY_ID</td>
 										<td th:text="${property.type}">PROPERTY_TYP</td>
+										<td th:text="${property.noApartments}">NUMBER_OF_APARTMENTS</td>
 										<td th:text="${property.address}">ADDRESS</td>
 										<td th:text="${property.livingSpaceInQm}">LIVING_SPACE_IN_QM</td>
 										<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
 										<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
+										<td th:text="${property.status}">STATUS</td>
 									</tr>
 								</table>
 							</section>				

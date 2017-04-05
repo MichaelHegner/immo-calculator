@@ -238,6 +238,22 @@
 														/>
 													</div>
 												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
+														<label for="selectBasicImmobilienStatus" th:text="#{property.propertyType}">IMMOBILIEN_STATUS</label >
+													</div>
+													<div class="col-md-6 col-md-offset-2">
+														<select id="selectBasicImmobilienStatus" 
+															th:field="*{status}"
+															class="form-control"
+														>
+															<option th:each="status : ${T(ch.hemisoft.immo.domain.PropertyStatus).values()}"
+														          th:value="${{status}}" 
+														          th:text="#{property.propertyStatus. + ${status.name()}}"
+														    />
+														</select>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div> <!-- END PANEL -->
