@@ -1,7 +1,7 @@
 $(document).ready(function() {
-	registerEventTableRowClick();
-	registerNewButton();
-	registerReturnButton();
+	registerEventTableRowClick();	// OVERVIEW PAGE
+	registerNewButton();			// OVERVIEW PAGE
+	registerDeactivateButton();		// INVESTMENT PAGE
 });
 
 function registerNewButton() {
@@ -10,15 +10,15 @@ function registerNewButton() {
 	});
 }
 
-function registerReturnButton() {
-	$("#buttonReturn").click(function(){
-		window.location = '/property/list';
-	});
-}
-
 function registerEventTableRowClick() {
 	$("tr.property-row").click(function(e){
 		var propertyId = $(this).find("td:first").text();
 		window.location = '/property/edit/' + propertyId;
+	});
+}
+
+function registerDeactivateButton() {
+	$("#buttonDeactivate").click(function(){
+		window.location = window.location.href + '?deactivate=true';
 	});
 }

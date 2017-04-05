@@ -31,8 +31,6 @@ public class PropertyServiceImpl implements PropertyService {
 
 	@Override
 	public Property save(Principal principal, Property property) {
-		Property persistentProperty = repository.save(property);
-		if(persistentProperty.getSelectedCredit() == null) persistentProperty.setSelectedCredit(new ActiveCredit(property));
-		return persistentProperty;
+		return repository.save(property);
 	}
 }

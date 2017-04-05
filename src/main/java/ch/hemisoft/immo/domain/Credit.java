@@ -186,5 +186,5 @@ public abstract class Credit {
 		return getProperty() == null ? 0.0 : getProperty().getFinancialNeedsTotal().doubleValue();
 	}
 
-	abstract Property getProperty();
+	public abstract Property getProperty();
 }

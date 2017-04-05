@@ -26,15 +26,19 @@
 							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.tilte.property.financial}">IMMOBILIEN MANGEMENT - FINANZIERUNG</h1>
 
 							<!--/*/ <th:block th:replace="fragments/edit/property-selector :: primary-panel-header-edit"></th:block> /*/-->
-
 	        				<div class="clearfix"></div>
 						</div>
-						<div class="panel-body">
+						
+						<div th:if="${null == property}" class="panel-body">
+							<h1 class="panel-title pull-left" th:text="#{gui.list.entry.no.selected}">NO_PROPERTY_SELECTED</h1>
+						</div>
+						
+						<div th:if="${null != property}" class="panel-body">
 						
 							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
 								<div class="panel panel-danger">
 									<div class="panel-heading">
-										<h1 class="panel-title pull-left" th:text="${gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
+										<h1 class="panel-title pull-left" th:text="#{gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
 										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">
@@ -45,7 +49,6 @@
 								</div>
 							</div>
 							
-							<input type="hidden" th:field="*{id}" />
 							
 							<!-- FINANCING NEEDS -->
 							<div class="col-md-4 col-md-offset-0">
@@ -57,6 +60,8 @@
 									<div class="panel-body">
 										<div class="container-fluid">
 											
+											<input type="hidden" th:field="*{id}" />
+				
 											<div class="row filterRow ">
 												<div class="col-md-4">
 													<label for="inputPurchasePrice" th:text="#{property.purchasePrice}">KAUFPREIS</label >
@@ -126,8 +131,10 @@
 							
 							<div class="clearfix"></div>
 
-							<div class="panel panel-primary">
+							<div th:if="${null != property.selectedCredit}" class="panel panel-primary">
 								<div class="panel-heading">
+									<button id="buttonDeactivate" type="button" class="btn btn-primary pull-right" name="deactivate" th:text="#{gui.button.deactivate}">DEACTIVATE</button>
+
 									<h1 class="panel-title pull-left">
 										<!-- CURRENTLY USED TO COMPARE EQUALITY, THAT WHY NOT EDITABLE AFTER FIRST SAVE! -->
 										<input th:if="${null == property.selectedCredit.nameOfInstitution}" type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
