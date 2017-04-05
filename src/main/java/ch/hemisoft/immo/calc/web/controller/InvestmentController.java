@@ -57,6 +57,7 @@ public class InvestmentController {
 	    }
 	}
 
+	// TODO: Try to Remove Mapping
 	private Property mapChangedValues(Property formProperty, Property dbProperty, Principal principal) {
 		dbProperty.setNetAssets(formProperty.getNetAssets());
 		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());

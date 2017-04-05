@@ -129,11 +129,13 @@
 							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h1 class="panel-title pull-left">
-										<input type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
+										<!-- CURRENTLY USED TO COMPARE EQUALITY, THAT WHY NOT EDITABLE AFTER FIRST SAVE! -->
+										<input th:if="${null == property.selectedCredit.nameOfInstitution}" type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
 											th:field="*{selectedCredit.nameOfInstitution}"
 											required="required"
 											class="form-control" 
 										/>
+										<span th:if="${null != property.selectedCredit.nameOfInstitution}" th:text="*{selectedCredit.nameOfInstitution}">CREDIT_INSTITUTE_NAME</span>
 									</h1>
 									<div class="clearfix"></div>
 								</div>
@@ -426,7 +428,15 @@
 							
 							<div class="panel panel-default" th:each="creditOption,loop : *{creditOptions}"> <!-- CREDIT OPTIONS ... -->
 								<div class="panel-heading">
-									<h1 class="panel-title pull-left"><span th:text="*{creditOptions[__${loop.index}__].nameOfInstitution}">CREDIT_INSTITUTE_NAME</span></h1>
+									<h1 class="panel-title pull-left">
+										<!-- CURRENTLY USED TO COMPARE EQUALITY, THAT WHY NOT EDITABLE AFTER FIRST SAVE! -->
+										<input th:if="${null == creditOption.nameOfInstitution}" type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
+											th:field="*{creditOptions[__${loop.index}__].nameOfInstitution}"
+											required="required"
+											class="form-control" 
+										/>
+										<span th:if="${null != creditOption.nameOfInstitution}" th:text="*{creditOptions[__${loop.index}__].nameOfInstitution}">CREDIT_INSTITUTE_NAME</span>
+									</h1>
 									<div class="clearfix"></div>
 								</div>
 								<div class="panel-body">
@@ -439,7 +449,6 @@
 												</div>
 												<div class="panel-body">
 													<div class="container-fluid">
-														<input type="hidden" th:field="*{creditOptions[__${loop.index}__].nameOfInstitution}" />
 
 														<div class="row filterRow ">
 															<div class="col-md-4">
