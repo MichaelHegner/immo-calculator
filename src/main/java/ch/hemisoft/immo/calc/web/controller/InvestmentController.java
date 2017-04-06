@@ -41,11 +41,14 @@ public class InvestmentController {
 			@PathVariable Long propertyId, 
 			Principal principal, 
 			ModelMap modelMap, 
-			@RequestParam(value="deactivate", defaultValue="false") Boolean deactivateCredit
+			@RequestParam(value = "deactivate", defaultValue = "false") Boolean deactivateCredit,
+			@RequestParam(value = "activate", required = false) Long idOfCreditToActivate
 	) {
 		final Property property;
 		if(deactivateCredit) {
 			property = investmentService.deactivateCredit(principal, propertyId);
+		} else if (null != idOfCreditToActivate) {
+			property = investmentService.activateCredit(principal, propertyId, idOfCreditToActivate);
 		} else {
 			property = propertyService.find(principal, propertyId);
 		}
@@ -67,7 +70,7 @@ public class InvestmentController {
 			mapChangedValues(formProperty, dbProperty, principal);
 	        final Property savedProperty = propertyService.save(principal, dbProperty);
 			modelMap.addAttribute("property", savedProperty);
-			return edit(savedProperty.getId(), principal, modelMap, FALSE);
+			return edit(savedProperty.getId(), principal, modelMap, FALSE, null);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "investment/edit";

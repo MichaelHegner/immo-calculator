@@ -2,6 +2,7 @@ $(document).ready(function() {
 	registerEventTableRowClick();	// OVERVIEW PAGE
 	registerNewButton();			// OVERVIEW PAGE
 	registerDeactivateButton();		// INVESTMENT PAGE
+	registerActivateButton();		// INVESTMENT PAGE
 });
 
 function registerNewButton() {
@@ -19,6 +20,19 @@ function registerEventTableRowClick() {
 
 function registerDeactivateButton() {
 	$("#buttonDeactivate").click(function(){
-		window.location = window.location.href + '?deactivate=true';
+		window.location = getURL() + '?deactivate=true';
 	});
+}
+
+function registerActivateButton() {
+	$(".btnActivate").each(function(){
+		$(this).click(function(){
+			var creditId = $(this).parent().find('input[type=hidden]').val();
+			window.location =getURL() + '?activate=' + creditId;
+		});
+	});
+}
+
+function getURL() {
+	return location.protocol + '//' + location.host + location.pathname
 }

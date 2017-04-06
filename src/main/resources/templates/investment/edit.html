@@ -183,7 +183,7 @@
 														</div>
 														<div class="row filterRow">
 															<div class="col-md-4">
-																<label for="inputSpecialRedemptionEachYearInPercent" th:text="#{property.specialRedemptionEachYearInPercent}">jährliche Sondertilgung (% vom Darlehensbetrag)</label>
+																<label for="inputSpecialRedemptionEachYearInPercent" th:text="#{property.specialRedemptionEachYearInPercent}">JÄHRLICHE SONDERTILGUNG (% VOM DARLEHENSBETRAG)</label>
 															</div>
 															<div class="col-md-6 col-md-offset-2">	
 																<input type="number" id="inputSpecialRedemptionEachYearInPercent" name="inputSpecialRedemptionEachYearInPercent" 
@@ -435,6 +435,10 @@
 							
 							<div class="panel panel-default" th:each="creditOption,loop : *{creditOptions}"> <!-- CREDIT OPTIONS ... -->
 								<div class="panel-heading">
+	
+									<input type="hidden" id="inputCreditId" name="inputCreditId" class=".hiddenCreditId" th:field="*{creditOptions[__${loop.index}__].id}" />
+									<button id="buttonActivate" type="button" class="btn btn-primary pull-right btnActivate" name="activate" th:text="#{gui.button.activate}">ACTIVATE</button>
+	
 									<h1 class="panel-title pull-left">
 										<!-- CURRENTLY USED TO COMPARE EQUALITY, THAT WHY NOT EDITABLE AFTER FIRST SAVE! -->
 										<input th:if="${null == creditOption.nameOfInstitution}" type="text" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 

@@ -10,7 +10,6 @@ public class CreditConverter {
 		Credit tempCredit = creditToConvert;
 		Property property = tempCredit.getProperty();
 		NotActiveCredit convertedCredit = new NotActiveCredit(property);
-//		convertedCredit.setId(tempCredit.getId());
 		convertedCredit.setInterestRateNominalInPercent(tempCredit.getInterestRateNominalInPercent());
 		convertedCredit.setNameOfInstitution(tempCredit.getNameOfInstitution());
 		convertedCredit.setRedemptionAtBeginInPercent(tempCredit.getRedemptionAtBeginInPercent());
@@ -22,7 +21,6 @@ public class CreditConverter {
 		Credit tempCredit = creditToConvert;
 		Property property = tempCredit.getProperty();
 		ActiveCredit convertedCredit = new ActiveCredit(property);
-//		convertedCredit.setId(tempCredit.getId());
 		convertedCredit.setInterestRateNominalInPercent(tempCredit.getInterestRateNominalInPercent());
 		convertedCredit.setNameOfInstitution(tempCredit.getNameOfInstitution());
 		convertedCredit.setRedemptionAtBeginInPercent(tempCredit.getRedemptionAtBeginInPercent());
