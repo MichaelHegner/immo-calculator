@@ -34,7 +34,7 @@
 										<td th:each="field : ${forecast.rentalForecast}">
 											<span th:text="${field}">>MITEINAHMEN VOR KOSTEN WERT</span>
 										</td>
-										<td><strong>00.00</strong></td>
+										<th><span th:text="${forecast.sumRentalForecast}">>MITEINAHMEN VOR KOSTEN WERT</span></th>
 									</tr>
 									<tr class="incomeBeforeCost">
 										<td th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</td>

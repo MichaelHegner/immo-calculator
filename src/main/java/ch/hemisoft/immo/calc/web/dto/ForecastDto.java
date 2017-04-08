@@ -56,4 +56,8 @@ public class ForecastDto {
 		
 		return resultList;
 	}
+	
+	public BigDecimal getSumRentalForecast() {
+		return getRentalForecast().stream().reduce(BigDecimal.valueOf(0), (l, r) -> l.add(r));
+	}
 }
