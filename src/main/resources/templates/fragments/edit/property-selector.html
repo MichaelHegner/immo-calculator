@@ -5,7 +5,7 @@
 	
 		<div th:fragment="primary-panel-header-edit" class="btn-group pull-right">
 			
-			<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}">SPEICHERN</button>
+			<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${null == property}" >SPEICHERN</button>
 			
 			<div class="dropdown pull-right">
 				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
