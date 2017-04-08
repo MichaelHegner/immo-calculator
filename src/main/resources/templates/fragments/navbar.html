@@ -29,6 +29,11 @@
 						        		<span th:text="#{gui.navbar.investment}">INVESTMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
+						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/forecast') ? 'active':''}">
+						        	<a th:href="@{/forecast/list}" href="/forecast/list">
+						        		<span th:text="#{gui.navbar.forecast}">FORECAST</span> <span class="sr-only">(current)</span>
+						        	</a>
+						        </li>
 					      </ul>
 					      <form th:action="@{/logout}" method="post" class="navbar-form navbar-right">
 						        <button type="submit" class="btn btn-default">

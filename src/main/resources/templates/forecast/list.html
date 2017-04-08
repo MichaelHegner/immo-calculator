@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	
+		<title th:text="#{gui.title.hemisoft} + ' - ' + #{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">HEMISOFT - Immobilienmanagement - Cash-Flow / Renditeprognose</title>
+		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
+			
+	</head>
+
+	<body>
+		<div class="container">
+
+			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
+		
+			<main id="mainPage">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">IMMOBILIENMANAGEMENT - CASH-FLOW / RENDITEPROGNOSE</h1>
+        				<div class="clearfix"></div>
+					</div>
+					<div class="panel-body">
+						<article> <!-- Auflistung ... -->
+							<section>
+								<table id="propertyTable" class="table table-hover">
+									<tr>
+										<th text="#{forecast.year}">JAHR</th>
+										<th>1</th>
+										<th>2</th>
+										<th>3</th>
+										<th>4</th>
+										<th>5</th>
+										<th>6</th>
+										<th>7</th>
+										<th>8</th>
+										<th>9</th>
+										<th>10</th>
+										<th text="#{forecast.sum}">SUMME</th>
+									</tr>
+									<tr class="incomeBeforeCost">
+										<th th:text="#{forecast.income.cost.before}">MITEINAHMEN VOR KOSTEN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="incomeBeforeCost">
+										<td th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="incomeBeforeCost">
+										<td th:text="#{forecast.cost.special}">AUSSERORDENTLICHE KOSTEN</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<th th:text="#{forecast.income.cost.after}">MITEINNAHMEN NACH KOSTEN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<td th:text="#{forecast.interest}">DARLEHENSZINSEN</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<th th:text="#{forecast.result.operation}">OPERATIVES ERGEBNIS</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<td th:text="#{forecast.deprecation.building}">ABSCHREIBUNG GEBÄUDEWERT</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="warning">
+										<th th:text="#{forecast.result.before.tax}">ERGEBNIS VOR STEUERN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="warning">
+										<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<td th:text="#{forecast.tax}">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG)</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="warning">
+										<th th:text="#{forecast.result.tax.after}">ERGEBNIS NACH STEUERN VOR TILGUNG</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="warning">
+										<th th:text="#{forecast.roi.tax.after}">EIGENKAPITALRENDITE NACH STEUERN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<td th:text="#{forecast.redemption}">TILGUNG DARLEHEN</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="warning">
+										<th th:text="#{forecast.result.redemption.after}">ERGEBNIS NACH STEUERN U. TILGUNG</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="danger">
+										<th th:text="#{forecast.cashflow}">FREIER CASH-FLOW</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<th th:text="#{forecast.realise.taking}">GEWINNENTNAHME</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<th th:text="#{forecast.reserve.supply}">ZUFÜHRUNG RÜCKLAGE</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr>
+										<th th:text="#{forecast.reserve.status}">STAND RÜCKLAGEN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									<tr class="info">
+										<th th:text="#{forecast.loan.valuta.status}">STAND RESTVALUTA DARLEHEN</th>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td>00.00</td>
+										<td><strong>00.00</strong></td>
+									</tr>
+									
+									
+								</table>
+							</section>				
+						</article> <!-- ... Auflistung -->
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>
+</html>
