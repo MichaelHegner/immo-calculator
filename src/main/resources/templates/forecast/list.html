@@ -24,30 +24,16 @@
 								<table id="propertyTable" class="table table-hover">
 									<tr>
 										<th text="#{forecast.year}">JAHR</th>
-										<th>1</th>
-										<th>2</th>
-										<th>3</th>
-										<th>4</th>
-										<th>5</th>
-										<th>6</th>
-										<th>7</th>
-										<th>8</th>
-										<th>9</th>
-										<th>10</th>
+										<th th:each="index,col : ${forecast.years}">
+											<span th:text="${index}">YEAR_INDEX</span>
+										</th>
 										<th text="#{forecast.sum}">SUMME</th>
 									</tr>
 									<tr class="incomeBeforeCost">
 										<th th:text="#{forecast.income.cost.before}">MITEINAHMEN VOR KOSTEN</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
+										<td th:each="field : ${forecast.rentalForecast}">
+											<span th:text="${field}">>MITEINAHMEN VOR KOSTEN WERT</span>
+										</td>
 										<td><strong>00.00</strong></td>
 									</tr>
 									<tr class="incomeBeforeCost">

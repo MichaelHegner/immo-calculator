@@ -228,6 +228,22 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
+														<label for="selectBasicCountry" th:text="#{property.address.countryCode}">COUNTRY_CODE</label >
+													</div>
+													<div class="col-md-6 col-md-offset-2">
+														<select id="selectBasicCountry" 
+															th:field="*{address.countryCode}"
+															class="form-control"
+														>
+															<option th:each="countryCode : ${countryCodes}"
+														          th:value="${{countryCode}}" 
+														          th:text="#{property.address.countryCode. + ${countryCode}}"
+														    />
+														</select>
+													</div>
+												</div>
+												<div class="row filterRow">
+													<div class="col-md-4">
 														<label id="inputBasicPurchaseDate" th:text="#{property.purchaseDate}">ERWERBSDATUM</label>
 													</div>
 													<div class="col-md-6 col-md-offset-2">	
@@ -240,7 +256,7 @@
 												</div>
 												<div class="row filterRow">
 													<div class="col-md-4">
-														<label for="selectBasicImmobilienStatus" th:text="#{property.propertyType}">IMMOBILIEN_STATUS</label >
+														<label for="selectBasicImmobilienStatus" th:text="#{property.propertyStatus}">IMMOBILIEN_STATUS</label >
 													</div>
 													<div class="col-md-6 col-md-offset-2">
 														<select id="selectBasicImmobilienStatus" 

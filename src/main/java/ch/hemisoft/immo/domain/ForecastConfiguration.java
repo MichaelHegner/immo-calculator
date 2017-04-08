@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class ForecastConfiguration {
 	@Id @ GeneratedValue 			Long 	id;
-	@NotNull						String 	countryCode; // TODO: CHECK VALID CODE
+	@NotNull @Column(unique=true)	String 	countryCode; // TODO: CHECK VALID CODE
 	@NotNull						Double 	taxQuote;
 	@NotNull						Double 	runningCostIndex;
 	@NotNull						Double 	deprecation;

@@ -19,7 +19,7 @@ public class ForecastController {
 
 	@GetMapping("/list")
 	public String edit(Principal principal, ModelMap modelMap) {
-		modelMap.addAttribute("forecast", forecastService.findAll());
+		modelMap.addAttribute("forecast", forecastService.findAll(principal));
 		return "forecast/list";
 	}
 }

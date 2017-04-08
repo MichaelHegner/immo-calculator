@@ -1,7 +1,9 @@
 package ch.hemisoft.immo.calc.web.controller;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -45,6 +47,11 @@ public class PropertyController {
 	@ModelAttribute("properties")
 	public List<Property> properties(Principal principal) {
 		return service.findAll(principal);
+	}
+	
+	@ModelAttribute("countryCodes") 
+	public List<String> countryCodes() {
+		return Arrays.asList("DE", "AT");
 	}
 	
 	@PostMapping("/save")
