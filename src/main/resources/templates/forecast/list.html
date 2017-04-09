@@ -24,31 +24,24 @@
 								<table id="propertyTable" class="table table-hover">
 									<tr>
 										<th text="#{forecast.year}">JAHR</th>
-										<th th:each="index,col : ${forecast.years}">
+										<th class="text-center" th:each="index,col : ${forecast.years}">
 											<span th:text="${index}">YEAR_INDEX</span>
 										</th>
-										<th text="#{forecast.sum}">SUMME</th>
+										<th class="text-center" text="#{forecast.sum}">SUMME</th>
 									</tr>
 									<tr class="incomeBeforeCost">
 										<th th:text="#{forecast.income.cost.before}">MITEINAHMEN VOR KOSTEN</th>
-										<td th:each="field : ${forecast.rentalForecast}">
+										<td class="text-right" th:each="field : ${forecast.rentalForecast}">
 											<span th:text="${field}">>MITEINAHMEN VOR KOSTEN WERT</span>
 										</td>
-										<th><span th:text="${forecast.sumRentalForecast}">>MITEINAHMEN VOR KOSTEN WERT</span></th>
+										<th class="text-right"><span th:text="${forecast.sumRentalForecast}">>MITEINAHMEN VOR KOSTEN SUMME</span></th>
 									</tr>
 									<tr class="incomeBeforeCost">
 										<td th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.runningCostForecast}">
+											<span th:text="${field}">>BEWIRTSCHAFTSKOSTEN WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumRunningCostForecast}">>BEWIRTSCHAFTSKOSTEN SUMME</span></th>
 									</tr>
 									<tr class="incomeBeforeCost">
 										<td th:text="#{forecast.cost.special}">AUSSERORDENTLICHE KOSTEN</td>

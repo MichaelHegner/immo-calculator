@@ -30,6 +30,7 @@ public class ForecastServiceImpl implements ForecastService {
 		for(Property property : boughtProperties) {
 			String countryCode = property.getAddress().getCountryCode();
 			forecast.addRental(countryCode, property.getRentalNet());
+			forecast.addRunningCost(countryCode, property.getTotalManagementCost());
 		}
 		
 		return forecast;
