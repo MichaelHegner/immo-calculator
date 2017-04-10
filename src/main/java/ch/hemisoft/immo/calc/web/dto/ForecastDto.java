@@ -71,6 +71,8 @@ public class ForecastDto {
 		return getRentalForecast().stream().reduce(BigDecimal.valueOf(0), (l, r) -> l.add(r));
 	}
 	
+	//
+	
 	// RUNNING COSTS ...
 	
 	private final Map<String, BigDecimal> runningCosts = new HashMap<>(); // County, Value
@@ -109,5 +111,47 @@ public class ForecastDto {
 	
 	public BigDecimal getSumRunningCostForecast() {
 		return ListStreamUtils.sumBigDecimal(() -> getRunningCostForecast());
+	}
+	
+	// 
+	
+	// SPECIAL COSTS ...
+	
+	private final Map<String, BigDecimal> specialCosts = new HashMap<>(); // County, Value
+	public void addSpecialCost(String country, BigDecimal rental) {
+		Assert.notNull(country, "Country must not be null.");
+		Assert.notNull(rental, "Rental must not be null.");
+		if(!specialCosts.containsKey(country)) specialCosts.put(country, BigDecimal.valueOf(0.0));
+		specialCosts.compute(country, (k, v) -> v = v.add(rental));
+	}
+	
+	public List<BigDecimal> getSpecialCostForecast() {
+		return getSpecialCostForecast(specialCosts);
+	}
+	
+	private List<BigDecimal> getSpecialCostForecast(Map<String, BigDecimal> values) {
+		List<BigDecimal> resultList = new ArrayList<>(FORECAST_IN_YEARS);
+		Map<String, BigDecimal> currentValue = new HashMap<>(values);
+		for(int index = 0; index < FORECAST_IN_YEARS; index++) {
+			for(String country : values.keySet()) {
+				populateSpecialCostForecast(resultList, currentValue, index, country);
+			}
+		}
+		return resultList;
+	}
+
+	private void populateSpecialCostForecast(List<BigDecimal> resultList, Map<String, BigDecimal> currentValue, int index, String country) {
+		currentValue.compute(country, (k, v) -> v);
+
+		BigDecimal valueOfCountry = BigDecimalUtils.convert(currentValue.get(country).doubleValue());
+		if(resultList.size() <= index) {
+			resultList.add(valueOfCountry);
+		} else {
+			resultList.set(index, valueOfCountry.add(resultList.get(index)));
+		}
+	}
+	
+	public BigDecimal getSumSpecialCostForecast() {
+		return ListStreamUtils.sumBigDecimal(() -> getSpecialCostForecast());
 	}
 }

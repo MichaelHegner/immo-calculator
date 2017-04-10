@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public final class BigDecimalUtils {
 	public static BigDecimal convert(double number) {
-		if (Double.doubleToLongBits(0.0) == Double.doubleToLongBits(number) || Double.isInfinite(number) || Double.isNaN(number)) {
+		if (Double.isInfinite(number) || Double.isNaN(number)) {
 			return BigDecimal.ZERO;
 		} else {
 			BigDecimal temp = BigDecimal.valueOf(number);

@@ -12,6 +12,7 @@ import ch.hemisoft.immo.calc.web.dto.ForecastConfigurationDto;
 import ch.hemisoft.immo.calc.web.dto.ForecastDto;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
 import ch.hemisoft.immo.domain.Property;
+import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,7 @@ public class ForecastServiceImpl implements ForecastService {
 			String countryCode = property.getAddress().getCountryCode();
 			forecast.addRental(countryCode, property.getRentalNet());
 			forecast.addRunningCost(countryCode, property.getTotalManagementCost());
+			forecast.addSpecialCost(countryCode, BigDecimalUtils.convert(0.0));
 		}
 		
 		return forecast;
