@@ -48,21 +48,14 @@
 										<td class="text-right" th:each="field : ${forecast.specialCostForecast}">
 											<span th:text="${field}">>AUSSERORDENDLICHE KOSTEN WERT</span>
 										</td>
-										<th class="text-right"><span th:text="${forecast.sumSpecialCostForecast}">>BEWIRTSCHAFTSKOSTEN SUMME</span></th>
+										<th class="text-right"><span th:text="${forecast.sumSpecialCostForecast}">>AUSSERORDENDLICHE KOSTEN SUMME</span></th>
 									</tr>
 									<tr>
-										<th th:text="#{forecast.income.cost.after}">MITEINNAHMEN NACH KOSTEN</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<th th:text="#{forecast.income.cost.after}">MIETEINNAHMEN NACH KOSTEN</th>
+										<td class="text-right" th:each="field : ${forecast.incomeAfterCostForecast}">
+											<span th:text="${field}">>MIETEINNAHMEN NACH KOSTEN WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumIncomeAfterCostForecast}">>MIETEINNAHMEN NACH KOSTEN SUMME</span></th>
 									</tr>
 									<tr>
 										<td th:text="#{forecast.interest}">DARLEHENSZINSEN</td>

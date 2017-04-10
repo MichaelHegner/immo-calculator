@@ -154,4 +154,23 @@ public class ForecastDto {
 	public BigDecimal getSumSpecialCostForecast() {
 		return ListStreamUtils.sumBigDecimal(() -> getSpecialCostForecast());
 	}
+	
+	//
+	
+	// INCOME AFTER COSTS
+	
+	public List<BigDecimal> getIncomeAfterCostForecast() {
+		List<BigDecimal> resultList = new ArrayList<>(FORECAST_IN_YEARS);
+		for(int index = 0; index < FORECAST_IN_YEARS; index++) {
+			double rental = getRentalForecast().get(index).doubleValue();
+			double runningCost = getRunningCostForecast().get(index).doubleValue();
+			double specialCost = getSpecialCostForecast().get(index).doubleValue();
+			resultList.add(BigDecimalUtils.convert(rental - runningCost - specialCost));
+		}
+		return resultList;
+	}
+	
+	public BigDecimal getSumIncomeAfterCostForecast() {
+		return ListStreamUtils.sumBigDecimal(() -> getIncomeAfterCostForecast());
+	}
 }
