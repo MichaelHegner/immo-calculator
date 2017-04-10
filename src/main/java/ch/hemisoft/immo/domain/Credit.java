@@ -8,6 +8,7 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
 import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -117,13 +118,8 @@ public abstract class Credit {
 		
 		int year = 0;
 		do {
-			++year;
-			double K = getFinancialNeedsTotal();
-			double q = 1 + interestRateNominalAsQuote();
-			double qn = getQPowN();
-			double qt = getQPowN(year - 1);
-			double result = K * ( (qn - qt) * (q - 1) ) / ( qn - 1 );
-			sum += Math.max(result, 0);
+			sum += CreditCalculator
+					.calculateInterestToPayAfterYear(getFinancialNeedsTotal(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
 		} while(year <= numberOfYears);
 		
 		return sum;
@@ -131,10 +127,6 @@ public abstract class Credit {
 
 	
 	//
-
-	private double getQPowN() {
-		return getQPowN(getTerm().doubleValue());
-	}
 
 	private double getQPowN(double years) {
 		double q = 1 + interestRateNominalAsQuote();
