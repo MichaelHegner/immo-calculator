@@ -19,4 +19,8 @@ public class ForecastConfigurationServiceImpl implements ForecastConfigurationSe
 		 return repository.findAll();
 	}
 
+	@Override
+	public ForecastConfiguration findByCountryCode(String countryCode) {
+		return repository.findByCountryCode(countryCode);
+	}
 }

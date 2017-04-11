@@ -6,4 +6,5 @@ import ch.hemisoft.immo.domain.ForecastConfiguration;
 
 public interface ForecastConfigurationService {
 	List<ForecastConfiguration> findAll();
+	ForecastConfiguration findByCountryCode(String countryCode);
 }
