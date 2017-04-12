@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import ch.hemisoft.immo.domain.Forecast;
-import ch.hemisoft.immo.utils.BigDecimalUtils;
+import ch.hemisoft.immo.utils.ListStreamUtils;
 import lombok.Data;
 
 @Data
@@ -28,7 +28,7 @@ public class ForecastDto {
 	}
 	
 	public BigDecimal getSumRentalForecast() {
-		return getRentalForecast().stream().reduce(BigDecimalUtils.convert(0.0), (l, r) -> l.add(r));
+		return ListStreamUtils.sumBigDecimal(this::getRentalForecast);
 	}
 	
 	public List<BigDecimal> getRunningCostForecast() {
@@ -36,7 +36,7 @@ public class ForecastDto {
 	}
 	
 	public BigDecimal getSumRunningCostForecast() {
-		return getRunningCostForecast().stream().reduce(BigDecimalUtils.convert(0.0), (l, r) -> l.add(r));
+		return ListStreamUtils.sumBigDecimal(this::getRunningCostForecast);
 	}
 
 	public List<BigDecimal> getSpecialCostForecast() {
@@ -44,7 +44,7 @@ public class ForecastDto {
 	}
 	
 	public BigDecimal getSumSpecialCostForecast() {
-		return getSpecialCostForecast().stream().reduce(BigDecimalUtils.convert(0.0), (l, r) -> l.add(r));
+		return ListStreamUtils.sumBigDecimal(this::getSpecialCostForecast);
 	}
 	
 	public List<BigDecimal> getIncomeAfterCostForecast() {
@@ -52,6 +52,22 @@ public class ForecastDto {
 	}
 	
 	public BigDecimal getSumIncomeAfterCostForecast() {
-		return getIncomeAfterCostForecast().stream().reduce(BigDecimalUtils.convert(0.0), (l, r) -> l.add(r));
+		return ListStreamUtils.sumBigDecimal(this::getIncomeAfterCostForecast);
+	}	
+	
+	public List<BigDecimal> getInterestForecast() {
+		return forecasts.stream().map(f -> f.getInterest()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumInterestForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getInterestForecast);
+	}
+	
+	public List<BigDecimal> getOperationResultForecast() {
+		return forecasts.stream().map(f -> f.getOperationResult()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumOperationResultForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getOperationResultForecast);
 	}
 }

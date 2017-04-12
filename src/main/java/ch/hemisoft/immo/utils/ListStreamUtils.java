@@ -10,7 +10,7 @@ public final class ListStreamUtils {
 	}
 
 	public static BigDecimal sumBigDecimal(Supplier<List<BigDecimal>> supplier) {
-		return supplier.get().stream().reduce(BigDecimal.ZERO, (l, r) -> l.add(r));
+		return supplier.get().stream().reduce(BigDecimalUtils.convert(0.0), (l, r) -> l.add(r));
 	}
 
 	private ListStreamUtils() {

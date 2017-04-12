@@ -9,9 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PostLoad;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
@@ -55,10 +53,9 @@ public class Forecast {
 	@Column(precision=10, scale=2)
 	private BigDecimal specialCost;
 	
-//	@Transient
-//	@NonNull @NotNull
-//	@Column(precision=10, scale=2)
-//	private BigDecimal incomeAfterCost;
+	@NonNull @NotNull
+	@Column(precision=10, scale=2)
+	private BigDecimal interest;
 	
 	public Forecast(int year) {
 		this(null, year);
@@ -70,7 +67,7 @@ public class Forecast {
 		incomeBeforeCost = BigDecimalUtils.convert(0.0);
 		runningCost = BigDecimalUtils.convert(0.0);
 		specialCost = BigDecimalUtils.convert(0.0);
-//		incomeAfterCost = BigDecimalUtils.convert(0.0);
+		interest = BigDecimalUtils.convert(0.0);
 	}
 	
 	//
@@ -78,4 +75,10 @@ public class Forecast {
 	public BigDecimal getIncomeAfterCost() {
 		return incomeBeforeCost.subtract(runningCost).subtract(specialCost);
 	}
+	
+	public BigDecimal getOperationResult() {
+		return getIncomeAfterCost().subtract(interest);
+	}
 }
+
+

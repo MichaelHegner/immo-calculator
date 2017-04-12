@@ -59,31 +59,17 @@
 									</tr>
 									<tr>
 										<td th:text="#{forecast.interest}">DARLEHENSZINSEN</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.interestForecast}">
+											<span th:text="${field}">>DARLEHENSZINSEN WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumInterestForecast}">>DARLEHENSZINSEN SUMME</span></th>
 									</tr>
 									<tr>
 										<th th:text="#{forecast.result.operation}">OPERATIVES ERGEBNIS</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.operationResultForecast}">
+											<span th:text="${field}">>OPERATIVES ERGEBNIS WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumOperationResultForecast}">>OPERATIVES ERGEBNIS SUMME</span></th>
 									</tr>
 									<tr>
 										<td th:text="#{forecast.deprecation.building}">ABSCHREIBUNG GEBÄUDEWERT</td>
