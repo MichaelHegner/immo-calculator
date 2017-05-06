@@ -76,28 +76,28 @@
 										<td class="text-right" th:each="field : ${forecast.deprecationForecast}">
 											<span th:text="${field} + ' €'">ABSCHREIBUNG GEBÄUDEWERT WERT</span>
 										</td>
-										<td class="text-right"><span th:text="${forecast.sumDeprecationForecast} + ' €'">ABSCHREIBUNG GEBÄUDEWERT SUMME</span></td >
+										<td class="text-right"><span th:text="${forecast.sumDeprecationForecast} + ' €'">ABSCHREIBUNG GEBÄUDEWERT SUMME</span></td>
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.result.before.tax}">ERGEBNIS VOR STEUERN</th>
 										<td class="text-right" th:each="field : ${forecast.resultBeforeTaxForecast}">
 											<span th:text="${field} + ' €'">ERGEBNIS VOR STEUERN WERT</span>
 										</td>
-										<td class="text-right"><span th:text="${forecast.sumResultBeforeTaxForecast} + ' €'">ERGEBNIS VOR STEUERN SUMME</span></td >
+										<th class="text-right"><span th:text="${forecast.sumResultBeforeTaxForecast} + ' €'">ERGEBNIS VOR STEUERN SUMME</span></th>
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>
 										<td class="text-right" th:each="field : ${forecast.roiBeforeTaxForecast}">
 											<span th:text="${field} + ' %'">EIGENKAPITALRENDITE VOR STEUERN WERT</span>
 										</td>
-										<td class="text-right"><span th:text="${forecast.sumRoiBeforeTaxForecast} + ' %'">EIGENKAPITALRENDITE VOR STEUERN SUMME</span></td >
+										<th class="text-right"><span th:text="${forecast.sumRoiBeforeTaxForecast} + ' %'">EIGENKAPITALRENDITE VOR STEUERN SUMME</span></th>
 									</tr>
 									<tr>
 										<td th:text="#{forecast.tax}">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG)</td>
 										<td class="text-right" th:each="field : ${forecast.taxForecast}">
 											<span th:text="${field} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG WERT</span>
 										</td>
-										<td class="text-right"><span th:text="${forecast.sumTaxForecast} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG SUMME</span></td >
+										<td class="text-right"><span th:text="${forecast.sumTaxForecast} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG SUMME</span></td>
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.result.tax.after}">ERGEBNIS NACH STEUERN VOR TILGUNG</th>
