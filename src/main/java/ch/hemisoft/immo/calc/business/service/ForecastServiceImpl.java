@@ -53,6 +53,7 @@ public class ForecastServiceImpl implements ForecastService {
 				forecastAtI.setRunningCost(forecastAtI.getRunningCost().add(findAll.get(i).getRunningCost()));
 				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(findAll.get(i).getSpecialCost()));
 				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
+				forecastAtI.setDeprecation(forecastAtI.getDeprecation().add(findAll.get(i).getDeprecation()));
 				forecastAtI.setRedemption(forecastAtI.getRedemption().add(findAll.get(i).getRedemption()));
 			}
 		}
@@ -81,6 +82,7 @@ public class ForecastServiceImpl implements ForecastService {
 			populateRental(property, forecast, configuration.getRentalIncreaseAllTwoYears(), 2);
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			populateDeprecation(property, forecast);
 			populateRedemption(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
 		}
 	}
@@ -114,6 +116,11 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setInterest(BigDecimalUtils.convert(result));
 	}
 	
+	private void populateDeprecation(Property property, Forecast forecast) {
+		double result = calculateDeprecation(property, forecast);
+		forecast.setDeprecation(BigDecimalUtils.convert(result));
+	}
+	
 	private void populateRedemption(Property property, Forecast forecast, double doubleValue) {
 		Credit selectedCredit = property.getSelectedCredit();
 		double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
@@ -134,4 +141,11 @@ public class ForecastServiceImpl implements ForecastService {
 		double zSpecialRedemption = selectedCredit.getSpecialRedemptionEachYearInPercent().doubleValue();
 		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, currentYear);
 	}
+	
+	private double calculateDeprecation(Property property, Forecast forecast) {
+		double value = property.getPurchasePrice().doubleValue();
+		double i = forecast.getConfiguration().getDeprecation() / 100;
+		return value * i;
+	}
+
 }

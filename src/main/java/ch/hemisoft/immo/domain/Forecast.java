@@ -60,6 +60,10 @@ public class Forecast implements Ownable{
 	
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
+	private BigDecimal deprecation			= BigDecimalUtils.convert(0.0);
+	
+	@NonNull @NotNull
+	@Column(precision=10, scale=2)
 	private BigDecimal redemption			= BigDecimalUtils.convert(0.0);
 	
 	@NonNull @NotNull
@@ -82,12 +86,6 @@ public class Forecast implements Ownable{
 	
 	public BigDecimal getOperationResult() {
 		return getIncomeAfterCost().subtract(interest);
-	}
-	
-	public BigDecimal getDeprecation() {
-		double value = property.getPurchasePrice().doubleValue();
-		double i = configuration.getDeprecation() / 100;
-		return BigDecimalUtils.convert(value * i);
 	}
 	
 	public BigDecimal getResultBeforeTax() {
