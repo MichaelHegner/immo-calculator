@@ -70,4 +70,12 @@ public class ForecastDto {
 	public BigDecimal getSumOperationResultForecast() {
 		return ListStreamUtils.sumBigDecimal(this::getOperationResultForecast);
 	}
+	
+	public List<BigDecimal> getDeprecationForecast() {
+		return forecasts.stream().map(f -> f.getDeprecation()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumDeprecationForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getDeprecationForecast);
+	}
 }

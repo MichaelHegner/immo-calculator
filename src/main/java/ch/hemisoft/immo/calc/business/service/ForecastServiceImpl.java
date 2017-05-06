@@ -3,6 +3,9 @@ package ch.hemisoft.immo.calc.business.service;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -33,17 +36,24 @@ public class ForecastServiceImpl implements ForecastService {
 	public List<Forecast> findAll(Principal principal, List<Property> properties) {
 		properties.forEach(this::save); // TODO SOC
 
+		// PREPARE ...
 		List<Forecast> forecasts = new ArrayList<>(FORECAST_TERM);
-		for(int i = 0; i < FORECAST_TERM; i++) forecasts.add(new Forecast(i));
+		for(int i = 0; i < FORECAST_TERM; i++) forecasts.add(new Forecast()); // INITIAL LIST WITH EMTPY FORCAST FOR REUSING
+		Map<String, ForecastConfiguration> forecastConfigurationMap = 
+				forecastConfigurationService.findAll().stream().collect(Collectors.toMap(ForecastConfiguration::getCountryCode, Function.identity()));
 		
+		// POPULATE ...
 		for(Property property : properties) {
 			List<Forecast> findAll = findAll(principal, property);
 			for(int i = 0; i < FORECAST_TERM; i++) {
-				forecasts.get(i).setYear(i + 1);
-				forecasts.get(i).setIncomeBeforeCost(forecasts.get(i).getIncomeBeforeCost().add(findAll.get(i).getIncomeBeforeCost()));
-				forecasts.get(i).setRunningCost(forecasts.get(i).getRunningCost().add(findAll.get(i).getRunningCost()));
-				forecasts.get(i).setSpecialCost(forecasts.get(i).getSpecialCost().add(findAll.get(i).getSpecialCost()));
-				forecasts.get(i).setInterest(forecasts.get(i).getInterest().add(findAll.get(i).getInterest()));
+				final Forecast forecastAtI = forecasts.get(i);
+				forecastAtI.setYear(i + 1);
+				forecastAtI.setProperty(property); // TEMPORARY SET PROPERTY FOR CALCULATION
+				forecastAtI.setConfiguration(forecastConfigurationMap.get(forecastAtI.getProperty().getAddress().getCountryCode()));
+				forecastAtI.setIncomeBeforeCost(forecastAtI.getIncomeBeforeCost().add(findAll.get(i).getIncomeBeforeCost()));
+				forecastAtI.setRunningCost(forecastAtI.getRunningCost().add(findAll.get(i).getRunningCost()));
+				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(findAll.get(i).getSpecialCost()));
+				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
 			}
 		}
 		
@@ -64,7 +74,7 @@ public class ForecastServiceImpl implements ForecastService {
 		for(int i = 0; i < FORECAST_TERM; i++) {
 			Forecast forecast = forecastRepository.findByYearAndProperty(i, property);
 			if(null == forecast) {
-				forecast = new Forecast(property, i);
+				forecast = new Forecast(property, configuration, i);
 				forecastRepository.save(forecast);
 			}
 			
@@ -73,6 +83,8 @@ public class ForecastServiceImpl implements ForecastService {
 			populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
 		}
 	}
+
+	//
 
 	private void populateRental(Property property, Forecast forecast, double percentalIncrease, int increaseFrequence) {
 		double value = property.getRentalNet().doubleValue();

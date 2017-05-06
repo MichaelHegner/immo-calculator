@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -43,31 +44,30 @@ public class Forecast {
 	
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
-	private BigDecimal incomeBeforeCost;
+	private BigDecimal incomeBeforeCost 	= BigDecimalUtils.convert(0.0);
 
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
-	private BigDecimal runningCost;
+	private BigDecimal runningCost 			= BigDecimalUtils.convert(0.0);
 	
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
-	private BigDecimal specialCost;
+	private BigDecimal specialCost			= BigDecimalUtils.convert(0.0);
 	
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
-	private BigDecimal interest;
+	private BigDecimal interest				= BigDecimalUtils.convert(0.0);
 	
-	public Forecast(int year) {
-		this(null, year);
-	}	
+	@NonNull @NotNull
+	@ManyToOne(optional = false)
+	private ForecastConfiguration configuration;
 	
-	public Forecast(Property property, int year) {
+	//
+	
+	public Forecast(Property property, ForecastConfiguration configuration, int year) {
 		this.property = property;
 		this.year = year;
-		incomeBeforeCost = BigDecimalUtils.convert(0.0);
-		runningCost = BigDecimalUtils.convert(0.0);
-		specialCost = BigDecimalUtils.convert(0.0);
-		interest = BigDecimalUtils.convert(0.0);
+		this.configuration = configuration;
 	}
 	
 	//
@@ -78,6 +78,12 @@ public class Forecast {
 	
 	public BigDecimal getOperationResult() {
 		return getIncomeAfterCost().subtract(interest);
+	}
+	
+	public BigDecimal getDeprecation() {
+		double value = property.getPurchasePrice().doubleValue();
+		double i = configuration.getDeprecation() / 100;
+		return BigDecimalUtils.convert(value * i);
 	}
 }
 
