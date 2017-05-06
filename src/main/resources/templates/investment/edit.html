@@ -143,6 +143,9 @@
 											class="form-control" 
 										/>
 										<span th:if="${null != property.selectedCredit.nameOfInstitution}" th:text="*{selectedCredit.nameOfInstitution}">CREDIT_INSTITUTE_NAME</span>
+										<input th:if="${null != property.selectedCredit.nameOfInstitution}" type="hidden" id="inputSelectedCreditNameOfInstitution" name="inputSelectedCreditNameOfInstitution" 
+											th:field="*{selectedCredit.nameOfInstitution}"
+										/>
 									</h1>
 									<div class="clearfix"></div>
 								</div>
