@@ -85,5 +85,13 @@ public class ForecastDto {
 	
 	public BigDecimal getSumResultBeforeTaxForecast() {
 		return ListStreamUtils.sumBigDecimal(this::getResultBeforeTaxForecast);
+	}	
+	
+	public List<BigDecimal> getRoiBeforeTaxForecast() {
+		return forecasts.stream().map(f -> f.getRoiBeforeTax()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumRoiBeforeTaxForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getRoiBeforeTaxForecast);
 	}
 }

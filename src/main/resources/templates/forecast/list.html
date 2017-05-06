@@ -87,17 +87,10 @@
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.roiBeforeTaxForecast}">
+											<span th:text="${field} + ' %'">EIGENKAPITALRENDITE VOR STEUERN WERT</span>
+										</td>
+										<td class="text-right"><span th:text="${forecast.sumRoiBeforeTaxForecast} + ' %'">EIGENKAPITALRENDITE VOR STEUERN SUMME</span></td >
 									</tr>
 									<tr>
 										<td th:text="#{forecast.tax}">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG)</td>

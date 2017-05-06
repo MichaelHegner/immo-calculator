@@ -89,6 +89,10 @@ public class Forecast {
 	public BigDecimal getResultBeforeTax() {
 		return getOperationResult().subtract(getDeprecation());
 	}
+	
+	public BigDecimal getRoiBeforeTax() {
+		return BigDecimalUtils.convert(getResultBeforeTax().doubleValue() / property.getNetAssets() * 100);
+	}
 }
 
 
