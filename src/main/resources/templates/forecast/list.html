@@ -101,17 +101,10 @@
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.result.tax.after}">ERGEBNIS NACH STEUERN VOR TILGUNG</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.resultAfterTaxForecast}">
+											<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumResultAfterTaxForecast} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG SUMME</span></th>
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.roi.tax.after}">EIGENKAPITALRENDITE NACH STEUERN</th>

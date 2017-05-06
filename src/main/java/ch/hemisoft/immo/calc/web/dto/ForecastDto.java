@@ -102,4 +102,12 @@ public class ForecastDto {
 	public BigDecimal getSumTaxForecast() {
 		return ListStreamUtils.sumBigDecimal(this::getTaxForecast);
 	}
+	
+	public List<BigDecimal> getResultAfterTaxForecast() {
+		return forecasts.stream().map(f -> f.getResultAfterTax()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumResultAfterTaxForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getResultAfterTaxForecast);
+	}
 }

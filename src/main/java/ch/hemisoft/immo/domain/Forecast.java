@@ -98,6 +98,10 @@ public class Forecast {
 		boolean german = configuration.countryCode.equals("DE"); // TODO: ADD ENUM
 		return BigDecimalUtils.convert(getResultBeforeTax().doubleValue() * (configuration.getTaxQuote()/100) * ((german) ? 1 : 1.055));
 	}
+	
+	public BigDecimal getResultAfterTax() {
+		return getResultBeforeTax().subtract(getTax());
+	}
 }
 
 
