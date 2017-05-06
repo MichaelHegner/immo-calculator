@@ -1,9 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -28,25 +26,25 @@ public class PropertyController {
 	@NonNull PropertyService service;
 
 	@GetMapping("/list")
-	public String list(Principal principal, ModelMap modelMap) {
+	public String list(ModelMap modelMap) {
 		return "property/list";
 	}
 	
 	@GetMapping("/edit")
-	public String edit(Principal principal, ModelMap modelMap) {
+	public String edit(ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
 		return "property/edit";
 	}
 
 	@GetMapping("/edit/{propertyId}")
-	public String edit(@PathVariable Long propertyId, Principal principal, ModelMap modelMap) {
-		modelMap.addAttribute("property", service.find(principal, propertyId));
+	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
+		modelMap.addAttribute("property", service.find(propertyId));
 		return "property/edit";
 	}
 	
 	@ModelAttribute("properties")
-	public List<Property> properties(Principal principal) {
-		return service.findAll(principal);
+	public List<Property> properties() {
+		return service.findAll();
 	}
 	
 	@ModelAttribute("countryCodes") 
@@ -58,7 +56,6 @@ public class PropertyController {
 	public String save (
 			@ModelAttribute("property") @Valid Property formProperty, 
 			BindingResult errors, 
-			Principal principal, 
 			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
@@ -66,15 +63,15 @@ public class PropertyController {
 			final Property savedProperty;
 
 			if (null == id) {
-				savedProperty = service.save(principal, formProperty);
+				savedProperty = service.save(formProperty);
 			} else {
-				final Property dbProperty = service.find(principal, id);
+				final Property dbProperty = service.find(id);
 				mapChangedValues(formProperty, dbProperty);
-				savedProperty = service.save(principal, dbProperty);
+				savedProperty = service.save(dbProperty);
 			}
 			
 			modelMap.addAttribute("property", savedProperty);
-			return edit(savedProperty.getId(), principal, modelMap);
+			return edit(savedProperty.getId(), modelMap);
 		} else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";

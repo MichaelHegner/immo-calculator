@@ -1,7 +1,5 @@
 package ch.hemisoft.immo.calc.business.service;
 
-import java.math.BigDecimal;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import ch.hemisoft.immo.calc.backend.repository.ForecastRepository;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
-import ch.hemisoft.immo.domain.ActiveCredit;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
@@ -35,7 +32,7 @@ public class ForecastServiceImpl implements ForecastService {
 	
 
 	@Override
-	public List<Forecast> findAll(Principal principal, List<Property> properties) {
+	public List<Forecast> findAll(List<Property> properties) {
 		properties.forEach(this::save); // TODO SOC
 
 		// PREPARE ...
@@ -46,7 +43,7 @@ public class ForecastServiceImpl implements ForecastService {
 		
 		// POPULATE ...
 		for(Property property : properties) {
-			List<Forecast> findAll = findAll(principal, property);
+			List<Forecast> findAll = findAll(property);
 			for(int i = 0; i < FORECAST_TERM; i++) {
 				final Forecast forecastAtI = forecasts.get(i);
 				forecastAtI.setYear(i + 1);
@@ -64,7 +61,7 @@ public class ForecastServiceImpl implements ForecastService {
 	}
 	
 	@Override
-	public List<Forecast> findAll(Principal principal, Property property) {
+	public List<Forecast> findAll(Property property) {
 		save(property); // TODO SOC
 		return forecastRepository.findAllByPropertyOrderByYearAsc(property);
 	}

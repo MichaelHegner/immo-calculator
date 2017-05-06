@@ -1,6 +1,5 @@
 package ch.hemisoft.immo.calc.business.service;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -20,22 +19,22 @@ public class PropertyServiceImpl implements PropertyService {
 	@NonNull PropertyRepository repository;
 	
 	@Override
-	public List<Property> findAll(Principal principal) {
+	public List<Property> findAll() {
 		return repository.findAll();
 	}
 
 	@Override
-	public List<Property> findAllBought(Principal principal) {
+	public List<Property> findAllBought() {
 		return repository.findAllByStatus(PropertyStatus.BOUGHT);
 	}
 	
 	@Override
-	public Property find(Principal principal, Long id) {
+	public Property find(Long id) {
 		return repository.findOne(id);
 	}
 
 	@Override
-	public Property save(Principal principal, Property property) {
+	public Property save(Property property) {
 		return repository.save(property);
 	}
 }

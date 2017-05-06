@@ -2,7 +2,6 @@ package ch.hemisoft.immo.calc.web.controller;
 
 import static java.lang.Boolean.FALSE;
 
-import java.security.Principal;
 import java.util.Collection;
 
 import org.springframework.stereotype.Controller;
@@ -30,8 +29,8 @@ public class InvestmentController {
 	@NonNull final InvestmentService investmentService;
 
 	@GetMapping("/edit")
-	public String edit(Principal principal, ModelMap modelMap) {
-		modelMap.addAttribute("properties", propertyService.findAll(principal));
+	public String edit(ModelMap modelMap) {
+		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", null);
 		return "investment/edit";
 	}
@@ -39,21 +38,20 @@ public class InvestmentController {
 	@GetMapping("/edit/{propertyId}")
 	public String edit(
 			@PathVariable Long propertyId, 
-			Principal principal, 
 			ModelMap modelMap, 
 			@RequestParam(value = "deactivate", defaultValue = "false") Boolean deactivateCredit,
 			@RequestParam(value = "activate", required = false) Long idOfCreditToActivate
 	) {
 		final Property property;
 		if(deactivateCredit) {
-			property = investmentService.deactivateCredit(principal, propertyId);
+			property = investmentService.deactivateCredit(propertyId);
 		} else if (null != idOfCreditToActivate) {
-			property = investmentService.activateCredit(principal, propertyId, idOfCreditToActivate);
+			property = investmentService.activateCredit(propertyId, idOfCreditToActivate);
 		} else {
-			property = propertyService.find(principal, propertyId);
+			property = propertyService.find(propertyId);
 		}
 		
-		modelMap.addAttribute("properties", propertyService.findAll(principal));
+		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);
 		return "investment/edit";
 	}
@@ -62,15 +60,14 @@ public class InvestmentController {
 	public String save (
 			@ModelAttribute("property") Property formProperty, 
 			BindingResult errors, 
-			Principal principal, 
 			ModelMap modelMap
 	) {
 		if (!errors.hasErrors()) {
-			final Property dbProperty = propertyService.find(principal, formProperty.getId());
-			mapChangedValues(formProperty, dbProperty, principal);
-	        final Property savedProperty = propertyService.save(principal, dbProperty);
+			final Property dbProperty = propertyService.find(formProperty.getId());
+			mapChangedValues(formProperty, dbProperty);
+	        final Property savedProperty = propertyService.save(dbProperty);
 			modelMap.addAttribute("property", savedProperty);
-			return edit(savedProperty.getId(), principal, modelMap, FALSE, null);
+			return edit(savedProperty.getId(), modelMap, FALSE, null);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "investment/edit";
@@ -80,7 +77,7 @@ public class InvestmentController {
 	//
 
 	// TODO: Try to Remove Mapping
-	private Property mapChangedValues(Property formProperty, Property dbProperty, Principal principal) {
+	private Property mapChangedValues(Property formProperty, Property dbProperty) {
 		dbProperty.setNetAssets(formProperty.getNetAssets());
 		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
 		mapChangedValues(formProperty.getCreditOptions(), dbProperty.getCreditOptions());
@@ -98,7 +95,7 @@ public class InvestmentController {
 	}
 	
 	private void mapChangedValues(Credit formCredit, Credit dbCredit) {
-		if(null == formCredit && null == dbCredit) return;
+		if(null == formCredit || null == dbCredit) return;
 		
 		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
 		dbCredit.setInterestRateNominalInPercent(formCredit.getInterestRateNominalInPercent());

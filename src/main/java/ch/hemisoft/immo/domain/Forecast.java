@@ -31,7 +31,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of={"year", "property"})
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Forecast {
+public class Forecast implements Ownable{
 	@Id @GeneratedValue
 	private Long id;
 	
@@ -117,6 +117,16 @@ public class Forecast {
 	
 	public BigDecimal getCashFlow() {
 		return getResultAfterRedemption().add(getDeprecation());
+	}
+
+	@Override
+	public User getOwner() {
+		return property.getOwner();
+	}
+
+	@Override
+	public void setOwner(User owner) {
+		// DONT SET FROM HERE!
 	}
 }
 

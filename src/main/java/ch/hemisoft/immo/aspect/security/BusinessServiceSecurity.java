@@ -4,8 +4,8 @@
 package ch.hemisoft.immo.aspect.security;
 
 import java.security.Principal;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,6 +13,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.util.StringUtils;
@@ -28,22 +29,17 @@ public class BusinessServiceSecurity {
 	
 	@Autowired private UserDetailsService userDetailService;
 
-	@Around(ALL + " && args(principal, ownable)")
-	public Object secureMethod(final ProceedingJoinPoint point, Principal principal, Ownable ownable) throws Throwable {
+	@Around(ALL + " && args(ownable)")
+	public Object secureMethod(final ProceedingJoinPoint point, Ownable ownable) throws Throwable {
+		Principal principal = SecurityContextHolder.getContext().getAuthentication();
 		handleNotAuthenticatedPrinciple(principal);
-
 		populatePrincipalToOwnable(principal, ownable);
 		return filterOwnedByPrincipleObjects(principal, point.proceed());
 	}
-
-	@Around(ALL + " && args(principal, ownableId)")
-	public Object secureMethod(final ProceedingJoinPoint point, Principal principal, Long ownableId) throws Throwable {
-		handleNotAuthenticatedPrinciple(principal);
-		return filterOwnedByPrincipleObjects(principal, point.proceed());
-	}
 	
-	@Around(ALL + " && args(principal)")
-	public Object secureMethod(final ProceedingJoinPoint point, Principal principal) throws Throwable {
+	@Around(ALL)
+	public Object secureMethod(final ProceedingJoinPoint point) throws Throwable {
+		Principal principal = SecurityContextHolder.getContext().getAuthentication();
 		handleNotAuthenticatedPrinciple(principal);
 		return filterOwnedByPrincipleObjects(principal, point.proceed());
 	}
@@ -60,21 +56,28 @@ public class BusinessServiceSecurity {
 	
 	//
 	
-	@SuppressWarnings("unchecked")
 	private Object filterOwnedByPrincipleObjects(Principal principal, Object object) {
 		if(object instanceof List<?>) {
-			List<Ownable> list = (List<Ownable>) object;
-			return filterObjectList(principal, list);
+			List<?> list = (List<?>) object;
+			Iterator<?> iterator = list.iterator();
+			
+			while(iterator.hasNext()) {
+				Object element = iterator.next();
+				if(element instanceof Ownable) {
+					Ownable ownable = (Ownable) element;
+					if(!isPrincipalOwner(principal, ownable)) {
+						iterator.remove();
+					}
+				}
+			}
+			
+			return list;
 		} else if (object instanceof Ownable) {
 			Ownable ownable = (Ownable) object;
 			return filterOwnable(principal, ownable);
 		} else {
 			return object;
 		}
-	}
-
-	private List<Ownable> filterObjectList(Principal principal, List<Ownable> list) {
-		return list.stream().filter(ownable -> isPrincipalOwner(principal, ownable)).collect(Collectors.toList());
 	}
 
 	private Ownable filterOwnable(Principal principal, Ownable ownable) {

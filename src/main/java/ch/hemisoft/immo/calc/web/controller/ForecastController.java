@@ -25,8 +25,8 @@ public class ForecastController {
 	
 	@GetMapping("/list")
 	public String edit(Principal principal, ModelMap modelMap) {
-		List<Property> properties = propertyService.findAll(principal);
-		List<Forecast> forecasts = forecastService.findAll(principal, properties);
+		List<Property> properties = propertyService.findAll();
+		List<Forecast> forecasts = forecastService.findAll(properties);
 		modelMap.addAttribute("forecast", new ForecastDto(forecasts));
 		return "forecast/list";
 	}
