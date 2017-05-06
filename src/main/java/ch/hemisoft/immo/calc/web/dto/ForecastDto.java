@@ -134,4 +134,12 @@ public class ForecastDto {
 	public BigDecimal getSumResultAfterRedemptionForecast() {
 		return ListStreamUtils.sumBigDecimal(this::getResultAfterRedemptionForecast);
 	}
+	
+	public List<BigDecimal> getCashFlowForecast() {
+		return forecasts.stream().map(f -> f.getCashFlow()).collect(Collectors.toList());
+	}
+	
+	public BigDecimal getSumCashFlowForecast() {
+		return ListStreamUtils.sumBigDecimal(this::getCashFlowForecast);
+	}
 }

@@ -3,7 +3,6 @@ package ch.hemisoft.immo.domain;
 import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -114,6 +113,10 @@ public class Forecast {
 	
 	public BigDecimal getResultAfterRedemption() {
 		return getResultBeforeTax().subtract(getTax()).subtract(redemption);
+	}
+	
+	public BigDecimal getCashFlow() {
+		return getResultAfterRedemption().add(getDeprecation());
 	}
 }
 

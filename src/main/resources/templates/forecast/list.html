@@ -129,17 +129,10 @@
 									</tr>
 									<tr class="danger">
 										<th th:text="#{forecast.cashflow}">FREIER CASH-FLOW</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<th class="text-right" th:each="field : ${forecast.cashFlowForecast}">
+											<span th:text="${field} + ' €'">FREIER CASH-FLOW WERT</span>
+										</th>
+										<th class="text-right"><span th:text="${forecast.sumCashFlowForecast} + ' €'">FREIER CASH-FLOW SUMME</span></th>
 									</tr>
 									<tr>
 										<td th:text="#{forecast.realise.taking}">GEWINNENTNAHME</td>
