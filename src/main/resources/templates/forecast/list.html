@@ -80,17 +80,10 @@
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.result.before.tax}">ERGEBNIS VOR STEUERN</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.resultBeforeTaxForecast}">
+											<span th:text="${field}">ERGEBNIS VOR STEUERN WERT</span>
+										</td>
+										<td class="text-right"><span th:text="${forecast.sumResultBeforeTaxForecast}">ERGEBNIS VOR STEUERN SUMME</span></td >
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>

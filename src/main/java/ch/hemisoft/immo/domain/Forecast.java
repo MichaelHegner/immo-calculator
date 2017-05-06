@@ -85,6 +85,10 @@ public class Forecast {
 		double i = configuration.getDeprecation() / 100;
 		return BigDecimalUtils.convert(value * i);
 	}
+	
+	public BigDecimal getResultBeforeTax() {
+		return getOperationResult().subtract(getDeprecation());
+	}
 }
 
 
