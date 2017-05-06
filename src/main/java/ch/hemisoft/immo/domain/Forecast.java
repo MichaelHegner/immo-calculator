@@ -93,6 +93,11 @@ public class Forecast {
 	public BigDecimal getRoiBeforeTax() {
 		return BigDecimalUtils.convert(getResultBeforeTax().doubleValue() / property.getNetAssets() * 100);
 	}
+	
+	public BigDecimal getTax() {
+		boolean german = configuration.countryCode.equals("DE"); // TODO: ADD ENUM
+		return BigDecimalUtils.convert(getResultBeforeTax().doubleValue() * (configuration.getTaxQuote()/100) * ((german) ? 1 : 1.055));
+	}
 }
 
 
