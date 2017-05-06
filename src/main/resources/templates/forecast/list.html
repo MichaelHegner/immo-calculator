@@ -122,17 +122,10 @@
 									</tr>
 									<tr class="warning">
 										<th th:text="#{forecast.result.redemption.after}">ERGEBNIS NACH STEUERN U. TILGUNG</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
+										<td class="text-right" th:each="field : ${forecast.resultAfterRedemptionForecast}">
+											<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG WERT</span>
+										</td>
+										<th class="text-right"><span th:text="${forecast.sumResultAfterRedemptionForecast} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG SUMME</span></th>
 									</tr>
 									<tr class="danger">
 										<th th:text="#{forecast.cashflow}">FREIER CASH-FLOW</th>
