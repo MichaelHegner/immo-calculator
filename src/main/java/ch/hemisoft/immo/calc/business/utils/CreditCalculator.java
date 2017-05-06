@@ -23,12 +23,16 @@ public final class CreditCalculator {
 	}
 	
 	public static double calculateRestLoanInYear(double K, double zInterest, double zRedemption, double zSpecialRedemption, int afterNumberOfYears) {
-		double annuity = K * quote(zInterest + zRedemption);
+		double annuity = calculateAnnuity(K, zInterest, zRedemption);
 		double T1 = annuity + quote(zSpecialRedemption);
 		double q = 1 + quote(zInterest);
 		double qPowN = getQPowN(afterNumberOfYears - 1, q);
 		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
 		return Math.max(result, 0);
+	}
+
+	public static double calculateAnnuity(double K, double zInterest, double zRedemption) {
+		return K * quote(zInterest + zRedemption);
 	}
 	
 	//

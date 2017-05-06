@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.calc.business.service;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import ch.hemisoft.immo.calc.backend.repository.ForecastRepository;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
+import ch.hemisoft.immo.domain.ActiveCredit;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
@@ -54,6 +56,7 @@ public class ForecastServiceImpl implements ForecastService {
 				forecastAtI.setRunningCost(forecastAtI.getRunningCost().add(findAll.get(i).getRunningCost()));
 				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(findAll.get(i).getSpecialCost()));
 				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
+				forecastAtI.setRedemption(forecastAtI.getRedemption().add(findAll.get(i).getRedemption()));
 			}
 		}
 		
@@ -81,6 +84,7 @@ public class ForecastServiceImpl implements ForecastService {
 			populateRental(property, forecast, configuration.getRentalIncreaseAllTwoYears(), 2);
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			populateRedemption(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
 		}
 	}
 
@@ -109,13 +113,28 @@ public class ForecastServiceImpl implements ForecastService {
 	}
 	
 	private void populateInterest(Property property, Forecast forecast, Double percental) {
+		double result = calculateInterest(property, forecast, percental);
+		forecast.setInterest(BigDecimalUtils.convert(result));
+	}
+	
+	private void populateRedemption(Property property, Forecast forecast, double doubleValue) {
+		Credit selectedCredit = property.getSelectedCredit();
+		double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
+		double interest = selectedCredit.getInterestRateNominalInPercent().doubleValue();
+		double redemption = selectedCredit.getRedemptionAtBeginInPercent().doubleValue();
+		double specialRedemption = selectedCredit.getSpecialRedemptionEachYearInPercent().doubleValue();
+		double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest, redemption + specialRedemption);
+		double calculateInterest = calculateInterest(property, forecast, interest);
+		forecast.setRedemption(BigDecimalUtils.convert(annuity - calculateInterest));
+	}
+
+	private double calculateInterest(Property property, Forecast forecast, Double interestInPercent) {
 		double value = property.getPurchasePrice().doubleValue();
 		int currentYear = forecast.getYear() + 1;
 
 		Credit selectedCredit = property.getSelectedCredit();
 		double zRedemption = selectedCredit.getRedemptionAtBeginInPercent().doubleValue();
 		double zSpecialRedemption = selectedCredit.getSpecialRedemptionEachYearInPercent().doubleValue();
-		double result = CreditCalculator.calculateInterestInYear(value, percental, zRedemption, zSpecialRedemption, currentYear);
-		forecast.setInterest(BigDecimalUtils.convert(result));
+		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, currentYear);
 	}
 }

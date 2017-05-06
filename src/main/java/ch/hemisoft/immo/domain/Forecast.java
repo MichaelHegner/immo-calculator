@@ -3,6 +3,7 @@ package ch.hemisoft.immo.domain;
 import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -57,6 +58,10 @@ public class Forecast {
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
 	private BigDecimal interest				= BigDecimalUtils.convert(0.0);
+	
+	@NonNull @NotNull
+	@Column(precision=10, scale=2)
+	private BigDecimal redemption			= BigDecimalUtils.convert(0.0);
 	
 	@NonNull @NotNull
 	@ManyToOne(optional = false)
