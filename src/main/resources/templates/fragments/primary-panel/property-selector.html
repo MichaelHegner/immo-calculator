@@ -3,10 +3,12 @@
 	<head></head>
 	<body>
 	
+		<!-- ELEMENTS ... -->
+	
 		<div class="pull-right" th:fragment="primary-panel-header-property-selection">
 			<div class="dropdown pull-right">
 				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span th:if="${null == property or null == property.address}">SELECT PROPERTY</span>  
+					<span th:if="${null == property or null == property.address}" th:text="#{gui.button.select}">SELECT PROPERTY</span>  
 					<span th:if="${null != property and null != property.address}" th:text="#{property} + ': ' + ${property.address}">SELECTED PROPERTY</span>  
 					<span class="caret"></span>
 				</button>
@@ -32,8 +34,8 @@
 			</div>
 		</div>
 		
-	
-	
+		<!-- PANEL HEADERS ... -->
+		
 		<div th:fragment="primary-panel-header-new" class="btn-group pull-right">
 			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-new"></th:block> /*/-->
 		</div>
@@ -52,6 +54,6 @@
 			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-property-selection"></th:block> /*/-->
 			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-new"></th:block> /*/-->
 		</div>
-	
+			
 	</body>
 </html>
