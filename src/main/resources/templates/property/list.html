@@ -16,9 +16,7 @@
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.overview}">Immobilien Management - Übersicht</h1>
-						<div class="btn-group pull-right">
-							<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="'Neue Immobilie'">ADD NEW PROPERTY</button>
-						</div>
+						<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-new"></th:block> /*/-->
         				<div class="clearfix"></div>
 					</div>
 					<div class="panel-body">

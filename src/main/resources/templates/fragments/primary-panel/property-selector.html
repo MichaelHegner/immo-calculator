@@ -1,0 +1,57 @@
+ <!DOCTYPE html>
+<html>
+	<head></head>
+	<body>
+	
+		<div class="pull-right" th:fragment="primary-panel-header-property-selection">
+			<div class="dropdown pull-right">
+				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span th:if="${null == property or null == property.address}">SELECT PROPERTY</span>  
+					<span th:if="${null != property and null != property.address}" th:text="#{property} + ': ' + ${property.address}">SELECTED PROPERTY</span>  
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li th:each="property : ${properties}">
+						<a href="#" th:href="@{${baseUrl}  + '/' + ${property.id}}" >
+							<span th:text="${property.address.street}">ADRESSE</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="pull-right" th:fragment="primary-panel-header-button-new">
+			<div class="pull-right">
+				<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="#{gui.button.new}">ADD NEW PROPERTY</button>
+			</div>
+		</div>
+				
+		<div class="pull-right" th:fragment="primary-panel-header-button-save">
+			<div class="pull-right">
+				<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${null == property}" >SPEICHERN</button>
+			</div>
+		</div>
+		
+	
+	
+		<div th:fragment="primary-panel-header-new" class="btn-group pull-right">
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-new"></th:block> /*/-->
+		</div>
+	
+		<div th:fragment="primary-panel-header-view" class="btn-group pull-right">
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-property-selection"></th:block> /*/-->
+		</div>
+	
+		<div th:fragment="primary-panel-header-edit" class="btn-group pull-right">
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-save"></th:block> /*/-->
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-property-selection"></th:block> /*/-->
+		</div>
+	
+		<div th:fragment="primary-panel-header-new-and-edit" class="btn-group pull-right">
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-save"></th:block> /*/-->
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-property-selection"></th:block> /*/-->
+			<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-button-new"></th:block> /*/-->
+		</div>
+	
+	</body>
+</html>
