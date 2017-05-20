@@ -23,20 +23,32 @@ public final class CreditCalculator {
 	}
 	
 	public static double calculateRestLoanInYear(double K, double zInterest, double zRedemption, double zSpecialRedemption, int afterNumberOfYears) {
-		double annuity = calculateAnnuity(K, zInterest, zRedemption);
-		double T1 = annuity + quote(zSpecialRedemption);
+		double redemptionOfFirstYear = calculateRedemptionOfFirstYear(K, zInterest, zRedemption);
+		double T1 = redemptionOfFirstYear + calculateSpecialRedemptionEachYear(K, zSpecialRedemption);
 		double q = 1 + quote(zInterest);
 		double qPowN = getQPowN(afterNumberOfYears - 1, q);
 		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
 		return Math.max(result, 0);
 	}
-
+	
+	private static double calculateSpecialRedemptionEachYear(double K, double zSpecialRedemption) {
+		return K * quote(zSpecialRedemption);
+	}
+	
 	public static double calculateAnnuity(double K, double zInterest, double zRedemption) {
 		return K * quote(zInterest + zRedemption);
 	}
 	
-	//
+	private static double calculateRedemptionOfFirstYear(double K, double zInterest, double zRedemption) {
+		return calculateAnnuity(K, zInterest, zRedemption) - getInterestOfFirstYear(K, zInterest);
+	}
 	
+	private static double getInterestOfFirstYear(double K, double zInterest) {
+		return K * quote(zInterest);
+	}
+	
+	//
+
 	private static double getQPowN(double years, double q) {
 		return Math.pow(q, years + 1);
 	}
