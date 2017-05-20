@@ -14,7 +14,7 @@
 		
 			<main id="mainPage">
 				<div class="panel panel-primary">
-					<div class="panel-heading">
+					<div th:with="baseUrl=('/forecast/list'),showSelectAll=true" class="panel-heading">
 						<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">IMMOBILIENMANAGEMENT - CASH-FLOW / RENDITEPROGNOSE</h1>
 						
 						<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-view"></th:block> /*/-->

@@ -8,11 +8,17 @@
 		<div class="pull-right" th:fragment="primary-panel-header-property-selection">
 			<div class="dropdown pull-right">
 				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<span th:if="${null == property or null == property.address}" th:text="#{gui.button.select}">SELECT PROPERTY</span>  
+					<span th:if="${(null != showSelectAll or true == showSelectAll) and (null == property or null == property.address)}" th:text="#{gui.button.all}">SHOW ALL PROPERTY</span>  
+					<span th:if="${(null == showSelectAll or false == showSelectAll) and (null == property or null == property.address)}" th:text="#{gui.button.select}">SELECT PROPERTY</span>  
 					<span th:if="${null != property and null != property.address}" th:text="#{property} + ': ' + ${property.address}">SELECTED PROPERTY</span>  
 					<span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
+					<li th:if="${null != showSelectAll or true == showSelectAll}">
+						<a href="#" th:href="@{${baseUrl}}">
+							<span th:text="#{gui.button.all}">SHOW ALL PROPERTY</span>
+						</a>
+					</li>
 					<li th:each="property : ${properties}">
 						<a href="#" th:href="@{${baseUrl}  + '/' + ${property.id}}" >
 							<span th:text="${property.address.street}">ADRESSE</span>
