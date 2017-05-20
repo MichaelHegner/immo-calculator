@@ -22,5 +22,6 @@ public class ForecastConfiguration {
 	@NotNull						Double 	taxQuote;
 	@NotNull						Double 	runningCostIndex;
 	@NotNull						Double 	deprecation;
-	@NotNull						Double 	rentalIncreaseAllTwoYears;
+	@NotNull						Double 	rentalIncrease;
+	@NotNull						Integer	rentalIncreaseFrequence;
 }

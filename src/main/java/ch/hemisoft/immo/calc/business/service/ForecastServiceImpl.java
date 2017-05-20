@@ -79,7 +79,7 @@ public class ForecastServiceImpl implements ForecastService {
 				forecastRepository.save(forecast);
 			}
 			
-			populateRental(property, forecast, configuration.getRentalIncreaseAllTwoYears(), 2);
+			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
 			populateDeprecation(property, forecast);
