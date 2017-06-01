@@ -13,194 +13,204 @@
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
 			<main id="mainPage">
-				<div class="panel panel-primary">
-					<div th:with="baseUrl=('/forecast/list'),showSelectAll=true" class="panel-heading">
-						<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">IMMOBILIENMANAGEMENT - CASH-FLOW / RENDITEPROGNOSE</h1>
-						
-						<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-view"></th:block> /*/-->
-        				<div class="clearfix"></div>
+				<form id="forecastEditForm" name="forecastEditForm" th:action="@{/forecast/list/} + ${property?.id}" th:object="${forecast}" method="post" novalidate="novalidate">
+				
+					<div class="panel panel-primary">
+						<div th:with="baseUrl=('/forecast/list'),showSelectAll=true" class="panel-heading">
+							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">IMMOBILIENMANAGEMENT - CASH-FLOW / RENDITEPROGNOSE</h1>
+							
+							<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-edit"></th:block> /*/-->
+	        				<div class="clearfix"></div>
+						</div>
+						<div class="panel-body">
+							<article> <!-- Auflistung ... -->
+								<section>
+									<table id="propertyTable" class="table table-hover table-bordered">
+										<tr>
+											<th text="#{forecast.year}">JAHR</th>
+											<th class="text-center" th:each="index,col : ${forecast.years}">
+												<span th:text="${index}">YEAR_INDEX</span>
+											</th>
+											<th class="text-center" text="#{forecast.sum}">SUMME</th>
+										</tr>
+										<tr class="incomeBeforeCost">
+											<th th:text="#{forecast.income.cost.before}">MITEINAHMEN VOR KOSTEN</th>
+											<td class="text-right" th:each="field : ${forecast.rentalForecast}">
+												<span th:text="${field} + ' €'">MITEINAHMEN VOR KOSTEN WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumRentalForecast} + ' €'">MITEINAHMEN VOR KOSTEN SUMME</span></td>
+										</tr>
+										<tr class="incomeBeforeCost">
+											<td th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</td>
+											<td class="text-right" th:each="field : ${forecast.runningCostForecast}">
+												<span th:text="${field} + ' €'">BEWIRTSCHAFTSKOSTEN WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumRunningCostForecast} + ' €'">BEWIRTSCHAFTSKOSTEN SUMME</span></td>
+										</tr>
+										<tr class="incomeBeforeCost">
+											<td th:text="#{forecast.cost.special}">AUSSERORDENTLICHE KOSTEN</td>
+											<td th:if="${null == property}" class="text-right" th:each="field, loop : ${forecast.specialCostForecast}">
+												<span th:text="${field} + ' €'">AUSSERORDENDLICHE KOSTEN WERT</span>
+											</td>
+											<td th:if="${null != property}" class="text-right" th:each="field, loop : *{forecasts}">
+												<input type="number" id="inputBasicPurchasePrice" name="inputBasicPurchasePrice" 
+													th:field="*{forecasts[__${loop.index}__].specialCost}"
+													min="1" max="10000000" 
+													class="form-control" 
+												/>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumSpecialCostForecast} + ' €'">AUSSERORDENDLICHE KOSTEN SUMME</span></th>
+										</tr>
+										<tr>
+											<th th:text="#{forecast.income.cost.after}">MIETEINNAHMEN NACH KOSTEN</th>
+											<td class="text-right" th:each="field : ${forecast.incomeAfterCostForecast}">
+												<span th:text="${field} + ' €'">MIETEINNAHMEN NACH KOSTEN WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumIncomeAfterCostForecast} + ' €'">MIETEINNAHMEN NACH KOSTEN SUMME</span></th>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.interest}">DARLEHENSZINSEN</td>
+											<td class="text-right" th:each="field : ${forecast.interestForecast}">
+												<span th:text="${field} + ' €'">DARLEHENSZINSEN WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumInterestForecast} + ' €'">DARLEHENSZINSEN SUMME</span></td>
+										</tr>
+										<tr>
+											<th th:text="#{forecast.result.operation}">OPERATIVES ERGEBNIS</th>
+											<td class="text-right" th:each="field : ${forecast.operationResultForecast}">
+												<span th:text="${field} + ' €'">OPERATIVES ERGEBNIS WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumOperationResultForecast} + ' €'">OPERATIVES ERGEBNIS SUMME</span></th>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.deprecation.building}">ABSCHREIBUNG GEBÄUDEWERT</td>
+											<td class="text-right" th:each="field : ${forecast.deprecationForecast}">
+												<span th:text="${field} + ' €'">ABSCHREIBUNG GEBÄUDEWERT WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumDeprecationForecast} + ' €'">ABSCHREIBUNG GEBÄUDEWERT SUMME</span></td>
+										</tr>
+										<tr class="warning">
+											<th th:text="#{forecast.result.before.tax}">ERGEBNIS VOR STEUERN</th>
+											<td class="text-right" th:each="field : ${forecast.resultBeforeTaxForecast}">
+												<span th:text="${field} + ' €'">ERGEBNIS VOR STEUERN WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumResultBeforeTaxForecast} + ' €'">ERGEBNIS VOR STEUERN SUMME</span></th>
+										</tr>
+										<tr class="warning">
+											<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>
+											<td class="text-right" th:each="field : ${forecast.roiBeforeTaxForecast}">
+												<span th:text="${field} + ' %'">EIGENKAPITALRENDITE VOR STEUERN WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumRoiBeforeTaxForecast} + ' %'">EIGENKAPITALRENDITE VOR STEUERN SUMME</span></th>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.tax}">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG)</td>
+											<td class="text-right" th:each="field : ${forecast.taxForecast}">
+												<span th:text="${field} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumTaxForecast} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG SUMME</span></td>
+										</tr>
+										<tr class="warning">
+											<th th:text="#{forecast.result.tax.after}">ERGEBNIS NACH STEUERN VOR TILGUNG</th>
+											<td class="text-right" th:each="field : ${forecast.resultAfterTaxForecast}">
+												<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumResultAfterTaxForecast} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG SUMME</span></th>
+										</tr>
+										<tr class="warning">
+											<th th:text="#{forecast.roi.tax.after}">EIGENKAPITALRENDITE NACH STEUERN</th>
+											<td class="text-right" th:each="field : ${forecast.roiAfterTaxForecast}">
+												<span th:text="${field} + ' %'">EIGENKAPITALRENDITE NACH STEUERN WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumRoiAfterTaxForecast} + ' %'">EIGENKAPITALRENDITE NACH STEUERN SUMME</span></th>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.redemption}">TILGUNG DARLEHEN</td>
+											<td class="text-right" th:each="field : ${forecast.redemptionForecast}">
+												<span th:text="${field} + ' €'">TILGUNG DARLEHEN WERT</span>
+											</td>
+											<td class="text-right"><span th:text="${forecast.sumRedemptionForecast} + ' €'">TILGUNG DARLEHEN SUMME</span></td>
+										</tr>
+										<tr class="warning">
+											<th th:text="#{forecast.result.redemption.after}">ERGEBNIS NACH STEUERN U. TILGUNG</th>
+											<td class="text-right" th:each="field : ${forecast.resultAfterRedemptionForecast}">
+												<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG WERT</span>
+											</td>
+											<th class="text-right"><span th:text="${forecast.sumResultAfterRedemptionForecast} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG SUMME</span></th>
+										</tr>
+										<tr class="danger">
+											<th th:text="#{forecast.cashflow}">FREIER CASH-FLOW</th>
+											<th class="text-right" th:each="field : ${forecast.cashFlowForecast}">
+												<span th:text="${field} + ' €'">FREIER CASH-FLOW WERT</span>
+											</th>
+											<th class="text-right"><span th:text="${forecast.sumCashFlowForecast} + ' €'">FREIER CASH-FLOW SUMME</span></th>
+										</tr>
+										
+										<!-- 
+										<tr>
+											<td th:text="#{forecast.realise.taking}">GEWINNENTNAHME</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td><strong>00.00</strong></td>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.reserve.supply}">ZUFÜHRUNG RÜCKLAGE</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td><strong>00.00</strong></td>
+										</tr>
+										<tr>
+											<td th:text="#{forecast.reserve.status}">STAND RÜCKLAGEN</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td><strong>00.00</strong></td>
+										</tr>
+										<tr class="info">
+											<th th:text="#{forecast.loan.valuta.status}">STAND RESTVALUTA DARLEHEN</th>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td>00.00</td>
+											<td><strong>00.00</strong></td>
+										</tr>
+										 -->
+										
+									</table>
+								</section>				
+							</article> <!-- ... Auflistung -->
+						</div>
 					</div>
-					<div class="panel-body">
-						<article> <!-- Auflistung ... -->
-							<section>
-								<table id="propertyTable" class="table table-hover table-bordered">
-									<tr>
-										<th text="#{forecast.year}">JAHR</th>
-										<th class="text-center" th:each="index,col : ${forecast.years}">
-											<span th:text="${index}">YEAR_INDEX</span>
-										</th>
-										<th class="text-center" text="#{forecast.sum}">SUMME</th>
-									</tr>
-									<tr class="incomeBeforeCost">
-										<th th:text="#{forecast.income.cost.before}">MITEINAHMEN VOR KOSTEN</th>
-										<td class="text-right" th:each="field : ${forecast.rentalForecast}">
-											<span th:text="${field} + ' €'">MITEINAHMEN VOR KOSTEN WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumRentalForecast} + ' €'">MITEINAHMEN VOR KOSTEN SUMME</span></td>
-									</tr>
-									<tr class="incomeBeforeCost">
-										<td th:text="#{property.cost.running}">BEWIRTSCHAFTUNGSKOSTEN</td>
-										<td class="text-right" th:each="field : ${forecast.runningCostForecast}">
-											<span th:text="${field} + ' €'">BEWIRTSCHAFTSKOSTEN WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumRunningCostForecast} + ' €'">BEWIRTSCHAFTSKOSTEN SUMME</span></td>
-									</tr>
-									<tr class="incomeBeforeCost">
-										<td th:text="#{forecast.cost.special}">AUSSERORDENTLICHE KOSTEN</td>
-										<td class="text-right" th:each="field : ${forecast.specialCostForecast}">
-											<span th:text="${field} + ' €'">AUSSERORDENDLICHE KOSTEN WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumSpecialCostForecast} + ' €'">AUSSERORDENDLICHE KOSTEN SUMME</span></th>
-									</tr>
-									<tr>
-										<th th:text="#{forecast.income.cost.after}">MIETEINNAHMEN NACH KOSTEN</th>
-										<td class="text-right" th:each="field : ${forecast.incomeAfterCostForecast}">
-											<span th:text="${field} + ' €'">MIETEINNAHMEN NACH KOSTEN WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumIncomeAfterCostForecast} + ' €'">MIETEINNAHMEN NACH KOSTEN SUMME</span></th>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.interest}">DARLEHENSZINSEN</td>
-										<td class="text-right" th:each="field : ${forecast.interestForecast}">
-											<span th:text="${field} + ' €'">DARLEHENSZINSEN WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumInterestForecast} + ' €'">DARLEHENSZINSEN SUMME</span></td>
-									</tr>
-									<tr>
-										<th th:text="#{forecast.result.operation}">OPERATIVES ERGEBNIS</th>
-										<td class="text-right" th:each="field : ${forecast.operationResultForecast}">
-											<span th:text="${field} + ' €'">OPERATIVES ERGEBNIS WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumOperationResultForecast} + ' €'">OPERATIVES ERGEBNIS SUMME</span></th>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.deprecation.building}">ABSCHREIBUNG GEBÄUDEWERT</td>
-										<td class="text-right" th:each="field : ${forecast.deprecationForecast}">
-											<span th:text="${field} + ' €'">ABSCHREIBUNG GEBÄUDEWERT WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumDeprecationForecast} + ' €'">ABSCHREIBUNG GEBÄUDEWERT SUMME</span></td>
-									</tr>
-									<tr class="warning">
-										<th th:text="#{forecast.result.before.tax}">ERGEBNIS VOR STEUERN</th>
-										<td class="text-right" th:each="field : ${forecast.resultBeforeTaxForecast}">
-											<span th:text="${field} + ' €'">ERGEBNIS VOR STEUERN WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumResultBeforeTaxForecast} + ' €'">ERGEBNIS VOR STEUERN SUMME</span></th>
-									</tr>
-									<tr class="warning">
-										<th th:text="#{forecast.roi.tax.before}">EIGENKAPITALRENDITE VOR STEUERN</th>
-										<td class="text-right" th:each="field : ${forecast.roiBeforeTaxForecast}">
-											<span th:text="${field} + ' %'">EIGENKAPITALRENDITE VOR STEUERN WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumRoiBeforeTaxForecast} + ' %'">EIGENKAPITALRENDITE VOR STEUERN SUMME</span></th>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.tax}">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG)</td>
-										<td class="text-right" th:each="field : ${forecast.taxForecast}">
-											<span th:text="${field} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumTaxForecast} + ' €'">STEUERN (INCL. SOLIDARITÄTSZUSCHLAG SUMME</span></td>
-									</tr>
-									<tr class="warning">
-										<th th:text="#{forecast.result.tax.after}">ERGEBNIS NACH STEUERN VOR TILGUNG</th>
-										<td class="text-right" th:each="field : ${forecast.resultAfterTaxForecast}">
-											<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumResultAfterTaxForecast} + ' €'">ERGEBNIS NACH STEUERN VOR TILGUNG SUMME</span></th>
-									</tr>
-									<tr class="warning">
-										<th th:text="#{forecast.roi.tax.after}">EIGENKAPITALRENDITE NACH STEUERN</th>
-										<td class="text-right" th:each="field : ${forecast.roiAfterTaxForecast}">
-											<span th:text="${field} + ' %'">EIGENKAPITALRENDITE NACH STEUERN WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumRoiAfterTaxForecast} + ' %'">EIGENKAPITALRENDITE NACH STEUERN SUMME</span></th>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.redemption}">TILGUNG DARLEHEN</td>
-										<td class="text-right" th:each="field : ${forecast.redemptionForecast}">
-											<span th:text="${field} + ' €'">TILGUNG DARLEHEN WERT</span>
-										</td>
-										<td class="text-right"><span th:text="${forecast.sumRedemptionForecast} + ' €'">TILGUNG DARLEHEN SUMME</span></td>
-									</tr>
-									<tr class="warning">
-										<th th:text="#{forecast.result.redemption.after}">ERGEBNIS NACH STEUERN U. TILGUNG</th>
-										<td class="text-right" th:each="field : ${forecast.resultAfterRedemptionForecast}">
-											<span th:text="${field} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG WERT</span>
-										</td>
-										<th class="text-right"><span th:text="${forecast.sumResultAfterRedemptionForecast} + ' €'">ERGEBNIS NACH STEUERN U. TILGUNG SUMME</span></th>
-									</tr>
-									<tr class="danger">
-										<th th:text="#{forecast.cashflow}">FREIER CASH-FLOW</th>
-										<th class="text-right" th:each="field : ${forecast.cashFlowForecast}">
-											<span th:text="${field} + ' €'">FREIER CASH-FLOW WERT</span>
-										</th>
-										<th class="text-right"><span th:text="${forecast.sumCashFlowForecast} + ' €'">FREIER CASH-FLOW SUMME</span></th>
-									</tr>
-									
-									<!-- 
-									<tr>
-										<td th:text="#{forecast.realise.taking}">GEWINNENTNAHME</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.reserve.supply}">ZUFÜHRUNG RÜCKLAGE</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
-									</tr>
-									<tr>
-										<td th:text="#{forecast.reserve.status}">STAND RÜCKLAGEN</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
-									</tr>
-									<tr class="info">
-										<th th:text="#{forecast.loan.valuta.status}">STAND RESTVALUTA DARLEHEN</th>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td>00.00</td>
-										<td><strong>00.00</strong></td>
-									</tr>
-									 -->
-									
-								</table>
-							</section>				
-						</article> <!-- ... Auflistung -->
-					</div>
-				</div>
+				</form>
 			</main>
 		</div>
 	</body>

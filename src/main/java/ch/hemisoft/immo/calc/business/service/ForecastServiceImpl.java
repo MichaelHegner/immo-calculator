@@ -89,6 +89,11 @@ public class ForecastServiceImpl implements ForecastService {
 		}
 	}
 
+	@Override
+	public void save(List<Forecast> forcasts) {
+		forecastRepository.save(forcasts);
+	}
+
 	//
 
 	private void populateRental(Property property, Forecast forecast, double percentalIncrease, int increaseFrequence) {

@@ -1,6 +1,7 @@
 package ch.hemisoft.immo.calc.web.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,12 +13,16 @@ import lombok.Data;
 public class ForecastDto {
 	private final int FORECAST_IN_YEARS = 10;
 	
-	private final List<Forecast> forecasts;
+	private final List<Forecast> forecasts = new ArrayList<>();
 
 	public ForecastDto(List<Forecast> forecasts) {
-		this.forecasts = forecasts;
+		this.forecasts.clear();
+		this.forecasts.addAll(forecasts);
 	}
 	
+	ForecastDto() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public List<Integer> getYears() {
 		return forecasts.stream().map(f -> f.getYear()).collect(Collectors.toList());
