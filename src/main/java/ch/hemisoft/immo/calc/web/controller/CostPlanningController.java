@@ -37,6 +37,7 @@ public class CostPlanningController {
 	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
 		Property property = propertyService.find(propertyId);
 		List<CostPlanning> plannings = costPlanningService.findAll(property);
+		modelMap.addAttribute("planning", new CostPlanning());
 		modelMap.addAttribute("plannings", plannings);
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);
