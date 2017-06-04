@@ -29,6 +29,11 @@
 						        		<span th:text="#{gui.navbar.investment}">INVESTMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
+						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/planning') ? 'active':''}">
+						        	<a th:href="@{/planning/edit}" href="/planning/edit">
+						        		<span th:text="#{gui.navbar.planning}">PLANUNG</span> <span class="sr-only">(current)</span>
+						        	</a>
+						        </li>
 						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/forecast') ? 'active':''}">
 						        	<a th:href="@{/forecast/list}" href="/forecast/list">
 						        		<span th:text="#{gui.navbar.forecast}">FORECAST</span> <span class="sr-only">(current)</span>

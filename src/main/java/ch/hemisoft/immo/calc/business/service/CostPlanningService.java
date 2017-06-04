@@ -1,0 +1,12 @@
+package ch.hemisoft.immo.calc.business.service;
+
+import java.util.List;
+
+import ch.hemisoft.immo.domain.CostPlanning;
+import ch.hemisoft.immo.domain.Property;
+
+public interface CostPlanningService {
+	List<CostPlanning> findAll(List<Property> properties);
+	List<CostPlanning> findAll(Property property);
+	void save(List<CostPlanning> costPlannings);
+}
