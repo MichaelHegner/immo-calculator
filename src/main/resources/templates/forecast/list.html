@@ -12,13 +12,14 @@
 
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
+			<a id="linkEditPage" th:href="@{/forecast/list}"></a> 
+		
 			<main id="mainPage">
 				<form id="forecastEditForm" name="forecastEditForm" th:action="@{/forecast/list/} + ${property?.id}" th:object="${forecast}" method="post" novalidate="novalidate">
 				
 					<div class="panel panel-primary">
-						<div th:with="baseUrl=('/forecast/list'),showSelectAll=true" class="panel-heading">
+						<div th:with="showSelectAll=true" class="panel-heading">
 							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.forecast}">IMMOBILIENMANAGEMENT - CASH-FLOW / RENDITEPROGNOSE</h1>
-							
 							<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-edit"></th:block> /*/-->
 	        				<div class="clearfix"></div>
 						</div>

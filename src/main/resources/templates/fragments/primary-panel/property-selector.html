@@ -15,12 +15,12 @@
 				</button>
 				<ul class="dropdown-menu">
 					<li th:if="${null != showSelectAll or true == showSelectAll}">
-						<a href="#" th:href="@{${baseUrl}}">
+						<a href="javascript:void(0)" onclick="javascript:directToEditUrl();">
 							<span th:text="#{gui.button.all}">SHOW ALL PROPERTY</span>
 						</a>
 					</li>
 					<li th:each="property : ${properties}">
-						<a href="#" th:href="@{${baseUrl}  + '/' + ${property.id}}" >
+						<a href="javascript:void(0)" th:onclick="'javascript:directToEditUrl(\'' + ${property.id} + '\');'">
 							<span th:text="${property.address.street}">ADRESSE</span>
 						</a>
 					</li>
@@ -30,13 +30,13 @@
 		
 		<div class="pull-right" th:fragment="primary-panel-header-button-new">
 			<div class="pull-right">
-				<button id="buttonNewProperty" type="button" class="btn btn-primary pull-right" th:text="#{gui.button.new}">ADD NEW PROPERTY</button>
+				<button id="buttonNew" type="button" class="btn btn-primary pull-right" th:text="#{gui.button.new}">NEW</button>
 			</div>
 		</div>
 				
 		<div class="pull-right" th:fragment="primary-panel-header-button-save">
 			<div class="pull-right">
-				<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${null == property}" >SPEICHERN</button>
+				<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${null == property}" >SAVE</button>
 			</div>
 		</div>
 		

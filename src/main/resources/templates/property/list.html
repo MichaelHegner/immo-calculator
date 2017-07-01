@@ -3,20 +3,25 @@
 	<head>
 	
 		<title th:text="#{gui.title.hemisoft} + ' - ' + #{gui.title.property.management} + ' - ' + #{gui.navbar.overview}">HEMISOFT - Immobilienmanagement - Liste</title>
+		
 		<!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
-			
+			    	
 	</head>
 
 	<body>
 		<div class="container">
 
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
+			
+			<a id="linkEditPage" th:href="@{/property/edit}"></a> 
 		
 			<main id="mainPage">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.navbar.overview}">Immobilien Management - Übersicht</h1>
+						
 						<!--/*/ <th:block th:replace="fragments/primary-panel/property-selector :: primary-panel-header-new"></th:block> /*/-->
+        				
         				<div class="clearfix"></div>
 					</div>
 					<div class="panel-body">

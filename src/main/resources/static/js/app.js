@@ -6,15 +6,15 @@ $(document).ready(function() {
 });
 
 function registerNewButton() {
-	$("#buttonNewProperty").click(function(){
-		window.location = '/property/edit';
+	$("#buttonNew").click(function(){
+		directToEditUrl();
 	});
 }
 
 function registerEventTableRowClick() {
 	$("tr.property-row").click(function(e){
 		var propertyId = $(this).find("td:first").text();
-		window.location = '/property/edit/' + propertyId;
+		window.location = getEditUrl(propertyId);
 	});
 }
 
@@ -33,6 +33,24 @@ function registerActivateButton() {
 	});
 }
 
+function getEditUrl(id) {
+	var url = $('#linkEditPage').attr('href');
+	
+	if(id !== null && id !== undefined) {
+		url += "/" + id;
+	}
+
+	return url;
+}
+
 function getURL() {
 	return location.protocol + '//' + location.host + location.pathname
+}
+
+function directToEditUrl(id) {
+	window.location = getEditUrl(id);
+}
+
+function directToUrl(url) {
+	window.location = url;
 }
