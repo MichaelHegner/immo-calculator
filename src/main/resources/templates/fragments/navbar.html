@@ -19,22 +19,22 @@
 						        		<span th:text="#{gui.navbar.overview}">ÜBERBLICK</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
-						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/property/edit') ? 'active':''}">
+						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/property/edit') or #httpServletRequest.getRequestURI().startsWith('/property/new') ? 'active':''}">
 						        	<a th:href="@{/property/edit}" href="/property/edit">
 						        		<span th:text="#{gui.navbar.management}">MANGEMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
-						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/investment') ? 'active':''}">
+						        <li th:if="${not #lists.isEmpty(properties)}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/investment') ? 'active':''}">
 						        	<a th:href="@{/investment/edit}" href="/investment/edit">
 						        		<span th:text="#{gui.navbar.investment}">INVESTMENT</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
-						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/planning') ? 'active':''}">
+						        <li th:if="${not #lists.isEmpty(properties)}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/planning') ? 'active':''}">
 						        	<a th:href="@{/planning/edit}" href="/planning/edit">
 						        		<span th:text="#{gui.navbar.planning}">PLANUNG</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
-						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/forecast') ? 'active':''}">
+						        <li th:if="${not #lists.isEmpty(properties)}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/forecast') ? 'active':''}">
 						        	<a th:href="@{/forecast/view}" href="/forecast/view">
 						        		<span th:text="#{gui.navbar.forecast}">FORECAST</span> <span class="sr-only">(current)</span>
 						        	</a>

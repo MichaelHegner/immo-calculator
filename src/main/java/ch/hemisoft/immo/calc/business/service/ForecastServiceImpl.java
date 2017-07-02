@@ -83,9 +83,16 @@ public class ForecastServiceImpl implements ForecastService {
 			
 			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
-			populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			
+			if(null != property.getSelectedCredit()) {
+				populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			}
+			
 			populateDeprecation(property, forecast);
-			populateRedemption(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+
+			if(null != property.getSelectedCredit()) {
+				populateRedemption(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			}
 		}
 	}
 
@@ -97,7 +104,7 @@ public class ForecastServiceImpl implements ForecastService {
 	//
 
 	private void populateRental(Property property, Forecast forecast, double percentalIncrease, int increaseFrequence) {
-		double value = property.getRentalNet().doubleValue();
+		double value = (null == property.getRentalNet()) ? 0.0 : property.getRentalNet().doubleValue();
 		double i = percentalIncrease / 100; 
 		long yearDiff = calculatePropertyForecastYear(property, forecast);
 		double q = 1 + i;
@@ -165,7 +172,14 @@ public class ForecastServiceImpl implements ForecastService {
 
 	private int calculatePropertyForecastYear(Property property, Forecast forecast) {
 		int forecastInYear = forecast.getYear();
-		int propertyPurchaseYear = property.getPurchaseDate().get(ChronoField.YEAR);
+		
+		int propertyPurchaseYear;
+		if(null == property.getPurchaseDate()) {
+			propertyPurchaseYear = LocalDate.now().get(ChronoField.YEAR);
+		} else {
+			propertyPurchaseYear = property.getPurchaseDate().get(ChronoField.YEAR);
+		}
+		
 		return forecastInYear - propertyPurchaseYear;
 	}
 

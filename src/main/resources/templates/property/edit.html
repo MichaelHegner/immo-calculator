@@ -40,7 +40,7 @@
 		
 			<main id="mainPage">
 			
-				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/save}" th:object="${property}" method="post" novalidate="novalidate">
+				<form id="propertyDataEditForm" name="propertyDataEditForm" th:action="@{/property/edit}" th:object="${property}" method="post" novalidate="novalidate">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.tilte.property.data.input}">IMMOBILIEN MANGEMENT - DATENERFASSUNG</h1>
@@ -52,7 +52,7 @@
 							<div th:if="${#fields.hasErrors('*')}" class="col-md-12">
 								<div class="panel panel-danger">
 									<div class="panel-heading">
-										<h1 class="panel-title pull-left" th:text="${gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
+										<h1 class="panel-title pull-left" th:text="#{gui.data.missing}">DATEN NICHT VOLLSTÄNDIG</h1>
 										<div class="clearfix"></div>
 									</div>
 									<div class="panel-body">

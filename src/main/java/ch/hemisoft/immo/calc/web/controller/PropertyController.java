@@ -69,7 +69,7 @@ public class PropertyController {
 		return new Property();
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/edit")
 	public String save (
 			@ModelAttribute("property") @Valid Property formProperty, 
 			BindingResult errors, 
@@ -88,7 +88,7 @@ public class PropertyController {
 			}
 			
 			modelMap.addAttribute("property", savedProperty);
-			return edit(savedProperty.getId(), modelMap);
+			return "redirect:/property/edit/" + savedProperty.getId();
 		} else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";
