@@ -1,7 +1,5 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import static java.lang.Boolean.FALSE;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.ForecastService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -24,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("forecast")
+@SessionAttributes("property")
 @RequiredArgsConstructor
 public class ForecastController {
 	@NonNull final ForecastService forecastService;
@@ -33,13 +33,27 @@ public class ForecastController {
 	public String list(ModelMap modelMap) {
 		List<Property> properties = propertyService.findAll();
 		List<Forecast> forecasts = forecastService.findAll(properties);
+		modelMap.addAttribute("property", new Property());
 		modelMap.addAttribute("forecast", new ForecastDto(forecasts));
 		modelMap.addAttribute("properties", properties);
 		return "forecast/list";
 	}	
 	
-	@GetMapping("/list/{propertyId}")
-	public String list(@PathVariable Long propertyId, ModelMap modelMap) {
+	@GetMapping("/view")
+	public String view(@ModelAttribute("property") Property property, ModelMap modelMap) {
+		if(null == property.getId()) {
+			List<Property> properties = propertyService.findAll();
+			List<Forecast> forecasts = forecastService.findAll(properties);
+			modelMap.addAttribute("forecast", new ForecastDto(forecasts));
+			modelMap.addAttribute("properties", properties);
+			return "forecast/list";
+		} else {
+			return "redirect:/forecast/view/" + property.getId();
+		}
+	}	
+	
+	@GetMapping("/view/{propertyId}")
+	public String view(@PathVariable Long propertyId, ModelMap modelMap) {
 		Property property = propertyService.find(propertyId);
 		List<Property> properties = Arrays.asList(property);
 		List<Forecast> forecasts = forecastService.findAll(properties);
@@ -49,7 +63,7 @@ public class ForecastController {
 		return "forecast/list";
 	}
 	
-	@PostMapping("/list/{propertyId}")
+	@PostMapping("/view/{propertyId}")
 	public String save (
 			@ModelAttribute("forecast") ForecastDto form, 
 			@PathVariable Long propertyId,
@@ -62,7 +76,7 @@ public class ForecastController {
 			List<Forecast> dbForcasts = forecastService.findAll(property);
 			mapChangedValues(formForcasts, dbForcasts);
 			forecastService.save(dbForcasts);
-			return list(property.getId(), modelMap);
+			return view(property.getId(), modelMap);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "forecast/list";

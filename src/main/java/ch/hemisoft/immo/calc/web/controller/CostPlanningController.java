@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.CostPlanningService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -27,17 +28,31 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("planning")
+@SessionAttributes("property")
 @RequiredArgsConstructor
 public class CostPlanningController {
 	@NonNull final CostPlanningService costPlanningService;
 	@NonNull final PropertyService propertyService;
 	
-	@GetMapping("/edit")
-	public String edit(ModelMap modelMap) {
+	@GetMapping("/list")
+	public String list(ModelMap modelMap) {
 		List<Property> properties = propertyService.findAll();
+		modelMap.addAttribute("property", new Property());
 		modelMap.addAttribute("properties", properties);
-		modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
+		modelMap.addAttribute("plannings", costPlanningService.findAll(properties));
 		return "planning/edit";
+	}	
+	
+	@GetMapping("/edit")
+	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
+		if(null == property.getId()) {
+			List<Property> properties = propertyService.findAll();
+			modelMap.addAttribute("properties", properties);
+			modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
+			return "planning/edit";
+		} else {
+			return "redirect:/planning/edit/" + property.getId();
+		}
 	}	
 	
 	@GetMapping("/edit/{propertyId}")

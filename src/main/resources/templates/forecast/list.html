@@ -12,7 +12,8 @@
 
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
-			<a id="linkEditPage" th:href="@{/forecast/list}"></a> 
+			<a id="linkListPage" th:href="@{/forecast/list}"></a> 
+			<a id="linkEditPage" th:href="@{/forecast/view}"></a> 
 		
 			<main id="mainPage">
 				<form id="forecastEditForm" name="forecastEditForm" th:action="@{/forecast/list/} + ${property?.id}" th:object="${forecast}" method="post" novalidate="novalidate">
@@ -50,10 +51,10 @@
 										</tr>
 										<tr class="incomeBeforeCost">
 											<td th:text="#{forecast.cost.special}">AUSSERORDENTLICHE KOSTEN</td>
-											<td th:if="${null == property}" class="text-right" th:each="field, loop : ${forecast.specialCostForecast}">
+											<td th:if="${null == property or null == property.id}" class="text-right" th:each="field, loop : ${forecast.specialCostForecast}">
 												<span th:text="${field} + ' €'">AUSSERORDENDLICHE KOSTEN WERT</span>
 											</td>
-											<td th:if="${null != property}" class="text-right" th:each="field, loop : *{forecasts}">
+											<td th:if="${null != property and null != property.id}" class="text-right" th:each="field, loop : *{forecasts}">
 												<input type="number" id="inputBasicPurchasePrice" name="inputBasicPurchasePrice" 
 													th:field="*{forecasts[__${loop.index}__].specialCost}"
 													min="1" max="10000000" 

@@ -8,7 +8,7 @@ $(document).ready(function() {
 
 function registerNewButton() {
 	$("#buttonNew").click(function(){
-		directToEditUrl();
+		directToNewUrl();
 	});
 }
 
@@ -50,6 +50,14 @@ function getSelectUrl(id) {
 	return url;
 }
 
+function getNewUrl() {
+	return $('#linkNewPage').attr('href');
+}
+
+function getListUrl() {
+	return $('#linkListPage').attr('href');
+}
+
 function getEditUrl(id) {
 	var url = $('#linkEditPage').attr('href');
 	
@@ -70,8 +78,16 @@ function directToSelectUrl(id) {
 	}
 }
 
+function directToListUrl() {
+	directToUrl(getListUrl());
+}
+
+function directToNewUrl() {
+	directToUrl(getNewUrl());
+}
+
 function directToEditUrl(id) {
-	window.location = getEditUrl(id);
+	directToUrl(getEditUrl(id));
 }
 
 function directToUrl(url) {

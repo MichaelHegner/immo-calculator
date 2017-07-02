@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.domain.Property;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("property")
+@SessionAttributes("property")
 @RequiredArgsConstructor
 public class PropertyController {
 	@NonNull PropertyService service;
@@ -30,9 +32,19 @@ public class PropertyController {
 		return "property/list";
 	}
 	
-	@GetMapping("/edit")
-	public String edit(ModelMap modelMap) {
+	@GetMapping("/new")
+	public String newProperty(ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
+		return "property/edit";
+	}	
+	
+	@GetMapping("/edit")
+	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
+		if(null != property.getId()) { // TO GET THE CORRECT URL WITH ID
+			return "redirect:/property/edit/" + property.getId();
+		}
+		
+		modelMap.addAttribute("property", property);
 		return "property/edit";
 	}
 
@@ -50,6 +62,11 @@ public class PropertyController {
 	@ModelAttribute("countryCodes") 
 	public List<String> countryCodes() {
 		return Arrays.asList("DE", "AT");
+	}
+	
+	@ModelAttribute("property") 
+	public Property property() {
+		return new Property();
 	}
 	
 	@PostMapping("/save")

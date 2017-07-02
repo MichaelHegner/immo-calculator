@@ -19,7 +19,8 @@
 		
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
-			<a id="linkSelectFromTable" th:if="${null != property}" th:href="@{/planning/edit/} + ${property.id} + '/planning/'"></a> 
+			<a id="linkSelectFromTable" th:if="${null != property and null != property.id}" th:href="@{/planning/edit/} + ${property.id} + '/planning/'"></a> 
+			<a id="linkListPage" th:href="@{/planning/list}"></a> 
 			<a id="linkEditPage" th:href="@{/planning/edit}"></a> 
 		
 			<main id="mainPage">
@@ -62,7 +63,7 @@
 					</div>
 				</div>
 				
-				<form th:if="${null != property}" id="planningDataEditForm" name="planningDataEditForm" th:action="@{/planning/edit/} + ${property.id}" th:object="${planning}" method="post" novalidate="novalidate">
+				<form th:if="${null != property and null != property.id}" id="planningDataEditForm" name="planningDataEditForm" th:action="@{/planning/edit/} + ${property.id}" th:object="${planning}" method="post" novalidate="novalidate">
 					<div class="panel panel-primary">	
 						<div class="panel-heading">
 							<h1 class="panel-title pull-left" th:text="#{gui.title.property.management} + ' - ' + #{gui.tilte.property.planning.form}">IMMOBILIEN MANGEMENT - PLANUNG - FORMULAR</h1>

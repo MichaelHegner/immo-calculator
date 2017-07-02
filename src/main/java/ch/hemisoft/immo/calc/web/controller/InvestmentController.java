@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.InvestmentService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -23,16 +24,21 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("investment")
+@SessionAttributes("property")
 @RequiredArgsConstructor
 public class InvestmentController {
 	@NonNull final PropertyService propertyService;
 	@NonNull final InvestmentService investmentService;
 
 	@GetMapping("/edit")
-	public String edit(ModelMap modelMap) {
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("property", null);
-		return "investment/edit";
+	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
+		if(null == property.getId()) {
+			modelMap.addAttribute("properties", propertyService.findAll());
+			modelMap.addAttribute("property", property);
+			return "investment/edit";
+		} else {
+			return "redirect:/investment/edit/" + property.getId();
+		}
 	}
 
 	@GetMapping("/edit/{propertyId}")

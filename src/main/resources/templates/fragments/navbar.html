@@ -35,7 +35,7 @@
 						        	</a>
 						        </li>
 						        <li th:classappend="${#httpServletRequest.getRequestURI().startsWith('/forecast') ? 'active':''}">
-						        	<a th:href="@{/forecast/list}" href="/forecast/list">
+						        	<a th:href="@{/forecast/view}" href="/forecast/view">
 						        		<span th:text="#{gui.navbar.forecast}">FORECAST</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
