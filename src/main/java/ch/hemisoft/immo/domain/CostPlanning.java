@@ -4,6 +4,7 @@ import static javax.persistence.FetchType.LAZY;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -49,7 +50,7 @@ public class CostPlanning implements Ownable{
 	})
 	@Embedded
 	@NonNull @NotNull
-	private CustomDate date;
+	private CustomDate date = new CustomDate();
 	
 	@NonNull @NotNull
 	@Column(precision=10, scale=2)
@@ -71,6 +72,10 @@ public class CostPlanning implements Ownable{
 	}
 	
 	//
+	
+	public void setDate(LocalDate date) {
+		this.date.setDate(Objects.requireNonNull(date));
+	}
 	
 	@Override
 	public User getOwner() {

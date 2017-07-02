@@ -28,9 +28,19 @@ public class CostPlanningServiceImpl implements CostPlanningService {
 	public List<CostPlanning> findAll(Property property) {
 		return costPlanningRepository.findAllByPropertyOrderByDateYearAsc(property);
 	}
+	
+	@Override
+	public CostPlanning find(Long id) {
+		return costPlanningRepository.findOne(id);
+	}
+	
+	@Override
+	public CostPlanning save(CostPlanning planning) {
+		return costPlanningRepository.save(planning);
+	}
 
 	@Override
 	public void save(List<CostPlanning> plannings) {
-		plannings.forEach(costPlanningRepository::save);
+		plannings.forEach(this::save);
 	}
 }

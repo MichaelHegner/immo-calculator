@@ -8,5 +8,7 @@ import ch.hemisoft.immo.domain.Property;
 public interface CostPlanningService {
 	List<CostPlanning> findAll(List<Property> properties);
 	List<CostPlanning> findAll(Property property);
+	CostPlanning find(Long planningId);
+	CostPlanning save(CostPlanning populated);
 	void save(List<CostPlanning> costPlannings);
 }

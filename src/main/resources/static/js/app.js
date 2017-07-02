@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	registerEventTableRowClick();	// OVERVIEW PAGE
 	registerNewButton();			// OVERVIEW PAGE
+	registerSubmitButton();			// EDIT PAGE
 	registerDeactivateButton();		// INVESTMENT PAGE
 	registerActivateButton();		// INVESTMENT PAGE
 });
@@ -11,10 +12,16 @@ function registerNewButton() {
 	});
 }
 
+function registerSubmitButton() {
+	$("#buttonSubmit").click(function(){
+		$('form').submit();
+	});
+}
+
 function registerEventTableRowClick() {
 	$("tr.property-row").click(function(e){
 		var propertyId = $(this).find("td:first").text();
-		window.location = getEditUrl(propertyId);
+		directToSelectUrl(propertyId);
 	});
 }
 
@@ -33,6 +40,16 @@ function registerActivateButton() {
 	});
 }
 
+function getSelectUrl(id) {
+	var url = $('#linkSelectFromTable').attr('href');
+	
+	if(id !== null && id !== undefined) {
+		url += "/" + id;
+	}
+
+	return url;
+}
+
 function getEditUrl(id) {
 	var url = $('#linkEditPage').attr('href');
 	
@@ -45,6 +62,12 @@ function getEditUrl(id) {
 
 function getURL() {
 	return location.protocol + '//' + location.host + location.pathname
+}
+
+function directToSelectUrl(id) {
+	if(getSelectUrl() !== undefined) { // CHECK SELECT URL EXISTING
+		window.location = getSelectUrl(id);
+	}
 }
 
 function directToEditUrl(id) {
