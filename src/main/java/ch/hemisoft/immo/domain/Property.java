@@ -1,6 +1,10 @@
 package ch.hemisoft.immo.domain;
 
+import static java.util.Objects.requireNonNull;
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
@@ -37,7 +41,7 @@ import lombok.ToString;
 @Data
 @ToString(of={"purchaseDate", "address"})
 @EqualsAndHashCode(of={"purchaseDate", "address"})
-public class Property implements Ownable{
+public class Property implements Ownable {
 	@Id @GeneratedValue		Long 			id; 
 	
 	// ==============================================================================================
@@ -156,6 +160,7 @@ public class Property implements Ownable{
 		return getTotalPurchaseCostAsDouble() - netAssets;
 	}
 	
+	@Valid 
 	@OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	@JoinTable(
 			name 				= "PROPERTY_CREDIT",
@@ -164,6 +169,7 @@ public class Property implements Ownable{
 	)
 	ActiveCredit 			selectedCredit;
 	
+	@Valid 
 	@Getter @Setter
 	@OneToMany(fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	@JoinTable(
@@ -173,11 +179,14 @@ public class Property implements Ownable{
 	)
 	Collection<NotActiveCredit> 	creditOptions = new ArrayList<>();	
 	
+
+	public void addCreditOptions(NotActiveCredit credit) {
+		creditOptions.add(requireNonNull(credit));
+	}
 	
 	// ==============================================================================================
 	// Relations ...
 	// ==============================================================================================
 	
 	@ManyToOne(fetch = LAZY, optional = false)		User  	owner;
-	
 }

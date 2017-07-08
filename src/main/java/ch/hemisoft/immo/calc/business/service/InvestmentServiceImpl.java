@@ -26,7 +26,9 @@ public class InvestmentServiceImpl implements InvestmentService {
 	public Property activateCredit(long propertyId, long idOfCreditToActivate) {
 		Property property = propertyRepository.findOne(propertyId);
 		
-		if(!property.getSelectedCredit().getId().equals(idOfCreditToActivate)) {
+		if(null == property.getSelectedCredit()) {
+			activate(idOfCreditToActivate, property);
+		} else if(!property.getSelectedCredit().getId().equals(idOfCreditToActivate)) {
 			deactivateCredit(propertyId);
 			activate(idOfCreditToActivate, property);
 		}

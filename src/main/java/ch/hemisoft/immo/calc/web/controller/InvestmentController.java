@@ -1,12 +1,15 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import static java.lang.Boolean.FALSE;
+import static org.springframework.beans.BeanUtils.copyProperties;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +22,7 @@ import ch.hemisoft.immo.calc.business.service.InvestmentService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.Credit;
+import ch.hemisoft.immo.domain.NotActiveCredit;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +34,22 @@ import lombok.RequiredArgsConstructor;
 public class InvestmentController {
 	@NonNull final PropertyService propertyService;
 	@NonNull final InvestmentService investmentService;
-
+	@NonNull final Validator validator;
+	
+	@GetMapping("/new")
+	public String newProperty(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		Long selectedPropertyId = selectedProperty.getId();
+		if(null != selectedPropertyId) {
+			Property property = propertyService.find(selectedPropertyId);
+			if(isEmpty(property.getCreditOptions())) {
+				property.addCreditOptions(new NotActiveCredit(property));
+			}
+			modelMap.addAttribute("selectedProperty", selectedProperty);
+			modelMap.addAttribute("property", property);
+		}
+		return "investment/edit";
+	}	
+	
 	@GetMapping("/edit")
 	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
 		if(null == selectedProperty.getId()) {
@@ -59,29 +78,40 @@ public class InvestmentController {
 			property = propertyService.find(propertyId);
 		}
 		
-		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);
 		modelMap.addAttribute("selectedProperty", new SessionProperty(property.getId()));
 		return "investment/edit";
 	}
 
-	@PostMapping("/save")
+	@PostMapping("/edit")
 	public String save (
 			@ModelAttribute("property") Property formProperty, 
 			BindingResult errors, 
 			ModelMap modelMap
 	) {
+		formProperty.getCreditOptions().stream().forEach(c -> validator.validate(c, errors));
 		if (!errors.hasErrors()) {
 			final Property dbProperty = propertyService.find(formProperty.getId());
 			mapChangedValues(formProperty, dbProperty);
 	        final Property savedProperty = propertyService.save(dbProperty);
 			modelMap.addAttribute("property", savedProperty);
 			modelMap.addAttribute("selectedProperty", new SessionProperty(savedProperty.getId()));
-			return edit(savedProperty.getId(), modelMap, FALSE, null);
+			return "redirect:/investment/edit/" + savedProperty.getId();
 	    } else {
+	    	modelMap.addAttribute("property", formProperty);
 	    	modelMap.addAttribute("errors", errors);
 	    	return "investment/edit";
 	    }
+	}
+	
+	@ModelAttribute("properties")
+	public List<Property> properties() {
+		return propertyService.findAll();
+	}	
+	
+	@ModelAttribute("selectedProperty")
+	public SessionProperty sessionProperty() {
+		return new SessionProperty();
 	}
 	
 	//
@@ -91,6 +121,7 @@ public class InvestmentController {
 		dbProperty.setNetAssets(formProperty.getNetAssets());
 		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
 		mapChangedValues(formProperty.getCreditOptions(), dbProperty.getCreditOptions());
+		formProperty.getCreditOptions().stream().filter(c -> c.getId() == null).forEach(c -> dbProperty.addCreditOptions(c));
 		return dbProperty;
 	}
 	
@@ -106,11 +137,6 @@ public class InvestmentController {
 	
 	private void mapChangedValues(Credit formCredit, Credit dbCredit) {
 		if(null == formCredit || null == dbCredit) return;
-		
-		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
-		dbCredit.setInterestRateNominalInPercent(formCredit.getInterestRateNominalInPercent());
-		dbCredit.setNameOfInstitution(formCredit.getNameOfInstitution());
-		dbCredit.setRedemptionAtBeginInPercent(formCredit.getRedemptionAtBeginInPercent());
-		dbCredit.setSpecialRedemptionEachYearInPercent(formCredit.getSpecialRedemptionEachYearInPercent());
+		copyProperties(formCredit, dbCredit);
 	}
 }
