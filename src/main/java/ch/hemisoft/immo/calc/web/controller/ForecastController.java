@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ch.hemisoft.immo.calc.business.service.ForecastService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.calc.web.dto.ForecastDto;
+import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
@@ -23,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("forecast")
-@SessionAttributes("property")
+@SessionAttributes("selectedProperty")
 @RequiredArgsConstructor
 public class ForecastController {
 	@NonNull final ForecastService forecastService;
@@ -34,21 +35,23 @@ public class ForecastController {
 		List<Property> properties = propertyService.findAll();
 		List<Forecast> forecasts = forecastService.findAll(properties);
 		modelMap.addAttribute("property", new Property());
+		modelMap.addAttribute("selectedProperty", new SessionProperty());
 		modelMap.addAttribute("forecast", new ForecastDto(forecasts));
 		modelMap.addAttribute("properties", properties);
 		return "forecast/list";
 	}	
 	
 	@GetMapping("/view")
-	public String view(@ModelAttribute("property") Property property, ModelMap modelMap) {
-		if(null == property.getId()) {
+	public String view(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		if(null == selectedProperty.getId()) {
 			List<Property> properties = propertyService.findAll();
 			List<Forecast> forecasts = forecastService.findAll(properties);
+			modelMap.addAttribute("selectedProperty", selectedProperty);
 			modelMap.addAttribute("forecast", new ForecastDto(forecasts));
 			modelMap.addAttribute("properties", properties);
 			return "forecast/list";
 		} else {
-			return "redirect:/forecast/view/" + property.getId();
+			return "redirect:/forecast/view/" + selectedProperty.getId();
 		}
 	}	
 	
@@ -60,6 +63,7 @@ public class ForecastController {
 		modelMap.addAttribute("forecast", new ForecastDto(forecasts));
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);
+		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
 		return "forecast/list";
 	}
 	

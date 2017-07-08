@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.InvestmentService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
+import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
@@ -24,20 +25,21 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("investment")
-@SessionAttributes("property")
+@SessionAttributes("selectedProperty")
 @RequiredArgsConstructor
 public class InvestmentController {
 	@NonNull final PropertyService propertyService;
 	@NonNull final InvestmentService investmentService;
 
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
-		if(null == property.getId()) {
+	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		if(null == selectedProperty.getId()) {
 			modelMap.addAttribute("properties", propertyService.findAll());
-			modelMap.addAttribute("property", property);
+			modelMap.addAttribute("property", new Property());
+			modelMap.addAttribute("selectedProperty", selectedProperty);
 			return "investment/edit";
 		} else {
-			return "redirect:/investment/edit/" + property.getId();
+			return "redirect:/investment/edit/" + selectedProperty.getId();
 		}
 	}
 
@@ -59,6 +61,7 @@ public class InvestmentController {
 		
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);
+		modelMap.addAttribute("selectedProperty", new SessionProperty(property.getId()));
 		return "investment/edit";
 	}
 
@@ -73,6 +76,7 @@ public class InvestmentController {
 			mapChangedValues(formProperty, dbProperty);
 	        final Property savedProperty = propertyService.save(dbProperty);
 			modelMap.addAttribute("property", savedProperty);
+			modelMap.addAttribute("selectedProperty", new SessionProperty(savedProperty.getId()));
 			return edit(savedProperty.getId(), modelMap, FALSE, null);
 	    } else {
 	    	modelMap.addAttribute("errors", errors);

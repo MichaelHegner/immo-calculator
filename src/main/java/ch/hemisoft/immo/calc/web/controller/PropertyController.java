@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
+import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,13 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
+import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.Property;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("property")
-@SessionAttributes("property")
+@SessionAttributes("selectedProperty")
 @RequiredArgsConstructor
 public class PropertyController {
 	@NonNull PropertyService service;
@@ -35,22 +38,24 @@ public class PropertyController {
 	@GetMapping("/new")
 	public String newProperty(ModelMap modelMap) {
 		modelMap.addAttribute("property", new Property());
+		modelMap.addAttribute("selectedProperty", new SessionProperty());
 		return "property/edit";
 	}	
 	
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
-		if(null != property.getId()) { // TO GET THE CORRECT URL WITH ID
-			return "redirect:/property/edit/" + property.getId();
+	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		Long selectedPropertyId = selectedProperty.getId();
+		if(null != selectedPropertyId) { // TO GET THE CORRECT URL WITH ID
+			return "redirect:/property/edit/" + selectedPropertyId;
 		}
-		
-		modelMap.addAttribute("property", property);
+		modelMap.addAttribute("selectedProperty", selectedProperty);
 		return "property/edit";
 	}
 
 	@GetMapping("/edit/{propertyId}")
 	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
 		modelMap.addAttribute("property", service.find(propertyId));
+		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
 		return "property/edit";
 	}
 	
@@ -62,6 +67,11 @@ public class PropertyController {
 	@ModelAttribute("countryCodes") 
 	public List<String> countryCodes() {
 		return Arrays.asList("DE", "AT");
+	}
+
+	@ModelAttribute("selectedProperty") 
+	public SessionProperty sessionProperty() {
+		return new SessionProperty();
 	}
 	
 	@ModelAttribute("property") 
@@ -87,8 +97,10 @@ public class PropertyController {
 				savedProperty = service.save(dbProperty);
 			}
 			
+			Long savedPropertyId = savedProperty.getId();
+			modelMap.addAttribute("selectedProperty", new SessionProperty(savedPropertyId));
 			modelMap.addAttribute("property", savedProperty);
-			return "redirect:/property/edit/" + savedProperty.getId();
+			return "redirect:/property/edit/" + savedPropertyId;
 		} else {
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";

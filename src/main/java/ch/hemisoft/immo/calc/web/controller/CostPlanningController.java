@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import ch.hemisoft.immo.calc.business.service.CostPlanningService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.calc.web.dto.CostPlanningDto;
+import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.CostPlanning;
 import ch.hemisoft.immo.domain.CostType;
 import ch.hemisoft.immo.domain.Property;
@@ -28,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("planning")
-@SessionAttributes("property")
+@SessionAttributes("selectedProperty")
 @RequiredArgsConstructor
 public class CostPlanningController {
 	@NonNull final CostPlanningService costPlanningService;
@@ -38,20 +39,22 @@ public class CostPlanningController {
 	public String list(ModelMap modelMap) {
 		List<Property> properties = propertyService.findAll();
 		modelMap.addAttribute("property", new Property());
+		modelMap.addAttribute("selectedProperty", new SessionProperty());
 		modelMap.addAttribute("properties", properties);
 		modelMap.addAttribute("plannings", costPlanningService.findAll(properties));
 		return "planning/edit";
 	}	
 	
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("property") Property property, ModelMap modelMap) {
-		if(null == property.getId()) {
+	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		if(null == selectedProperty.getId()) {
 			List<Property> properties = propertyService.findAll();
 			modelMap.addAttribute("properties", properties);
+			modelMap.addAttribute("selectedProperty", selectedProperty);
 			modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
 			return "planning/edit";
 		} else {
-			return "redirect:/planning/edit/" + property.getId();
+			return "redirect:/planning/edit/" + selectedProperty.getId();
 		}
 	}	
 	
@@ -61,6 +64,7 @@ public class CostPlanningController {
 		modelMap.addAttribute("plannings", costPlanningService.findAll(daoProperty)); 
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", daoProperty);
+		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
 		return "planning/edit";
 	}	
 	
@@ -71,6 +75,7 @@ public class CostPlanningController {
 		modelMap.addAttribute("plannings", costPlanningService.findAll(daoProperty)); 
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", daoProperty);
+		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
 		return "planning/edit";
 	}
 
