@@ -41,7 +41,7 @@ public class InvestmentController {
 		Long selectedPropertyId = selectedProperty.getId();
 		if(null != selectedPropertyId) {
 			Property property = propertyService.find(selectedPropertyId);
-			if(isEmpty(property.getCreditOptions())) {
+			if(!property.getCreditOptions().stream().filter(c -> null == c.getId()).findAny().isPresent()) {
 				property.addCreditOptions(new NotActiveCredit(property));
 			}
 			modelMap.addAttribute("selectedProperty", selectedProperty);
@@ -119,7 +119,7 @@ public class InvestmentController {
 	// TODO: Try to Remove Mapping
 	private Property mapChangedValues(Property formProperty, Property dbProperty) {
 		dbProperty.setNetAssets(formProperty.getNetAssets());
-		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
+//		mapChangedValues(formProperty.getSelectedCredit(), dbProperty.getSelectedCredit());
 		mapChangedValues(formProperty.getCreditOptions(), dbProperty.getCreditOptions());
 		formProperty.getCreditOptions().stream().filter(c -> c.getId() == null).forEach(c -> dbProperty.addCreditOptions(c));
 		return dbProperty;
@@ -137,6 +137,6 @@ public class InvestmentController {
 	
 	private void mapChangedValues(Credit formCredit, Credit dbCredit) {
 		if(null == formCredit || null == dbCredit) return;
-		copyProperties(formCredit, dbCredit);
+		copyProperties(formCredit, dbCredit, "property");
 	}
 }

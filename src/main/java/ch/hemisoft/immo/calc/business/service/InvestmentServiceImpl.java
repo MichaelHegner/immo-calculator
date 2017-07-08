@@ -2,6 +2,8 @@ package ch.hemisoft.immo.calc.business.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.immo.calc.backend.repository.PropertyRepository;
@@ -13,6 +15,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class InvestmentServiceImpl implements InvestmentService {
 	@NonNull private final PropertyRepository propertyRepository;
@@ -39,14 +42,14 @@ public class InvestmentServiceImpl implements InvestmentService {
 	//
 	
 	private void activate(long idOfCreditToActivate, Property property) {
-		Optional<NotActiveCredit> creditToActivate = property.getCreditOptions().stream()
+		NotActiveCredit creditToActivate = property.getCreditOptions().stream()
 				.filter(credit -> credit.getId() == idOfCreditToActivate)
-				.findAny()
+				.findAny().orElse(null)
 				;
 		
-		if(creditToActivate.isPresent()) {
-			property.getCreditOptions().remove(creditToActivate.get());
-			property.setSelectedCredit(CreditConverter.convert(creditToActivate.get()));
+		if(null != creditToActivate) {
+			property.getCreditOptions().remove(creditToActivate);
+			property.setSelectedCredit(CreditConverter.convert(creditToActivate));
 		}
 	}
 	
