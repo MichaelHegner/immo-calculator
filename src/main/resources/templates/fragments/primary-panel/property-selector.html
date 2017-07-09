@@ -6,7 +6,7 @@
 		<!-- INTERNAL ELEMENTS ... -->
 	
 		<div class="pull-right" th:fragment="primary-panel-header-property-selection">
-			<div class="dropdown pull-right">
+			<div th:if="${not #lists.isEmpty(properties)}" class="dropdown pull-right">
 				<button id="dropdownProperties" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span th:if="${(null != showSelectAll or true == showSelectAll) and (null == property or null == property.id or null == property.address)}" th:text="#{gui.button.all}">SHOW ALL PROPERTY</span>  
 					<span th:if="${(null == showSelectAll or false == showSelectAll) and (null == property or null == property.id or null == property.address)}" th:text="#{gui.button.select}">SELECT PROPERTY</span>  
