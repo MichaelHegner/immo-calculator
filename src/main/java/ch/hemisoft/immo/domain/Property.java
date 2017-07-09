@@ -2,9 +2,6 @@ package ch.hemisoft.immo.domain;
 
 import static java.util.Objects.requireNonNull;
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 
@@ -171,12 +168,7 @@ public class Property implements Ownable {
 	
 	@Valid 
 	@Getter @Setter
-	@OneToMany(fetch = LAZY, cascade = ALL, orphanRemoval = true)
-	@JoinTable(
-			name 				= "PROPERTY_CREDIT_OPTIONS",
-			joinColumns 		= @JoinColumn(name="PROPERTY_ID", nullable = false), 
-			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
-	)
+	@OneToMany(mappedBy="property", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	Collection<NotActiveCredit> 	creditOptions = new ArrayList<>();	
 	
 

@@ -1,6 +1,8 @@
 package ch.hemisoft.immo.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +21,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class NotActiveCredit extends Credit {
 	@ManyToOne
+	@JoinTable(
+			name 				= "PROPERTY_CREDIT_OPTIONS",
+			inverseJoinColumns 	= @JoinColumn(name="PROPERTY_ID", nullable = false), 
+			joinColumns 		= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
+	)
 	@NotNull @NonNull 
 	Property 	property;
 }
