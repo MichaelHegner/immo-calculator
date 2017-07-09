@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.domain;
 
+import static java.util.Objects.requireNonNull;
 import static javax.persistence.FetchType.EAGER;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -34,10 +35,10 @@ public class User {
 	private Collection<UserRole> userRoles = new ArrayList<>();
 	
 	public User(User user) {
-		id = user.id;
-		userName = user.userName;
-		password = user.password;
-		email = user.email;
-		enabled = user.enabled;
+		id = requireNonNull(user.getId());
+		userName = requireNonNull(user.getUserName());
+		password = requireNonNull(user.getPassword());
+		email = requireNonNull(user.getEmail());
+		enabled = requireNonNull(user.getEnabled());
 	}
 }

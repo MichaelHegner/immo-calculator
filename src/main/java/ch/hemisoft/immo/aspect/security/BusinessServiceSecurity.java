@@ -47,10 +47,12 @@ public class BusinessServiceSecurity {
 	//
 	
 	private void populatePrincipalToOwnable(Principal principal, Ownable ownable) {
-		if(null == ownable.getOwner()) {
+		if(null == ownable.getOwner() || null == ownable.getOwner().getId()) {
 			String username = principal.getName();
 			SecurityUser userDetails = (SecurityUser) userDetailService.loadUserByUsername(username);
 			ownable.setOwner(userDetails);
+		} else if (!StringUtils.equals(principal.getName(), ownable.getOwner().getUserName())) {
+			throw new AccessDeniedException("The access to the requested data has been denied.");
 		}
 	}
 	

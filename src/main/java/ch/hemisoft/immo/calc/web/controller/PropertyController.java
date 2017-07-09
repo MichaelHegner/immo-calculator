@@ -1,7 +1,5 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import static org.apache.commons.lang3.math.NumberUtils.LONG_MINUS_ONE;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -102,6 +100,7 @@ public class PropertyController {
 			modelMap.addAttribute("property", savedProperty);
 			return "redirect:/property/edit/" + savedPropertyId;
 		} else {
+			modelMap.addAttribute("property", formProperty);
 	    	modelMap.addAttribute("errors", errors);
 	    	return "property/edit";
 	    }
