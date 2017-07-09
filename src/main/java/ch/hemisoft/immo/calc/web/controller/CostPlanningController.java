@@ -120,6 +120,11 @@ public class CostPlanningController {
 	    	return edit(propertyId, modelMap);
 	    }
 	}
+	
+	@ModelAttribute("selectedProperty")
+	public SessionProperty sessionProperty() {
+		return new SessionProperty();
+	}
 
 	//
 
