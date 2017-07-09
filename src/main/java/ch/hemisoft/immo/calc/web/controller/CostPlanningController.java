@@ -2,7 +2,6 @@ package ch.hemisoft.immo.calc.web.controller;
 
 import static org.springframework.beans.BeanUtils.copyProperties;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -45,6 +44,22 @@ public class CostPlanningController {
 		return "planning/edit";
 	}	
 	
+	@GetMapping("/new")
+	public String newPlanning(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+		Long selectedPropertyId = selectedProperty.getId();
+		if(null != selectedPropertyId) {
+			List<Property> properties = propertyService.findAll();
+			modelMap.addAttribute("properties", properties);
+			modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
+			modelMap.addAttribute("selectedProperty", selectedProperty);
+			modelMap.addAttribute("property", propertyService.find(selectedPropertyId));
+			modelMap.addAttribute("planning", createNewPlanning(selectedPropertyId));
+			return "planning/edit";
+		} else {
+			throw new IllegalStateException("Selecting new cost planning without selected property not allowed.");
+		}
+	}	
+	
 	@GetMapping("/edit")
 	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
 		if(null == selectedProperty.getId()) {
@@ -81,6 +96,7 @@ public class CostPlanningController {
 
 	@PostMapping("/edit/{propertyId}")
 	public String save (
+			@PathVariable Long propertyId,
 			@ModelAttribute("planning") @Valid CostPlanningDto formCostPlanningDto, 
 			BindingResult errors, 
 			ModelMap modelMap
@@ -97,31 +113,22 @@ public class CostPlanningController {
 				costPlanningService.save(dbCostPlanning);
 			}
 			
-			return "redirect:/planning/edit/" + formCostPlanningDto.getPropertyId();
+			return "redirect:/planning/edit/" + propertyId;
 	    } else {
+	    	modelMap.addAttribute("planning", formCostPlanningDto);
 	    	modelMap.addAttribute("errors", errors);
-	    	return edit(formCostPlanningDto.getPropertyId(), modelMap);
+	    	return edit(propertyId, modelMap);
 	    }
 	}
 
-	@ModelAttribute("planning")
-	public CostPlanningDto newPlanning(@PathVariable(required=false) Long propertyId) {
+	//
+
+	private CostPlanningDto createNewPlanning(Long propertyId) {
 		CostPlanningDto form = new CostPlanningDto();
 		if(null != propertyId) form.setPropertyId(propertyId);
 		return form;
 	}
 	
-	//
-
-	// TODO: Try to Remove Mapping
-	private List<CostPlanningDto> getPopulated(List<CostPlanning> daoCostPlannings) {
-		List<CostPlanningDto> dtoCostPlannings = new ArrayList<>();
-		for(int i = 0; i < daoCostPlannings.size(); i++) {
-			dtoCostPlannings.add(getPopulated(daoCostPlannings.get(i)));
-		}
-		return dtoCostPlannings;
-	}
-
 	private CostPlanningDto getPopulated(CostPlanning costPlanning) {
 		return new CostPlanningDto(costPlanning);
 	}

@@ -29,14 +29,14 @@
 		</div>
 		
 		<div class="pull-right" th:fragment="primary-panel-header-button-new">
-			<div th:if="${(null == newOnSelectedProperty or false == newOnSelectedProperty) or (true == newOnSelectedProperty and null != property.id)}" class="pull-right">
+			<div th:if="${(null == newOnSelectedProperty or false == newOnSelectedProperty) or (true == newOnSelectedProperty and null != selectedProperty.id)}" class="pull-right">
 				<button id="buttonNew" type="button" class="btn btn-primary pull-right" th:text="#{gui.button.new}">NEW</button>
 			</div>
 		</div>
 				
 		<div class="pull-right" th:fragment="primary-panel-header-button-save">
 			<div class="pull-right">
-				<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${null == property}" >SAVE</button>
+				<button id="buttonSubmit" type="submit" class="btn btn-primary pull-right" name="save" th:text="#{gui.button.save}"  th:disabled="${disableSave == true or null == property}" >SAVE</button>
 			</div>
 		</div>
 		
