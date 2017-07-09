@@ -54,7 +54,7 @@
 										<td th:text="${planning.date.date}">PLANNING COST DATE</td>
 										<td th:text="${planning.property.address}">PLANNING COST PROPERTY</td>
 										<td th:text="${planning.amount}">PLANNING COST AMOUNT</td>
-										<td th:text="${planning.type}">PLANNING COST TYPE</td>
+										<td th:text="#{planning.cost.type. + ${planning.type.name()}}">PLANNING COST TYPE</td>
 										<td th:text="${planning.description}">PLANNING COST DESCRIPTION</td>
 									</tr>
 								</table>
