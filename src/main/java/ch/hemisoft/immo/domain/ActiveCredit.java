@@ -22,5 +22,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class ActiveCredit extends Credit {
 	@NotNull @NonNull
+	@org.hibernate.envers.NotAudited
 	@OneToOne(mappedBy="selectedCredit", fetch=LAZY)	Property 	property;
 }
