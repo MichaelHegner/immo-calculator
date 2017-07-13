@@ -35,6 +35,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@org.hibernate.envers.Audited
 @Data
 @ToString(of={"purchaseDate", "address"})
 @EqualsAndHashCode(of={"purchaseDate", "address"})
@@ -168,6 +169,7 @@ public class Property implements Ownable {
 	
 	@Valid 
 	@Getter @Setter
+	@org.hibernate.envers.NotAudited
 	@OneToMany(mappedBy="property", fetch = LAZY, cascade = ALL, orphanRemoval = true)
 	Collection<NotActiveCredit> 	creditOptions = new ArrayList<>();	
 	
@@ -180,5 +182,6 @@ public class Property implements Ownable {
 	// Relations ...
 	// ==============================================================================================
 	
+	@org.hibernate.envers.NotAudited
 	@ManyToOne(fetch = LAZY, optional = false)		User  	owner;
 }

@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Entity
+@org.hibernate.envers.Audited
 @Data
 @ToString(callSuper=true, of={"property"})
 @EqualsAndHashCode(callSuper=true, of={"property"})
