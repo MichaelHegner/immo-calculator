@@ -1,5 +1,8 @@
 package ch.hemisoft.immo.calc.business.service;
 
+import static java.math.BigDecimal.ZERO;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
@@ -10,10 +13,13 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
+import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.springframework.stereotype.Service;
 
+import ch.hemisoft.commons.CollectionUtils;
 import ch.hemisoft.immo.calc.backend.repository.ForecastRepository;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
+import ch.hemisoft.immo.domain.CostPlanning;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
@@ -29,6 +35,7 @@ public class ForecastServiceImpl implements ForecastService {
 	private static final int FORECAST_TERM_TO_SAVE = 10;
 	
 	@NonNull private PropertyService propertyService;
+	@NonNull private CostPlanningService costPlanningService;
 	@NonNull private ForecastConfigurationService forecastConfigurationService;
 	@NonNull private ForecastRepository forecastRepository;
 	
@@ -46,14 +53,15 @@ public class ForecastServiceImpl implements ForecastService {
 		for(Property property : properties) {
 			List<Forecast> findAll = findAll(property);
 			for(int i = 0; i < FORECAST_TERM_TO_SAVE; i++) {
-				final int yearNow = LocalDate.now().get(ChronoField.YEAR);
+				final int yearToday = LocalDate.now().get(ChronoField.YEAR);
+				final int yearLoop = i + yearToday;
 				final Forecast forecastAtI = forecasts.get(i);
-				forecastAtI.setYear(i + yearNow);
+				forecastAtI.setYear(yearLoop);
 				forecastAtI.setProperty(property); // TEMPORARY SET PROPERTY FOR CALCULATION
 				forecastAtI.setConfiguration(forecastConfigurationMap.get(forecastAtI.getProperty().getAddress().getCountryCode()));
 				forecastAtI.setIncomeBeforeCost(forecastAtI.getIncomeBeforeCost().add(findAll.get(i).getIncomeBeforeCost()));
 				forecastAtI.setRunningCost(forecastAtI.getRunningCost().add(findAll.get(i).getRunningCost()));
-				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(findAll.get(i).getSpecialCost()));
+				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(CollectionUtils.reduce(costPlanningService.findAll(property, yearLoop), t -> t.getAmount())));
 				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
 				forecastAtI.setDeprecation(forecastAtI.getDeprecation().add(findAll.get(i).getDeprecation()));
 				forecastAtI.setRedemption(forecastAtI.getRedemption().add(findAll.get(i).getRedemption()));

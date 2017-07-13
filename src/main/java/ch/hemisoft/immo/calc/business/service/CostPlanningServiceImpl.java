@@ -23,6 +23,11 @@ public class CostPlanningServiceImpl implements CostPlanningService {
 	public List<CostPlanning> findAll(List<Property> properties) {
 		return costPlanningRepository.findAllByPropertyInOrderByDateYearAsc(properties);
 	}
+
+	@Override
+	public List<CostPlanning> findAll(Property property, int yearNow) {
+		return costPlanningRepository.findAllByPropertyAndDateYear(property, yearNow);
+	}
 	
 	@Override
 	public List<CostPlanning> findAll(Property property) {
@@ -43,4 +48,5 @@ public class CostPlanningServiceImpl implements CostPlanningService {
 	public void save(List<CostPlanning> plannings) {
 		plannings.forEach(this::save);
 	}
+
 }
