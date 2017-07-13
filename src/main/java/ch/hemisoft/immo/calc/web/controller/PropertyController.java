@@ -121,5 +121,6 @@ public class PropertyController {
 		dbProperty.setRunningCost(formProperty.getRunningCost());
 		dbProperty.setType(formProperty.getType());
 		dbProperty.setStatus(formProperty.getStatus());
+		dbProperty.setYearOfConstruction(formProperty.getYearOfConstruction());
 	}
 }
