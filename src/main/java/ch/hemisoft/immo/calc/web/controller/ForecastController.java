@@ -66,29 +66,4 @@ public class ForecastController {
 		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
 		return "forecast/list";
 	}
-	
-	@PostMapping("/view/{propertyId}")
-	public String save (
-			@ModelAttribute("forecast") ForecastDto form, 
-			@PathVariable Long propertyId,
-			BindingResult errors, 
-			ModelMap modelMap
-	) {
-		if (!errors.hasErrors()) {
-			Property property = propertyService.find(propertyId);
-			List<Forecast> formForcasts = form.getForecasts();
-			List<Forecast> dbForcasts = forecastService.findAll(property);
-			mapChangedValues(formForcasts, dbForcasts);
-			forecastService.save(dbForcasts);
-			return view(property.getId(), modelMap);
-	    } else {
-	    	modelMap.addAttribute("errors", errors);
-	    	return "forecast/list";
-	    }
-	}
-
-	private void mapChangedValues(List<Forecast> formForcasts, List<Forecast> dbForcasts) {
-		for(int i = 0; i < formForcasts.size(); i++)
-			dbForcasts.get(i).setSpecialCost(formForcasts.get(i).getSpecialCost());
-	}
 }
