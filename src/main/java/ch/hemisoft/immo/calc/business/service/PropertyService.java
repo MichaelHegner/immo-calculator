@@ -7,6 +7,7 @@ import ch.hemisoft.immo.domain.Property;
 public interface PropertyService {
 	List<Property> findAll();
 	List<Property> findAllBought();
+	List<Property> findAllConcrete();
 	Property find(Long id);
 	Property save(Property property);
 }

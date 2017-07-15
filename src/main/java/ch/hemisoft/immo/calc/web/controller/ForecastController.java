@@ -5,11 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -32,23 +30,19 @@ public class ForecastController {
 	
 	@GetMapping("/list")
 	public String list(ModelMap modelMap) {
-		List<Property> properties = propertyService.findAll();
-		List<Forecast> forecasts = forecastService.findAll(properties);
 		modelMap.addAttribute("property", new Property());
 		modelMap.addAttribute("selectedProperty", new SessionProperty());
-		modelMap.addAttribute("forecast", new ForecastDto(forecasts));
-		modelMap.addAttribute("properties", properties);
+		modelMap.addAttribute("properties", propertyService.findAll());
+		modelMap.addAttribute("forecast", new ForecastDto(forecastService.findAll(propertyService.findAllConcrete())));
 		return "forecast/list";
 	}	
 	
 	@GetMapping("/view")
 	public String view(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
 		if(null == selectedProperty.getId()) {
-			List<Property> properties = propertyService.findAll();
-			List<Forecast> forecasts = forecastService.findAll(properties);
 			modelMap.addAttribute("selectedProperty", selectedProperty);
-			modelMap.addAttribute("forecast", new ForecastDto(forecasts));
-			modelMap.addAttribute("properties", properties);
+			modelMap.addAttribute("properties", propertyService.findAll());
+			modelMap.addAttribute("forecast", new ForecastDto(forecastService.findAll(propertyService.findAllConcrete())));
 			return "forecast/list";
 		} else {
 			return "redirect:/forecast/view/" + selectedProperty.getId();

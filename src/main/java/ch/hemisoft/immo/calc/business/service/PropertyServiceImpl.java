@@ -27,6 +27,11 @@ public class PropertyServiceImpl implements PropertyService {
 	public List<Property> findAllBought() {
 		return repository.findAllByStatus(PropertyStatus.BOUGHT);
 	}
+
+	@Override
+	public List<Property> findAllConcrete() {
+		return repository.findAllByStatusIn(PropertyStatus.BOUGHT, PropertyStatus.PROPOSED);
+	}
 	
 	@Override
 	public Property find(Long id) {
