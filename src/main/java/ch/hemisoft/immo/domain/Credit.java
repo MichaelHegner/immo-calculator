@@ -1,11 +1,19 @@
 package ch.hemisoft.immo.domain;
 
+import static java.lang.Boolean.TRUE;
+import static javax.persistence.FetchType.LAZY;
+
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
@@ -13,19 +21,51 @@ import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-@MappedSuperclass 
+@Entity
+@org.hibernate.envers.Audited
 @Data
-@ToString(of={"nameOfInstitution"})
-@EqualsAndHashCode(of={"nameOfInstitution"})
+@ToString(of={"nameOfInstitution", "property"})
+@EqualsAndHashCode(of={"nameOfInstitution", "property"})
 @NoArgsConstructor
-public abstract class Credit {
+@RequiredArgsConstructor
+public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
-	@Size(min=1, max=255)								String		nameOfInstitution;
+	@Size(min = 1, max = 255)							String		nameOfInstitution;
 	@Min(0)												BigDecimal 	interestRateNominalInPercent;
 	@Min(0)												BigDecimal	redemptionAtBeginInPercent;
 	@Min(0)												BigDecimal	specialRedemptionEachYearInPercent;
+														Boolean		active;
+	
+	@ManyToOne(fetch = LAZY)
+	@JoinTable(
+			name 				= "PROPERTY_CREDIT",
+			joinColumns 		= @JoinColumn(name = "CREDIT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"), unique = true),
+			inverseJoinColumns 	= @JoinColumn(name="PROPERTY_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_PROPERTY_CREDIT_OPTIONS_TO_PROPERTY")), 
+			foreignKey 			= @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"),
+			inverseForeignKey 	= @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_PROPERTY")
+	)
+	@org.hibernate.envers.NotAudited
+	@NotNull @NonNull									Property 	property;
+	
+	public void activate() {
+		active = TRUE;
+	}
+	
+	public void deactivate() {
+		active = Boolean.FALSE;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public boolean isDeactivated() {
+		return !isActive();
+	}
 														
 	public BigDecimal getTerm() {
 		double financialNeedsTotal = getFinancialNeedsTotal();
@@ -178,5 +218,4 @@ public abstract class Credit {
 		return getProperty() == null ? 0.0 : getProperty().getFinancialNeedsTotal().doubleValue();
 	}
 
-	public abstract Property getProperty();
 }

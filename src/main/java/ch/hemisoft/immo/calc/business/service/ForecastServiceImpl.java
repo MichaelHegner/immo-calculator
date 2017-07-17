@@ -87,14 +87,15 @@ public class ForecastServiceImpl implements ForecastService {
 			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			
-			if(null != property.getSelectedCredit()) {
-				populateInterest(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			
+			for (Credit credit : property.getActiveCredits()) {
+				populateInterest(property, forecast, credit.getInterestRateNominalInPercent().doubleValue());
 			}
 			
 			populateDeprecation(property, forecast);
 
-			if(null != property.getSelectedCredit()) {
-				populateRedemption(property, forecast, property.getSelectedCredit().getInterestRateNominalInPercent().doubleValue());
+			for (Credit credit : property.getActiveCredits()) {
+				populateRedemption(property, forecast, credit.getInterestRateNominalInPercent().doubleValue());
 			}
 		}
 	}
@@ -141,19 +142,20 @@ public class ForecastServiceImpl implements ForecastService {
 	private void populateRedemption(Property property, Forecast forecast, double doubleValue) {
 		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
 		int forecastYear = forecast.getYear();
-		int termSelectedCredit = property.getSelectedCredit().getTerm().intValue();
 		
-		if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
-			Credit selectedCredit = property.getSelectedCredit();
-			double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
-			double interest = selectedCredit.getInterestRateNominalInPercent().doubleValue();
-			double redemption = selectedCredit.getRedemptionAtBeginInPercent().doubleValue();
-			double specialRedemption = selectedCredit.getSpecialRedemptionEachYearInPercent().doubleValue();
-			double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest, redemption + specialRedemption);
-			double calculateInterest = calculateInterest(property, forecast, interest);
-			forecast.setRedemption(BigDecimalUtils.convert(annuity - calculateInterest));
-		} else {
-			forecast.setRedemption(BigDecimalUtils.convert(0.0));
+		for (Credit credit : property.getActiveCredits()) {
+			int termSelectedCredit = credit.getTerm().intValue();
+			if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
+				double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
+				double interest = credit.getInterestRateNominalInPercent().doubleValue();
+				double redemption = credit.getRedemptionAtBeginInPercent().doubleValue();
+				double specialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
+				double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest, redemption + specialRedemption);
+				double calculateInterest = calculateInterest(property, forecast, interest);
+				forecast.setRedemption(BigDecimalUtils.convert(annuity - calculateInterest));
+			} else {
+				forecast.setRedemption(BigDecimalUtils.convert(0.0));
+			}
 		}
 	}
 
@@ -161,10 +163,14 @@ public class ForecastServiceImpl implements ForecastService {
 		double value = property.getPurchasePrice().doubleValue();
 		int yearDiff = calculatePropertyForecastYear(property, forecast) + 1;
 
-		Credit selectedCredit = property.getSelectedCredit();
-		double zRedemption = selectedCredit.getRedemptionAtBeginInPercent().doubleValue();
-		double zSpecialRedemption = selectedCredit.getSpecialRedemptionEachYearInPercent().doubleValue();
-		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
+		double interestInYear = 0.0;;
+		for (Credit credit : property.getActiveCredits()) {
+			double zRedemption = credit.getRedemptionAtBeginInPercent().doubleValue();
+			double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
+			interestInYear += CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
+		}
+		
+		return interestInYear;
 	}
 	
 	private double calculateDeprecation(Property property, Forecast forecast) {

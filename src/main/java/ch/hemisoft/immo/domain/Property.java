@@ -9,16 +9,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -159,24 +158,27 @@ public class Property implements Ownable {
 	}
 	
 	@Valid 
-	@OneToOne(fetch = LAZY, cascade = ALL, orphanRemoval = true)
-	@JoinTable(
-			name 				= "PROPERTY_CREDIT",
-			joinColumns 		= @JoinColumn(name="PROPERTY_ID"), 
-			inverseJoinColumns 	= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
-	)
-	ActiveCredit 			selectedCredit;
-	
-	@Valid 
 	@Getter @Setter
 	@org.hibernate.envers.NotAudited
 	@OneToMany(mappedBy="property", fetch = LAZY, cascade = ALL, orphanRemoval = true)
-	Collection<NotActiveCredit> 	creditOptions = new ArrayList<>();	
+	Collection<Credit> 	credits = new ArrayList<>();	
 	
-
-	public void addCreditOptions(NotActiveCredit credit) {
-		creditOptions.add(requireNonNull(credit));
+	public void addCreditOptions(Credit credit) {
+		credits.add(requireNonNull(credit));
 	}
+	
+	public Collection<Credit> getActiveCredits() {
+		return getFilteredCredits(Credit::isActive);
+	}
+	
+	public Collection<Credit> getDeactivatedCredits() {
+		return getFilteredCredits(Credit::isDeactivated);
+	}
+	
+	private Collection<Credit> getFilteredCredits(Predicate<Credit> predicate) {
+		return credits.stream().filter(predicate).collect(Collectors.toList());
+	}
+	
 	
 	// ==============================================================================================
 	// Relations ...

@@ -26,16 +26,22 @@ function registerEventTableRowClick() {
 }
 
 function registerDeactivateButton() {
-	$("#buttonDeactivate").click(function(){
-		window.location = getURL() + '?deactivate=true';
+	$(".buttonDeactivate").each(function(){
+		$(this).click(function(){
+			// TODO: LINK
+			var creditId = $(this).parent().find('input[type=hidden]').val();
+			window.location = getBaseURL() + '/investment/edit/' + propertyId + '/credit/' + creditId + '/swap';
+		});
 	});
 }
 
 function registerActivateButton() {
 	$(".btnActivate").each(function(){
 		$(this).click(function(){
+			// TODO: LINK
+			var propertyId = $("#propertyId").val();
 			var creditId = $(this).parent().find('input[type=hidden]').val();
-			window.location =getURL() + '?activate=' + creditId;
+			window.location = getBaseURL() + '/investment/edit/' + propertyId + '/credit/' + creditId + '/swap';
 		});
 	});
 }
@@ -68,8 +74,12 @@ function getEditUrl(id) {
 	return url;
 }
 
+function getBaseURL() {
+	return location.protocol + '//' + location.host;
+}
+
 function getURL() {
-	return location.protocol + '//' + location.host + location.pathname
+	return getBaseURL() + location.pathname
 }
 
 function directToSelectUrl(id) {
