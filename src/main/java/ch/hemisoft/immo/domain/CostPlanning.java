@@ -30,7 +30,7 @@ import lombok.ToString;
 
 @Entity
 @Table(uniqueConstraints={
-    @UniqueConstraint(columnNames = {"year", "month", "day", "property_id", "type"})
+    @UniqueConstraint(columnNames = {"year", "month", "day", "property_id", "type"}, name = "UK_COST_PLANNING")
 }) 
 @Data
 @ToString(of={"date", "property", "type"})

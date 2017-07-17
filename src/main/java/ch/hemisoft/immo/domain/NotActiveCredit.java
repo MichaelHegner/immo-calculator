@@ -1,6 +1,7 @@
 package ch.hemisoft.immo.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -23,8 +24,10 @@ public class NotActiveCredit extends Credit {
 	@ManyToOne
 	@JoinTable(
 			name 				= "PROPERTY_CREDIT_OPTIONS",
-			inverseJoinColumns 	= @JoinColumn(name="PROPERTY_ID", nullable = false), 
-			joinColumns 		= @JoinColumn(name = "CREDIT_ID", nullable = false, unique = true)
+			joinColumns 		= @JoinColumn(name = "CREDIT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"), unique = true),
+			inverseJoinColumns 	= @JoinColumn(name="PROPERTY_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_PROPERTY_CREDIT_OPTIONS_TO_PROPERTY")), 
+			foreignKey 			= @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"),
+			inverseForeignKey 	= @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_PROPERTY")
 	)
 	@NotNull @NonNull 
 	Property 	property;

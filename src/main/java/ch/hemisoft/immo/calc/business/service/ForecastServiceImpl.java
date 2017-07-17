@@ -1,8 +1,5 @@
 package ch.hemisoft.immo.calc.business.service;
 
-import static java.math.BigDecimal.ZERO;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
@@ -13,13 +10,11 @@ import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
-import org.apache.tomcat.util.http.fileupload.util.Streams;
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
 import ch.hemisoft.immo.calc.backend.repository.ForecastRepository;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
-import ch.hemisoft.immo.domain.CostPlanning;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.ForecastConfiguration;

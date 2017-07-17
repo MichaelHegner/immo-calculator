@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -31,6 +33,10 @@ public class User {
 	@NonNull @NotNull	private String 	email;
 	@NonNull @NotNull	private Boolean enabled;
 
+	@JoinTable(
+			foreignKey = @ForeignKey(name = "FK_USER_ROLE_TO_USER"),
+			inverseForeignKey = @ForeignKey(name = "FK_USER_TO_USER_ROLE")
+	)
 	@ManyToMany(fetch = EAGER)
 	private Collection<UserRole> userRoles = new ArrayList<>();
 	
