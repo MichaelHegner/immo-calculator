@@ -35,6 +35,7 @@ import lombok.ToString;
 public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
 	@Size(min = 1, max = 255)							String		nameOfInstitution;
+	@Min(0)												BigDecimal	capital;
 	@Min(0)												BigDecimal 	interestRateNominalInPercent;
 	@Min(0)												BigDecimal	redemptionAtBeginInPercent;
 	@Min(0)												BigDecimal	specialRedemptionEachYearInPercent;
@@ -68,8 +69,8 @@ public class Credit {
 	}
 														
 	public BigDecimal getTerm() {
-		double financialNeedsTotal = getFinancialNeedsTotal();
-		double rateEachYear = getAnnuityEachYear() + getSpecialRedemptionEachYearAbsoluteAsDouble();
+		double financialNeedsTotal = getCapitalAsDouble();
+		double rateEachYear = getAnnuityEachYear().doubleValue() + getSpecialRedemptionEachYearAbsoluteAsDouble();
 		double term = (Math.log(rateEachYear) - Math.log(rateEachYear - financialNeedsTotal * interestRateNominalAsQuote())) / Math.log(1 + interestRateNominalAsQuote());
 		return BigDecimalUtils.convert(term);
 	}
@@ -79,7 +80,7 @@ public class Credit {
 	}
 
 	private double getSpecialRedemptionEachYearAbsoluteAsDouble() {
-		double financialNeedsTotal = getFinancialNeedsTotal();
+		double financialNeedsTotal = getCapitalAsDouble();
 		double specialRedemptionEachYearAsQuote = specialRedemptionEachYearInPercent == null ? 0.0 : specialRedemptionEachYearInPercent.doubleValue() / 100;
 		return financialNeedsTotal * specialRedemptionEachYearAsQuote;
 	}
@@ -115,7 +116,7 @@ public class Credit {
 	}
 	
 	private double getRestLoanInYear(int afterNumberOfYears) {
-		double K = getFinancialNeedsTotal();
+		double K = getCapitalAsDouble();
 		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsoluteAsDouble();
 		double q = 1 + interestRateNominalAsQuote();
 		double qPowN = getQPowN(afterNumberOfYears - 1);
@@ -159,7 +160,7 @@ public class Credit {
 		int year = 0;
 		do {
 			sum += CreditCalculator
-					.calculateInterestToPayAfterYear(getFinancialNeedsTotal(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
+					.calculateInterestToPayAfterYear(getCapitalAsDouble(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
 		} while(year <= numberOfYears);
 		
 		return sum;
@@ -176,21 +177,21 @@ public class Credit {
 	//
 
 	private double getRedemptionOfFirstYear() {
-		return getAnnuityEachYear() - getInterestOfFirstYear();
+		return getAnnuityEachYear().doubleValue() - getInterestOfFirstYear();
 	}
 	
 	private double getInterestOfFirstYear() {
-		return getFinancialNeedsTotal() * interestRateNominalAsQuote();
+		return getCapitalAsDouble() * interestRateNominalAsQuote();
 	}
 
 	//
 	
 	public BigDecimal getAnnuityEachMonth() {
-		return BigDecimalUtils.convert(getAnnuityEachYear() / 12);
+		return BigDecimalUtils.convert(getAnnuityEachYear().doubleValue() / 12);
 	}
 	
-	private double getAnnuityEachYear() {
-		return getFinancialNeedsTotal() * sumTilgungAndInterestAsQuote();
+	private BigDecimal getAnnuityEachYear() {
+		return BigDecimalUtils.convert(getCapitalAsDouble() * sumTilgungAndInterestAsQuote());
 	}
 	
 	//
@@ -212,10 +213,8 @@ public class Credit {
 		return null == interestRateNominalInPercent ? 0.0 : interestRateNominalInPercent.doubleValue();
 	}
 	
-	//
-	
-	private double getFinancialNeedsTotal() {
-		return getProperty() == null ? 0.0 : getProperty().getFinancialNeedsTotal().doubleValue();
+	private double getCapitalAsDouble() {
+		return capital == null ? 0.0 : capital.doubleValue();
 	}
 
 }

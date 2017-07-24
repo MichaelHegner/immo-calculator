@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
-import ch.hemisoft.immo.calc.backend.repository.ForecastRepository;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.Forecast;
@@ -27,30 +26,26 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class ForecastServiceImpl implements ForecastService {
-	private static final int FORECAST_TERM_TO_SAVE = 10;
+	private static final int FORECAST_TERM = 10;
 	
 	@NonNull private PropertyService propertyService;
 	@NonNull private CostPlanningService costPlanningService;
 	@NonNull private ForecastConfigurationService forecastConfigurationService;
-	@NonNull private ForecastRepository forecastRepository;
 	
 	@Override
 	public List<Forecast> findAll(List<Property> properties) {
-		properties.forEach(this::save); // TODO SOC
 
 		// PREPARE ...
-		List<Forecast> forecasts = new ArrayList<>(FORECAST_TERM_TO_SAVE);
-		for(int i = 0; i < FORECAST_TERM_TO_SAVE; i++) forecasts.add(new Forecast()); // INITIAL LIST WITH EMTPY FORCAST FOR REUSING
-		Map<String, ForecastConfiguration> forecastConfigurationMap = 
-				forecastConfigurationService.findAll().stream().collect(Collectors.toMap(ForecastConfiguration::getCountryCode, Function.identity()));
+		List<Forecast> forecasts = new ArrayList<>(FORECAST_TERM);
+		Map<String, ForecastConfiguration> forecastConfigurationMap = createForecastConfigurationMap();
 		
 		// POPULATE ...
 		for(Property property : properties) {
 			List<Forecast> findAll = findAll(property);
-			for(int i = 0; i < FORECAST_TERM_TO_SAVE; i++) {
+			for(int i = 0; i < FORECAST_TERM; i++) {
 				final int yearToday = LocalDate.now().get(ChronoField.YEAR);
 				final int yearLoop = i + yearToday;
-				final Forecast forecastAtI = forecasts.get(i);
+				final Forecast forecastAtI = new Forecast();
 				forecastAtI.setYear(yearLoop);
 				forecastAtI.setProperty(property); // TEMPORARY SET PROPERTY FOR CALCULATION
 				forecastAtI.setConfiguration(forecastConfigurationMap.get(forecastAtI.getProperty().getAddress().getCountryCode()));
@@ -60,49 +55,46 @@ public class ForecastServiceImpl implements ForecastService {
 				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
 				forecastAtI.setDeprecation(forecastAtI.getDeprecation().add(findAll.get(i).getDeprecation()));
 				forecastAtI.setRedemption(forecastAtI.getRedemption().add(findAll.get(i).getRedemption()));
+				forecasts.add(forecastAtI);
 			}
 		}
 		
 		return forecasts;
 	}
+
 	
 	@Override
 	public List<Forecast> findAll(Property property) {
-		save(property); // TODO SOC
-		return forecastRepository.findAllByPropertyOrderByYearAsc(property);
-	}
-
-	@Override
-	public void save(Property property) {
+		List<Forecast> forecasts = new ArrayList<>();
 		String countryCode = property.getAddress().getCountryCode();
 		ForecastConfiguration configuration = forecastConfigurationService.findByCountryCode(countryCode);
 		
-		for(int i = 0; i < FORECAST_TERM_TO_SAVE; i++) {
+		for(int i = 0; i < FORECAST_TERM; i++) {
 			final int forecastYear = LocalDate.now().get(ChronoField.YEAR) + i;
-			Forecast forecast = forecastRepository.findByYearAndProperty(forecastYear, property);
-			if(null == forecast) {
-				forecast = forecastRepository.save(new Forecast(property, configuration, forecastYear));
-			}
-			
+			Forecast forecast = new Forecast(property, configuration, forecastYear);
 			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			
 			
 			for (Credit credit : property.getActiveCredits()) {
-				populateInterest(property, forecast, credit.getInterestRateNominalInPercent().doubleValue());
+				populateInterest(property, credit, forecast);
 			}
 			
 			populateDeprecation(property, forecast);
 
 			for (Credit credit : property.getActiveCredits()) {
-				populateRedemption(property, forecast, credit.getInterestRateNominalInPercent().doubleValue());
+				populateRedemption(property, credit, forecast);
 			}
+			
+			forecasts.add(forecast);
 		}
+		return forecasts;
 	}
-
-	@Override
-	public void save(List<Forecast> forcasts) {
-		forecastRepository.save(forcasts);
+	
+	//
+	
+	private Map<String, ForecastConfiguration> createForecastConfigurationMap() {
+		return forecastConfigurationService.findAll().stream().collect(Collectors.toMap(ForecastConfiguration::getCountryCode, Function.identity()));
 	}
 
 	//
@@ -129,9 +121,9 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setRunningCost(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateInterest(Property property, Forecast forecast, Double percental) {
-		double result = calculateInterest(property, forecast, percental);
-		forecast.setInterest(BigDecimalUtils.convert(result));
+	private void populateInterest(Property property, Credit credit, Forecast forecast) {
+		double result = calculateInterest(property, credit, forecast);
+		forecast.setInterest(forecast.getInterest().add(BigDecimalUtils.convert(result)));
 	}
 	
 	private void populateDeprecation(Property property, Forecast forecast) {
@@ -139,38 +131,31 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setDeprecation(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateRedemption(Property property, Forecast forecast, double doubleValue) {
-		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
+	private void populateRedemption(Property property, Credit credit, Forecast forecast) {
 		int forecastYear = forecast.getYear();
+		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
 		
-		for (Credit credit : property.getActiveCredits()) {
-			int termSelectedCredit = credit.getTerm().intValue();
-			if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
-				double financialNeedsTotal = property.getFinancialNeedsTotal().doubleValue();
-				double interest = credit.getInterestRateNominalInPercent().doubleValue();
-				double redemption = credit.getRedemptionAtBeginInPercent().doubleValue();
-				double specialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
-				double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest, redemption + specialRedemption);
-				double calculateInterest = calculateInterest(property, forecast, interest);
-				forecast.setRedemption(BigDecimalUtils.convert(annuity - calculateInterest));
-			} else {
-				forecast.setRedemption(BigDecimalUtils.convert(0.0));
-			}
+		int termSelectedCredit = credit.getTerm().intValue();
+		if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
+			double financialNeedsTotal = credit.getCapital().doubleValue();
+			double redemption = credit.getRedemptionAtBeginInPercent().doubleValue();
+			double specialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
+			double interest = credit.getInterestRateNominalInPercent().doubleValue();
+			double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest , redemption + specialRedemption);
+			double calculateInterest = calculateInterest(property, credit, forecast);
+			forecast.setRedemption(forecast.getRedemption().add(BigDecimalUtils.convert(annuity - calculateInterest)));
+		} else {
+			forecast.setRedemption(forecast.getRedemption().add(BigDecimalUtils.convert(0.0)));
 		}
 	}
 
-	private double calculateInterest(Property property, Forecast forecast, Double interestInPercent) {
-		double value = property.getPurchasePrice().doubleValue();
+	private double calculateInterest(Property property, Credit credit, Forecast forecast) {
+		double value = credit.getCapital().doubleValue();
+		Double interestInPercent = credit.getInterestRateNominalInPercent().doubleValue();
 		int yearDiff = calculatePropertyForecastYear(property, forecast) + 1;
-
-		double interestInYear = 0.0;;
-		for (Credit credit : property.getActiveCredits()) {
-			double zRedemption = credit.getRedemptionAtBeginInPercent().doubleValue();
-			double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
-			interestInYear += CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
-		}
-		
-		return interestInYear;
+		double zRedemption = credit.getRedemptionAtBeginInPercent().doubleValue();
+		double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
+		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
 	}
 	
 	private double calculateDeprecation(Property property, Forecast forecast) {

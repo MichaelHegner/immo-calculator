@@ -41,6 +41,18 @@
 		
 									<div class="row filterRow ">
 										<div class="col-md-4">
+											<label for="inputCapital" th:text="#{property.capital}">FINANZIERUNGSBETRAG</label >
+										</div>
+										<div class="col-md-6 col-md-offset-2">	
+											<input type="number" id="inputCapital" name="inputCapital" 
+												th:field="*{credits[__${loop.index}__].capital}"
+												min="0" max="10000000"
+												class="form-control text-right" 
+											/>
+										</div>				
+									</div>
+									<div class="row filterRow ">
+										<div class="col-md-4">
 											<label for="inputInterestRateNominalInPercent" th:text="#{property.interestRateNominalInPercent}">ZINSSATZ NOMINAL (%)</label >
 										</div>
 										<div class="col-md-6 col-md-offset-2">	
