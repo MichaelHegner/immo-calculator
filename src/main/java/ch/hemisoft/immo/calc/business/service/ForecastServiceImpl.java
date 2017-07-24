@@ -1,5 +1,6 @@
 package ch.hemisoft.immo.calc.business.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.ArrayList;
@@ -13,9 +14,9 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
+import ch.hemisoft.immo.calc.business.service.dto.ForecastDto;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
 import ch.hemisoft.immo.domain.Credit;
-import ch.hemisoft.immo.domain.Forecast;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
 import ch.hemisoft.immo.domain.Property;
 import ch.hemisoft.immo.utils.BigDecimalUtils;
@@ -33,29 +34,43 @@ public class ForecastServiceImpl implements ForecastService {
 	@NonNull private ForecastConfigurationService forecastConfigurationService;
 	
 	@Override
-	public List<Forecast> findAll(List<Property> properties) {
+	public List<ForecastDto> findAll(List<Property> properties) {
 
 		// PREPARE ...
-		List<Forecast> forecasts = new ArrayList<>(FORECAST_TERM);
+		List<ForecastDto> forecasts = new ArrayList<>(FORECAST_TERM);
 		Map<String, ForecastConfiguration> forecastConfigurationMap = createForecastConfigurationMap();
 		
 		// POPULATE ...
 		for(Property property : properties) {
-			List<Forecast> findAll = findAll(property);
+			final boolean firstProperty = properties.indexOf(property) <= 0;
+			
+			
+			List<ForecastDto> findAll = findAll(property);
 			for(int i = 0; i < FORECAST_TERM; i++) {
 				final int yearToday = LocalDate.now().get(ChronoField.YEAR);
 				final int yearLoop = i + yearToday;
-				final Forecast forecastAtI = new Forecast();
-				forecastAtI.setYear(yearLoop);
-				forecastAtI.setProperty(property); // TEMPORARY SET PROPERTY FOR CALCULATION
-				forecastAtI.setConfiguration(forecastConfigurationMap.get(forecastAtI.getProperty().getAddress().getCountryCode()));
+				final BigDecimal netAssets = BigDecimalUtils.convert(property.getNetAssets());
+				final String countryCode = property.getAddress().getCountryCode();
+				final BigDecimal taxQuote = BigDecimalUtils.convert(forecastConfigurationMap.get(countryCode).getTaxQuote());
+				final boolean german = "DE".equals(countryCode);
+				
+				final ForecastDto forecastAtI;
+				if(firstProperty) {
+					forecastAtI = new ForecastDto(yearLoop, netAssets, taxQuote, german);
+				} else {
+					forecastAtI = forecasts.get(i);
+				}
+				
 				forecastAtI.setIncomeBeforeCost(forecastAtI.getIncomeBeforeCost().add(findAll.get(i).getIncomeBeforeCost()));
 				forecastAtI.setRunningCost(forecastAtI.getRunningCost().add(findAll.get(i).getRunningCost()));
 				forecastAtI.setSpecialCost(forecastAtI.getSpecialCost().add(CollectionUtils.reduce(costPlanningService.findAll(property, yearLoop), t -> t.getAmount())));
 				forecastAtI.setInterest(forecastAtI.getInterest().add(findAll.get(i).getInterest()));
 				forecastAtI.setDeprecation(forecastAtI.getDeprecation().add(findAll.get(i).getDeprecation()));
 				forecastAtI.setRedemption(forecastAtI.getRedemption().add(findAll.get(i).getRedemption()));
-				forecasts.add(forecastAtI);
+				
+				if(firstProperty) {
+					forecasts.add(forecastAtI);
+				}
 			}
 		}
 		
@@ -64,14 +79,18 @@ public class ForecastServiceImpl implements ForecastService {
 
 	
 	@Override
-	public List<Forecast> findAll(Property property) {
-		List<Forecast> forecasts = new ArrayList<>();
+	public List<ForecastDto> findAll(Property property) {
+		List<ForecastDto> forecasts = new ArrayList<>();
 		String countryCode = property.getAddress().getCountryCode();
 		ForecastConfiguration configuration = forecastConfigurationService.findByCountryCode(countryCode);
 		
 		for(int i = 0; i < FORECAST_TERM; i++) {
-			final int forecastYear = LocalDate.now().get(ChronoField.YEAR) + i;
-			Forecast forecast = new Forecast(property, configuration, forecastYear);
+			final int yearToday = LocalDate.now().get(ChronoField.YEAR);
+			final int yearLoop = i + yearToday;
+			final BigDecimal netAssets = BigDecimalUtils.convert(property.getNetAssets());
+			final BigDecimal taxQuote = BigDecimalUtils.convert(configuration.getTaxQuote());
+			final boolean german = "DE".equals(countryCode);
+			ForecastDto forecast = new ForecastDto(yearLoop, netAssets, taxQuote, german);
 			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			
@@ -80,7 +99,7 @@ public class ForecastServiceImpl implements ForecastService {
 				populateInterest(property, credit, forecast);
 			}
 			
-			populateDeprecation(property, forecast);
+			populateDeprecation(property, forecast, configuration);
 
 			for (Credit credit : property.getActiveCredits()) {
 				populateRedemption(property, credit, forecast);
@@ -99,7 +118,7 @@ public class ForecastServiceImpl implements ForecastService {
 
 	//
 
-	private void populateRental(Property property, Forecast forecast, double percentalIncrease, int increaseFrequence) {
+	private void populateRental(Property property, ForecastDto forecast, double percentalIncrease, int increaseFrequence) {
 		double value = (null == property.getRentalNet()) ? 0.0 : property.getRentalNet().doubleValue();
 		double i = percentalIncrease / 100; 
 		long yearDiff = calculatePropertyForecastYear(property, forecast);
@@ -110,7 +129,7 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setIncomeBeforeCost(BigDecimalUtils.convert(result));
 	}
 
-	private void populateRunningCost(Property property, Forecast forecast, Double percentalIncrease, int increaseFrequence) {
+	private void populateRunningCost(Property property, ForecastDto forecast, Double percentalIncrease, int increaseFrequence) {
 		double value = property.getTotalManagementCost().doubleValue();
 		double i = percentalIncrease / 100;
 		long yearDiff = calculatePropertyForecastYear(property, forecast);
@@ -121,17 +140,17 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setRunningCost(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateInterest(Property property, Credit credit, Forecast forecast) {
+	private void populateInterest(Property property, Credit credit, ForecastDto forecast) {
 		double result = calculateInterest(property, credit, forecast);
 		forecast.setInterest(forecast.getInterest().add(BigDecimalUtils.convert(result)));
 	}
 	
-	private void populateDeprecation(Property property, Forecast forecast) {
-		double result = calculateDeprecation(property, forecast);
+	private void populateDeprecation(Property property, ForecastDto forecast, ForecastConfiguration forecastConfiguration) {
+		double result = calculateDeprecation(property, forecastConfiguration);
 		forecast.setDeprecation(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateRedemption(Property property, Credit credit, Forecast forecast) {
+	private void populateRedemption(Property property, Credit credit, ForecastDto forecast) {
 		int forecastYear = forecast.getYear();
 		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
 		
@@ -149,7 +168,7 @@ public class ForecastServiceImpl implements ForecastService {
 		}
 	}
 
-	private double calculateInterest(Property property, Credit credit, Forecast forecast) {
+	private double calculateInterest(Property property, Credit credit, ForecastDto forecast) {
 		double value = credit.getCapital().doubleValue();
 		Double interestInPercent = credit.getInterestRateNominalInPercent().doubleValue();
 		int yearDiff = calculatePropertyForecastYear(property, forecast) + 1;
@@ -158,13 +177,13 @@ public class ForecastServiceImpl implements ForecastService {
 		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
 	}
 	
-	private double calculateDeprecation(Property property, Forecast forecast) {
+	private double calculateDeprecation(Property property, ForecastConfiguration forecastConfiguration) {
 		double value = property.getPurchasePrice().doubleValue();
-		double i = forecast.getConfiguration().getDeprecation() / 100;
+		double i = forecastConfiguration.getDeprecation() / 100;
 		return value * i;
 	}
 
-	private int calculatePropertyForecastYear(Property property, Forecast forecast) {
+	private int calculatePropertyForecastYear(Property property, ForecastDto forecast) {
 		int forecastInYear = forecast.getYear();
 		
 		int propertyPurchaseYear;

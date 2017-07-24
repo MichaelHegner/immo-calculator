@@ -5,22 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.hemisoft.immo.domain.Forecast;
+import ch.hemisoft.immo.calc.business.service.dto.ForecastDto;
 import ch.hemisoft.immo.utils.ListStreamUtils;
 import lombok.Data;
 
 @Data
-public class ForecastDto {
+public class ForecastTableDto {
 	private final int FORECAST_IN_YEARS = 10;
 	
-	private final List<Forecast> forecasts = new ArrayList<>();
+	private final List<ForecastDto> forecasts = new ArrayList<>();
 
-	public ForecastDto(List<Forecast> forecasts) {
+	public ForecastTableDto(List<ForecastDto> forecasts) {
 		this.forecasts.clear();
 		this.forecasts.addAll(forecasts);
 	}
 	
-	ForecastDto() {
+	ForecastTableDto() {
 		// TODO Auto-generated constructor stub
 	}
 	
