@@ -16,7 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
+import ch.hemisoft.immo.calc.business.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -159,7 +159,7 @@ public class Credit {
 		
 		int year = 0;
 		do {
-			sum += CreditCalculator
+			sum += AnnuitiesCalculator
 					.calculateInterestToPayAfterYear(getCapitalAsDouble(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
 		} while(year <= numberOfYears);
 		

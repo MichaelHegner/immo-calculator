@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
 import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
-import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
+import ch.hemisoft.immo.calc.business.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
 import ch.hemisoft.immo.domain.Property;
@@ -160,7 +160,7 @@ public class ForecastServiceImpl implements ForecastService {
 			double redemption = credit.getRedemptionAtBeginInPercent().doubleValue();
 			double specialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
 			double interest = credit.getInterestRateNominalInPercent().doubleValue();
-			double annuity = CreditCalculator.calculateAnnuity(financialNeedsTotal, interest , redemption + specialRedemption);
+			double annuity = AnnuitiesCalculator.calculateAnnuityInYear(financialNeedsTotal, interest , redemption + specialRedemption);
 			double calculateInterest = calculateInterest(property, credit, forecast);
 			forecast.setRedemption(forecast.getRedemption().add(BigDecimalUtils.convert(annuity - calculateInterest)));
 		} else {
@@ -174,7 +174,7 @@ public class ForecastServiceImpl implements ForecastService {
 		int yearDiff = calculatePropertyForecastYear(property, forecast) + 1;
 		double zRedemption = credit.getRedemptionAtBeginInPercent().doubleValue();
 		double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
-		return CreditCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
+		return AnnuitiesCalculator.calculateInterestInYear(value, interestInPercent, zRedemption, zSpecialRedemption, yearDiff);
 	}
 	
 	private double calculateDeprecation(Property property, ForecastConfiguration forecastConfiguration) {
