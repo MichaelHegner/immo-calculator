@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
-import ch.hemisoft.immo.calc.business.service.dto.ForecastDto;
+import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
 import ch.hemisoft.immo.calc.business.utils.CreditCalculator;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
@@ -34,10 +34,10 @@ public class ForecastServiceImpl implements ForecastService {
 	@NonNull private ForecastConfigurationService forecastConfigurationService;
 	
 	@Override
-	public List<ForecastDto> findAll(List<Property> properties) {
+	public List<ForecastVO> findAll(List<Property> properties) {
 
 		// PREPARE ...
-		List<ForecastDto> forecasts = new ArrayList<>(FORECAST_TERM);
+		List<ForecastVO> forecasts = new ArrayList<>(FORECAST_TERM);
 		Map<String, ForecastConfiguration> forecastConfigurationMap = createForecastConfigurationMap();
 		
 		// POPULATE ...
@@ -45,7 +45,7 @@ public class ForecastServiceImpl implements ForecastService {
 			final boolean firstProperty = properties.indexOf(property) <= 0;
 			
 			
-			List<ForecastDto> findAll = findAll(property);
+			List<ForecastVO> findAll = findAll(property);
 			for(int i = 0; i < FORECAST_TERM; i++) {
 				final int yearToday = LocalDate.now().get(ChronoField.YEAR);
 				final int yearLoop = i + yearToday;
@@ -54,9 +54,9 @@ public class ForecastServiceImpl implements ForecastService {
 				final BigDecimal taxQuote = BigDecimalUtils.convert(forecastConfigurationMap.get(countryCode).getTaxQuote());
 				final boolean german = "DE".equals(countryCode);
 				
-				final ForecastDto forecastAtI;
+				final ForecastVO forecastAtI;
 				if(firstProperty) {
-					forecastAtI = new ForecastDto(yearLoop, netAssets, taxQuote, german);
+					forecastAtI = new ForecastVO(yearLoop, netAssets, taxQuote, german);
 				} else {
 					forecastAtI = forecasts.get(i);
 				}
@@ -79,8 +79,8 @@ public class ForecastServiceImpl implements ForecastService {
 
 	
 	@Override
-	public List<ForecastDto> findAll(Property property) {
-		List<ForecastDto> forecasts = new ArrayList<>();
+	public List<ForecastVO> findAll(Property property) {
+		List<ForecastVO> forecasts = new ArrayList<>();
 		String countryCode = property.getAddress().getCountryCode();
 		ForecastConfiguration configuration = forecastConfigurationService.findByCountryCode(countryCode);
 		
@@ -90,7 +90,7 @@ public class ForecastServiceImpl implements ForecastService {
 			final BigDecimal netAssets = BigDecimalUtils.convert(property.getNetAssets());
 			final BigDecimal taxQuote = BigDecimalUtils.convert(configuration.getTaxQuote());
 			final boolean german = "DE".equals(countryCode);
-			ForecastDto forecast = new ForecastDto(yearLoop, netAssets, taxQuote, german);
+			ForecastVO forecast = new ForecastVO(yearLoop, netAssets, taxQuote, german);
 			populateRental(property, forecast, configuration.getRentalIncrease(), configuration.getRentalIncreaseFrequence());
 			populateRunningCost(property, forecast, configuration.getRunningCostIndex(), 1);
 			
@@ -118,7 +118,7 @@ public class ForecastServiceImpl implements ForecastService {
 
 	//
 
-	private void populateRental(Property property, ForecastDto forecast, double percentalIncrease, int increaseFrequence) {
+	private void populateRental(Property property, ForecastVO forecast, double percentalIncrease, int increaseFrequence) {
 		double value = (null == property.getRentalNet()) ? 0.0 : property.getRentalNet().doubleValue();
 		double i = percentalIncrease / 100; 
 		long yearDiff = calculatePropertyForecastYear(property, forecast);
@@ -129,7 +129,7 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setIncomeBeforeCost(BigDecimalUtils.convert(result));
 	}
 
-	private void populateRunningCost(Property property, ForecastDto forecast, Double percentalIncrease, int increaseFrequence) {
+	private void populateRunningCost(Property property, ForecastVO forecast, Double percentalIncrease, int increaseFrequence) {
 		double value = property.getTotalManagementCost().doubleValue();
 		double i = percentalIncrease / 100;
 		long yearDiff = calculatePropertyForecastYear(property, forecast);
@@ -140,17 +140,17 @@ public class ForecastServiceImpl implements ForecastService {
 		forecast.setRunningCost(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateInterest(Property property, Credit credit, ForecastDto forecast) {
+	private void populateInterest(Property property, Credit credit, ForecastVO forecast) {
 		double result = calculateInterest(property, credit, forecast);
 		forecast.setInterest(forecast.getInterest().add(BigDecimalUtils.convert(result)));
 	}
 	
-	private void populateDeprecation(Property property, ForecastDto forecast, ForecastConfiguration forecastConfiguration) {
+	private void populateDeprecation(Property property, ForecastVO forecast, ForecastConfiguration forecastConfiguration) {
 		double result = calculateDeprecation(property, forecastConfiguration);
 		forecast.setDeprecation(BigDecimalUtils.convert(result));
 	}
 	
-	private void populateRedemption(Property property, Credit credit, ForecastDto forecast) {
+	private void populateRedemption(Property property, Credit credit, ForecastVO forecast) {
 		int forecastYear = forecast.getYear();
 		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
 		
@@ -168,7 +168,7 @@ public class ForecastServiceImpl implements ForecastService {
 		}
 	}
 
-	private double calculateInterest(Property property, Credit credit, ForecastDto forecast) {
+	private double calculateInterest(Property property, Credit credit, ForecastVO forecast) {
 		double value = credit.getCapital().doubleValue();
 		Double interestInPercent = credit.getInterestRateNominalInPercent().doubleValue();
 		int yearDiff = calculatePropertyForecastYear(property, forecast) + 1;
@@ -183,7 +183,7 @@ public class ForecastServiceImpl implements ForecastService {
 		return value * i;
 	}
 
-	private int calculatePropertyForecastYear(Property property, ForecastDto forecast) {
+	private int calculatePropertyForecastYear(Property property, ForecastVO forecast) {
 		int forecastInYear = forecast.getYear();
 		
 		int propertyPurchaseYear;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import ch.hemisoft.immo.calc.business.service.dto.ForecastDto;
+import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
 import ch.hemisoft.immo.utils.ListStreamUtils;
 import lombok.Data;
 
@@ -13,9 +13,9 @@ import lombok.Data;
 public class ForecastTableDto {
 	private final int FORECAST_IN_YEARS = 10;
 	
-	private final List<ForecastDto> forecasts = new ArrayList<>();
+	private final List<ForecastVO> forecasts = new ArrayList<>();
 
-	public ForecastTableDto(List<ForecastDto> forecasts) {
+	public ForecastTableDto(List<ForecastVO> forecasts) {
 		this.forecasts.clear();
 		this.forecasts.addAll(forecasts);
 	}

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import ch.hemisoft.immo.calc.business.service.ForecastService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
-import ch.hemisoft.immo.calc.business.service.dto.ForecastDto;
+import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
 import ch.hemisoft.immo.calc.web.dto.ForecastTableDto;
 import ch.hemisoft.immo.calc.web.dto.SessionProperty;
 import ch.hemisoft.immo.domain.Property;
@@ -53,7 +53,7 @@ public class ForecastController {
 	public String view(@PathVariable Long propertyId, ModelMap modelMap) {
 		Property property = propertyService.find(propertyId);
 		List<Property> properties = Arrays.asList(property);
-		List<ForecastDto> forecasts = forecastService.findAll(properties);
+		List<ForecastVO> forecasts = forecastService.findAll(properties);
 		modelMap.addAttribute("forecast", new ForecastTableDto(forecasts));
 		modelMap.addAttribute("properties", propertyService.findAll());
 		modelMap.addAttribute("property", property);

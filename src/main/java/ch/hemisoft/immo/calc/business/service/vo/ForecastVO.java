@@ -1,4 +1,4 @@
-package ch.hemisoft.immo.calc.business.service.dto;
+package ch.hemisoft.immo.calc.business.service.vo;
 
 import java.math.BigDecimal;
 
@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode(includes = "year")
-public class ForecastDto {
+public class ForecastVO {
 	@NonNull @NotNull		private Integer 				year;
 	@NotNull @NonNull		private BigDecimal 				netAssets;
 	@NonNull @NotNull		private BigDecimal 				incomeBeforeCost 	= BigDecimalUtils.convert(0.0);
@@ -28,7 +28,7 @@ public class ForecastDto {
 							private Boolean 				german;
 	
 	
-	public ForecastDto(int year, BigDecimal netAssets, BigDecimal taxQuote, Boolean german) {
+	public ForecastVO(int year, BigDecimal netAssets, BigDecimal taxQuote, Boolean german) {
 		this.year = year;
 		this.netAssets = netAssets;
 		this.taxQuote = taxQuote;
