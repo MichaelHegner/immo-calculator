@@ -1,4 +1,4 @@
-package ch.hemisoft.immo.calc.business.utils;
+package ch.hemisoft.commons.calc.utils;
 
 public final class AnnuitiesCalculator {
 	

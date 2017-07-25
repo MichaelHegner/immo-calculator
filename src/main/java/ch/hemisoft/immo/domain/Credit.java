@@ -16,7 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.hemisoft.immo.calc.business.utils.AnnuitiesCalculator;
+import ch.hemisoft.commons.calc.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

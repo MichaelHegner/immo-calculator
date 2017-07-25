@@ -5,4 +5,4 @@
  * @author Michael
  *
  */
-package ch.hemisoft.immo.calc.business.utils;
+package ch.hemisoft.commons.calc.utils;

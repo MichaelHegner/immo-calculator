@@ -14,8 +14,8 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import ch.hemisoft.commons.CollectionUtils;
+import ch.hemisoft.commons.calc.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
-import ch.hemisoft.immo.calc.business.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
 import ch.hemisoft.immo.domain.Property;
