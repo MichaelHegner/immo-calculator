@@ -6,6 +6,19 @@ public final class BasicCalculator {
 	 * Calculates the Interest of an amount as absolute value.
 	 * @param K as capital
 	 * @param z as interest
+	 * @param t as year
+	 * @param interval the interval of years for the next interest increase.
+	 * @return returns the interest as absolute value.
+	 */
+	public static double calculateInterestOfAmountWithInterval(double K, double z, int t, int interval) {
+		double tInterval = t %  interval == 0 ? t :  t - t %  interval;
+		return accumulationFactorByYearsAndInterest(tInterval, z);
+	}
+	
+	/**
+	 * Calculates the Interest of an amount as absolute value.
+	 * @param K as capital
+	 * @param z as interest
 	 * @return returns the interest as absolute value.
 	 */
 	public static double calculateInterestOfAmount(double K, double z) {

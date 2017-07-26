@@ -12,13 +12,48 @@ import ch.hemisoft.immo.domain.Property;
 
 public final class ForecastCalculator {
 	
+	
+	public static double calculateRental(Property property, ForecastVO forecast, Double rentalIndex, int interval) {
+		double K = (null == property.getRentalNet()) ? 0.0 : property.getRentalNet().doubleValue();
+		int yearDiff = ForecastCalculator.calculatePropertyForecastOfYear(property, forecast);
+		return BasicCalculator.calculateInterestOfAmountWithInterval(K, rentalIndex, yearDiff, interval);
+	}	
+	
+	public static double calculateRunningCost(Property property, ForecastVO forecast, Double percentalIncrease, int increaseFrequence) {
+		double K = property.getTotalManagementCost().doubleValue();
+		int yearDiff = ForecastCalculator.calculatePropertyForecastOfYear(property, forecast);
+		return BasicCalculator.calculateInterestOfAmountWithInterval(K, percentalIncrease, yearDiff, increaseFrequence);
+	}
 
+	//
+	
+	public static double calculateRedemption(Property property, Credit credit, ForecastVO forecast) {
+		int forecastYear = forecast.getYear();
+		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
+		int termSelectedCredit = credit.getTerm().intValue();
+		
+		if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
+			int yearDiff = calculatePropertyForecastAtEndOfYear(property, forecast);
+			return calculateRedemption(property, credit, forecast, yearDiff);
+		} else {
+			return 0.0;
+		}
+	}
+	
 	public static double calculateRedemption(Property property, Credit credit, ForecastVO forecast, int year) {
 		double financialNeedsTotal = credit.getCapital().doubleValue();
 		double zRedemptionAtBegin = credit.getRedemptionAtBeginInPercent().doubleValue();
 		double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
 		double zInterest = credit.getInterestRateNominalInPercent().doubleValue();
 		return AnnuitiesCalculator.calculateRedemptionAfterYear(financialNeedsTotal, zInterest, zRedemptionAtBegin, zSpecialRedemption, year);
+	}
+	
+	//
+	
+	
+	public static double calculateInterest(Property property, Credit credit, ForecastVO forecast) {
+		int yearDiff = ForecastCalculator.calculatePropertyForecastAtEndOfYear(property, forecast);
+		return calculateInterest(credit, yearDiff);
 	}
 	
 	public static double calculateInterest(Credit credit, int year) {

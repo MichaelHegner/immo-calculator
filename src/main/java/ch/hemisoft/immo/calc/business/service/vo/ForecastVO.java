@@ -8,12 +8,12 @@ import javax.validation.constraints.NotNull;
 
 import ch.hemisoft.immo.utils.BigDecimalUtils;
 import groovy.transform.EqualsAndHashCode;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@Data
+@Getter
 @NoArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode(includes = "year")
