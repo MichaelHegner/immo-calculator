@@ -1,6 +1,6 @@
 package ch.hemisoft.commons.calc.utils;
 
-final class _BasicCalculator {
+public final class BasicCalculator {
 	
 	/**
 	 * Calculates the Interest of an amount as absolute value.
@@ -9,7 +9,7 @@ final class _BasicCalculator {
 	 * @return returns the interest as absolute value.
 	 */
 	public static double calculateInterestOfAmount(double K, double z) {
-		return K * _BasicCalculator.interestToQuote(z);
+		return K * BasicCalculator.interestToQuote(z);
 	}
 
 	/**
@@ -31,6 +31,6 @@ final class _BasicCalculator {
 		return interest / 100;
 	}
 	
-	private _BasicCalculator() {}
+	private BasicCalculator() {}
 	
 }

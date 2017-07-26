@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.business.service.vo;
 
+import static java.util.Objects.requireNonNull;
+
 import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ForecastVO {
 	@NonNull @NotNull		private Integer 				year;
 	@NotNull @NonNull		private BigDecimal 				netAssets;
+	
 	@NonNull @NotNull		private BigDecimal 				incomeBeforeCost 	= BigDecimalUtils.convert(0.0);
 	@NonNull @NotNull		private BigDecimal 				runningCost 		= BigDecimalUtils.convert(0.0);
 	@NonNull @NotNull		private BigDecimal 				specialCost			= BigDecimalUtils.convert(0.0);
@@ -33,6 +36,31 @@ public class ForecastVO {
 		this.netAssets = netAssets;
 		this.taxQuote = taxQuote;
 		this.german = german;
+	}
+	
+	//
+
+	public void addIncomeBeforeCost(BigDecimal incomeBeforeCost) {
+		this.incomeBeforeCost = this.incomeBeforeCost.add(requireNonNull(incomeBeforeCost));
+	}
+	
+	public void addRunningCost(BigDecimal runningCost) {
+		this.runningCost = this.runningCost.add(requireNonNull(runningCost));
+	}
+	
+	public void addSpecialCost(BigDecimal specialCost) {
+		this.specialCost = this.specialCost.add(requireNonNull(specialCost));
+	}
+	
+	public void addInterest(BigDecimal interest) {
+		this.interest = this.interest.add(requireNonNull(interest));
+	}
+	
+	public void addDeprecation(BigDecimal deprecation) {
+		this.deprecation = this.deprecation.add(requireNonNull(deprecation));
+	}	
+	public void addRedemption(BigDecimal redemption) {
+		this.redemption = this.redemption.add(requireNonNull(redemption));
 	}
 	
 	//

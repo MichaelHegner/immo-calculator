@@ -160,7 +160,7 @@ public class Credit {
 		int year = 0;
 		do {
 			sum += AnnuitiesCalculator
-					.calculateInterestToPayAfterYear(getCapitalAsDouble(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
+					.calculateInterestAfterYear(getCapitalAsDouble(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
 		} while(year <= numberOfYears);
 		
 		return sum;

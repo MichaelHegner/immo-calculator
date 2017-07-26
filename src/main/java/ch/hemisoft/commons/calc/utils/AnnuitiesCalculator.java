@@ -3,17 +3,32 @@ package ch.hemisoft.commons.calc.utils;
 public final class AnnuitiesCalculator {
 	
 	/**
+	 * Calculates the redemption at the end of the given year
+	 * @param K as capital
+	 * @param zInterest to pay for the loan (e.g. 4%).
+	 * @param zRedemptionAtBegin redemption reducing the loan (e.g. 4%).
+	 * @param zSpecialRedemption also reducing loan by free will (e.g. 4%).
+	 * @param endOfYear the end of the year to calculate the rest of the capital
+	 * @return the redemption at the end of the given year.
+	 */
+	public static double calculateRedemptionAfterYear(double K, double zInterest, double zRedemptionAtBegin, double zSpecialRedemption, int endOfYear) {
+		double annuity = calculateAnnuityInYear(K, zInterest , zRedemptionAtBegin + zSpecialRedemption);
+		double interest = calculateInterestInYear(K, zInterest, zRedemptionAtBegin, zSpecialRedemption, endOfYear);
+		return annuity - interest;
+	}
+	
+	/**
 	 * Calculates the interest in the given year p.a.
-	 * @param K to loan
+	 * @param K as capital
 	 * @param t the year to calculate
 	 * @param n complete time loan running in years
 	 * @param z as percent like 2.2%
 	 * @return the interest to pay in the given year.
 	 */
-	public static double calculateInterestToPayAfterYear(double K, int t, double n, double z) {
+	public static double calculateInterestAfterYear(double K, int t, double n, double z) {
 		double q = 1 + (z / 100);
-		double qn = _BasicCalculator.accumulationFactorByYearsAndInterest(n + 1, z);
-		double qt = _BasicCalculator.accumulationFactorByYearsAndInterest(t, z);
+		double qn = BasicCalculator.accumulationFactorByYearsAndInterest(n + 1, z);
+		double qt = BasicCalculator.accumulationFactorByYearsAndInterest(t, z);
 		double result = K * ( (qn - qt) * (q - 1) ) / ( qn - 1 );
 		return Math.max(result, 0);
 	}
@@ -29,7 +44,7 @@ public final class AnnuitiesCalculator {
 	 */
 	public static double calculateInterestInYear(double K, double zInterest, double zRedemption, double zSpecialRedemption, int endOfYear) {
 		double restLoan = calculateRestLoanInYear(K, zInterest, zRedemption, zSpecialRedemption, endOfYear);
-		return _BasicCalculator.calculateInterestOfAmount(restLoan, zInterest); 
+		return BasicCalculator.calculateInterestOfAmount(restLoan, zInterest); 
 	}
 	
 	/**
@@ -44,7 +59,7 @@ public final class AnnuitiesCalculator {
 	public static double calculateRestLoanInYear(double K, double zInterest, double zRedemption, double zSpecialRedemption, int endOfYear) {
 		double redemptionOfFirstYear = calculateRedemptionAmountOfFirstYear(K, zInterest, zRedemption);
 		double T1 = redemptionOfFirstYear + calculateSpecialRedemptionInYear(K, zSpecialRedemption);
-		double qPowN = _BasicCalculator.accumulationFactorByYearsAndInterest(endOfYear, zInterest);
+		double qPowN = BasicCalculator.accumulationFactorByYearsAndInterest(endOfYear, zInterest);
 		double result = K - ( T1 * (qPowN - 1) ) / ( zInterest );
 		return Math.max(result, 0);
 	}
@@ -58,7 +73,7 @@ public final class AnnuitiesCalculator {
 	 * @return the special redemption as amount in the year.
 	 */
 	public static double calculateSpecialRedemptionInYear(double K, double zSpecialRedemption) {
-		return _BasicCalculator.calculateInterestOfAmount(K, zSpecialRedemption);
+		return BasicCalculator.calculateInterestOfAmount(K, zSpecialRedemption);
 	}
 	
 	/**
@@ -69,7 +84,7 @@ public final class AnnuitiesCalculator {
 	 * @return the annuity of the year as amount.
 	 */
 	public static double calculateAnnuityInYear(double K, double zInterest, double zRedemption) {
-		return _BasicCalculator.calculateInterestOfAmount(K, zInterest + zRedemption);
+		return BasicCalculator.calculateInterestOfAmount(K, zInterest + zRedemption);
 	}
 	
 	//
@@ -92,7 +107,7 @@ public final class AnnuitiesCalculator {
 	 * @return the amount of the interest in the first year
 	 */
 	public static double calculateInterestAmountOfFirstYear(double K, double z) {
-		return _BasicCalculator.calculateInterestOfAmount(K, z);
+		return BasicCalculator.calculateInterestOfAmount(K, z);
 	}
 	
 	private AnnuitiesCalculator() {}
