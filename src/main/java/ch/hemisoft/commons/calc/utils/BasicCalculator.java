@@ -12,7 +12,8 @@ public final class BasicCalculator {
 	 */
 	public static double calculateInterestOfAmountWithInterval(double K, double z, int t, int interval) {
 		double tInterval = t %  interval == 0 ? t :  t - t %  interval;
-		return accumulationFactorByYearsAndInterest(tInterval, z);
+		double accumulationFactor = accumulationFactorByYearsAndInterest(tInterval, z);
+		return K * accumulationFactor;
 	}
 	
 	/**
