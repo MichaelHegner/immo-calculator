@@ -3,12 +3,12 @@ package ch.hemisoft.immo.calc.business.utils;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 
-import ch.hemisoft.commons.calc.utils.AnnuitiesCalculator;
-import ch.hemisoft.commons.calc.utils.BasicCalculator;
 import ch.hemisoft.immo.calc.business.service.vo.ForecastVO;
 import ch.hemisoft.immo.domain.Credit;
 import ch.hemisoft.immo.domain.ForecastConfiguration;
 import ch.hemisoft.immo.domain.Property;
+import net.hemisoft.financial.calculator.library.utils.AnnuityCalculator;
+import net.hemisoft.financial.calculator.library.utils.BasicCalculator;
 
 public final class ForecastCalculator {
 	
@@ -45,7 +45,7 @@ public final class ForecastCalculator {
 		double zRedemptionAtBegin = credit.getRedemptionAtBeginInPercent().doubleValue();
 		double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
 		double zInterest = credit.getInterestRateNominalInPercent().doubleValue();
-		return AnnuitiesCalculator.calculateRedemptionAfterYear(financialNeedsTotal, zInterest, zRedemptionAtBegin, zSpecialRedemption, year);
+		return AnnuityCalculator.calculateRedemptionAfterYear(financialNeedsTotal, zInterest, zRedemptionAtBegin, zSpecialRedemption, year);
 	}
 	
 	//
@@ -61,7 +61,7 @@ public final class ForecastCalculator {
 		Double zInterest = credit.getInterestRateNominalInPercent().doubleValue();
 		double zRedemption = credit.getRedemptionAtBeginInPercent().doubleValue();
 		double zSpecialRedemption = credit.getSpecialRedemptionEachYearInPercent().doubleValue();
-		return AnnuitiesCalculator.calculateInterestInYear(K, zInterest, zRedemption, zSpecialRedemption, year);
+		return AnnuityCalculator.calculateInterestInYear(K, zInterest, zRedemption, zSpecialRedemption, year);
 	}
 
 	/**

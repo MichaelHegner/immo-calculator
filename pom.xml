@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.4.RELEASE</version>
+		<version>1.5.6.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -25,6 +25,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- APP-CALCULATOR ... -->
+		<dependency>
+			<groupId>net.hemisoft.calculator</groupId>
+			<artifactId>financial-calculator-library</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 		<!-- SPRING FRAMEWORK ... -->
 		<dependency>
@@ -132,5 +138,15 @@
 		</plugins>
 	</build>
 
-
+	<repositories>
+		<repository>
+			<id>spring-milestones</id>
+			<name>Spring Milestones</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
 </project>

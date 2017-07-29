@@ -16,7 +16,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import ch.hemisoft.commons.calc.utils.AnnuitiesCalculator;
 import ch.hemisoft.immo.utils.BigDecimalUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,6 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import net.hemisoft.financial.calculator.library.utils.AnnuityCalculator;
 
 @Entity
 @org.hibernate.envers.Audited
@@ -159,8 +159,8 @@ public class Credit {
 		
 		int year = 0;
 		do {
-			sum += AnnuitiesCalculator
-					.calculateInterestAfterYear(getCapitalAsDouble(), ++year, getTerm().doubleValue(), getDInterestRateNominalInPercent());
+			sum += AnnuityCalculator
+					.calculateInterestAfterYear(getCapitalAsDouble(), getDInterestRateNominalInPercent(), ++year, getTerm().intValue());
 		} while(year <= numberOfYears);
 		
 		return sum;
