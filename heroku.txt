@@ -3,3 +3,14 @@ https://devcenter.heroku.com/articles/deploying-java-applications-with-the-herok
 
 Deploy the app
 https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
+
+
+GIT DEPLOY
+
+
+MAVEN DEPLOY
+Deploy and Upload Full Deployment File
+On Dashboard add new Project immo-calculator
+mvn clean install
+mvn heroku:deploy
+heroku ps
