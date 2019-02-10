@@ -61,7 +61,7 @@ public class Credit {
 	}
 
 	public boolean isActive() {
-		return active;
+		return active == null ? false : active.booleanValue();
 	}
 
 	public boolean isDeactivated() {
