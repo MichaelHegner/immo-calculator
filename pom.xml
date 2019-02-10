@@ -27,9 +27,9 @@
 	<dependencies>
 		<!-- APP-CALCULATOR ... -->
 		<dependency>
-			<groupId>net.hemisoft.calculator</groupId>
+			<groupId>net.hemisoft.financial.calculator</groupId>
 			<artifactId>financial-calculator-library</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.1.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- SPRING FRAMEWORK ... -->
