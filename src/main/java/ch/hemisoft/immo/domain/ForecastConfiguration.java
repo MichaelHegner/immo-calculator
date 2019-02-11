@@ -17,10 +17,10 @@ import lombok.ToString;
 @Table(uniqueConstraints={
 		@UniqueConstraint(columnNames = {"countryCode"}, name="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE")
 }) 
-@Data
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
+@Data
 public class ForecastConfiguration {
 	@Id @ GeneratedValue 			Long 	id;
 	@NotNull @Column(unique=true)	String 	countryCode; // TODO: CHECK VALID CODE

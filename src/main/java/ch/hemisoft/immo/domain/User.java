@@ -21,11 +21,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@Data
 @Entity
 @Table(name="users")
 @NoArgsConstructor(access=PROTECTED)
 @RequiredArgsConstructor
+@Data
 public class User {
 	@Id @GeneratedValue	private Long 	id;
 	@NonNull @NotNull	private String 	userName;

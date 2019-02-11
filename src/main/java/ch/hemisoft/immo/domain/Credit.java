@@ -27,11 +27,11 @@ import net.hemisoft.financial.calculator.library.utils.AnnuityCalculator;
 
 @Entity
 @org.hibernate.envers.Audited
-@Data
 @ToString(of={"nameOfInstitution", "property"})
 @EqualsAndHashCode(of={"nameOfInstitution", "property"})
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Data
 public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
 	@Size(min = 1, max = 255)							String		nameOfInstitution;

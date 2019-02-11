@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Embeddable
-@Data
 @NoArgsConstructor
+@Data
 public class CustomDate {
 	@NonNull @NotNull
 	private Integer year;

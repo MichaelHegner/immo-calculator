@@ -32,11 +32,11 @@ import lombok.ToString;
 @Table(uniqueConstraints={
     @UniqueConstraint(columnNames = {"year", "month", "day", "property_id", "type"}, name = "UK_COST_PLANNING")
 }) 
-@Data
 @ToString(of={"date", "property", "type"})
 @EqualsAndHashCode(of={"date", "property", "type"})
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Data
 public class CostPlanning implements Ownable{
 	@Id @GeneratedValue									private 	Long 		id;
 	@NotNull @NonNull @OneToOne(fetch=LAZY)				private 	Property 	property;

@@ -35,9 +35,9 @@ import lombok.ToString;
 
 @Entity
 @org.hibernate.envers.Audited
-@Data
 @ToString(of={"purchaseDate", "address"})
 @EqualsAndHashCode(of={"purchaseDate", "address"})
+@Data
 public class Property implements Ownable {
 	@Id @GeneratedValue		Long 			id; 
 	

@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-@Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@Data
 public class CostPlanningDto {
 	private Long id;
 	
