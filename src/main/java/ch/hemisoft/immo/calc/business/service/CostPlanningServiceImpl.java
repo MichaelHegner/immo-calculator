@@ -36,7 +36,7 @@ public class CostPlanningServiceImpl implements CostPlanningService {
 	
 	@Override
 	public CostPlanning find(Long id) {
-		return costPlanningRepository.findOne(id);
+		return costPlanningRepository.findById(id).orElse(null);
 	}
 	
 	@Override

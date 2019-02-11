@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.business.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
@@ -17,9 +19,13 @@ public class InvestmentServiceImpl implements InvestmentService {
 
 	@Override
 	public Credit swapCredit(Long creditId) {
-		Credit credit = repository.findOne(creditId);
-		credit.setActive(!credit.isActive());
-		return credit;
+		Optional<Credit> optCredit = repository.findById(creditId);
+		
+		if (optCredit.isPresent()) {
+			Credit credit = optCredit.get();
+			credit.setActive(!credit.isActive());
+		} 
+		
+		return optCredit.orElse(null);
 	}
-
 }

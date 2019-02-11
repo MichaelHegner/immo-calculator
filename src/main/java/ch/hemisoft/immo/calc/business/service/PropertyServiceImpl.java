@@ -35,7 +35,7 @@ public class PropertyServiceImpl implements PropertyService {
 	
 	@Override
 	public Property find(Long id) {
-		return repository.findOne(id);
+		return repository.findById(id).orElse(null);
 	}
 
 	@Override
