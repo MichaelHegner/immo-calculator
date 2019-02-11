@@ -35,11 +35,11 @@ import net.hemisoft.financial.calculator.library.utils.AnnuityCalculator;
 public class Credit {
 	@Id @ GeneratedValue 								Long 		id;
 	@Size(min = 1, max = 255)							String		nameOfInstitution;
-	@Min(0)												BigDecimal	capital;
-	@Min(0)												BigDecimal 	interestRateNominalInPercent;
-	@Min(0)												BigDecimal	redemptionAtBeginInPercent;
-	@Min(0)												BigDecimal	specialRedemptionEachYearInPercent;
-														Boolean		active;
+	@Min(0)												BigDecimal	capital								= BigDecimal.ZERO;
+	@Min(0)												BigDecimal 	interestRateNominalInPercent		= BigDecimal.ZERO;
+	@Min(0)												BigDecimal	redemptionAtBeginInPercent			= BigDecimal.ZERO;			
+	@Min(0)												BigDecimal	specialRedemptionEachYearInPercent	= BigDecimal.ZERO;
+														Boolean		active								= Boolean.FALSE;
 	
 	@ManyToOne(fetch = LAZY)
 	@JoinTable(
@@ -61,7 +61,7 @@ public class Credit {
 	}
 
 	public boolean isActive() {
-		return active == null ? false : active.booleanValue();
+		return active.booleanValue();
 	}
 
 	public boolean isDeactivated() {
