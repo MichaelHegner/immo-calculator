@@ -116,12 +116,9 @@ public class Credit {
 	}
 	
 	private double getRestLoanInYear(int afterNumberOfYears) {
-		double K = getCapitalAsDouble();
-		double T1 = getRedemptionOfFirstYear() + getSpecialRedemptionEachYearAbsoluteAsDouble();
-		double q = 1 + interestRateNominalAsQuote();
-		double qPowN = getQPowN(afterNumberOfYears - 1);
-		double result = K - ( T1 * (qPowN - 1) ) / ( q - 1 );
-		return Math.max(result, 0);
+		double K = getCapitalAsDouble();					  
+		double interest = getDInterestRateNominalInPercent(); 
+		return AnnuityCalculator.calculateRestLoanInYear(K, interest, redemptionAtBeginInPercent.doubleValue(), specialRedemptionEachYearInPercent.doubleValue(), afterNumberOfYears);
 	}
 	
 	// 
@@ -164,24 +161,6 @@ public class Credit {
 		} while(year <= numberOfYears);
 		
 		return sum;
-	}
-
-	
-	//
-
-	private double getQPowN(double years) {
-		double q = 1 + interestRateNominalAsQuote();
-		return Math.pow(q, years + 1);
-	}
-
-	//
-
-	private double getRedemptionOfFirstYear() {
-		return getAnnuityEachYear().doubleValue() - getInterestOfFirstYear();
-	}
-	
-	private double getInterestOfFirstYear() {
-		return getCapitalAsDouble() * interestRateNominalAsQuote();
 	}
 
 	//
