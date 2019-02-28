@@ -19,11 +19,22 @@
 			        <div th:if="${param.logout}" class="alert alert-info">
 			            Sie haben sich ausgeloggt.
 			        </div>
+			        <div th:if="${param.registration}" class="alert alert-info">
+			            Sie haben sich registriert.
+			        </div>
 			        <form th:action="@{/login}" method="post">
-			            <input type="text" id="username" class="form-control" name="username" placeholder="Benutzername" />
-						<input type="password" id="password" class="form-control" name="password" placeholder="Passwort" /> 
-			            <button type="submit" name="submit" class="btn btn-info btn-block">Anmelden</button>
+			        	<div class="row filterRow">
+			            	<input type="text" id="username" class="form-control" name="username" placeholder="Benutzername" />
+						</div>
+			        	<div class="row filterRow">
+							<input type="password" id="password" class="form-control" name="password" placeholder="Passwort" /> 
+						</div>
+			        	<div class="row filterRow">
+				            <button type="submit" name="submit" class="btn btn-info btn-block">Anmelden</button>
+						</div>
 			        </form>
+			        
+			        <a th:href="@{/registration}" th:text="#{gui.button.register}">register</a>
 				</div>
 			</main>
 		</div>
