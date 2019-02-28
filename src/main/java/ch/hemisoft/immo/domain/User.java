@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import groovy.transform.ToString;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -26,7 +27,8 @@ import lombok.RequiredArgsConstructor;
 @NoArgsConstructor(access=PROTECTED)
 @RequiredArgsConstructor
 @Data
-public class User {
+@ToString(excludes = "password")
+public class User implements PasswordProtectable {
 	@Id @GeneratedValue	private Long 	id;
 	@NonNull @NotNull	private String 	userName;
 	@NonNull @NotNull	private String 	password;
