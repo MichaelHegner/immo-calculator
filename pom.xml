@@ -10,6 +10,21 @@
 
 	<name>immo-calculator</name>
 	<description>Demo project for Spring Boot</description>
+	
+	<scm>
+		<url>https://github.com/MichaelHegner/immo-calculator</url>
+		<connection>scm:git:git://github.com/MichaelHegner/immo-calculator.git</connection>
+		<developerConnection>scm:git:git://github.com/MichaelHegner/immo-calculator.git</developerConnection>
+	</scm>
+	
+	<developers>
+		<developer>
+			<email>michael.hegner@hemisoft.net</email>
+			<name>Michael Hegner</name>
+			<url>https://github.com/MichaelHegner</url>
+			<id>MichaelHegner</id>
+		</developer>
+	</developers>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
