@@ -14,6 +14,5 @@ GIT DEPLOY
 MAVEN DEPLOY
 Deploy and Upload Full Deployment File
 On Dashboard add new Project immo-calculator
-mvn clean install
-mvn heroku:deploy
+mvn clean install heroku:deploy -Ptest
 heroku ps
