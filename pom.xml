@@ -13,8 +13,8 @@
 	
 	<scm>
 		<url>https://github.com/MichaelHegner/immo-calculator</url>
-		<connection>scm:git:git://github.com/MichaelHegner/immo-calculator.git</connection>
-		<developerConnection>scm:git:git://github.com/MichaelHegner/immo-calculator.git</developerConnection>
+		<connection>scm:git:https://github.com/MichaelHegner/immo-calculator.git</connection>
+		<developerConnection>scm:git:https://github.com/MichaelHegner/immo-calculator.git</developerConnection>
 	</scm>
 	
 	<developers>
