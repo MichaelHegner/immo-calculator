@@ -29,7 +29,8 @@ public final class ForecastCalculator {
 	
 	public static double calculateRedemption(Property property, Credit credit, ForecastVO forecast) {
 		int forecastYear = forecast.getYear();
-		int yearPurchaseProperty = property.getPurchaseDate().get(ChronoField.YEAR);
+		LocalDate purchaseDate = property.getPurchaseDate();
+        int yearPurchaseProperty = purchaseDate != null ? purchaseDate.get(ChronoField.YEAR) : LocalDate.now().get(ChronoField.YEAR);
 		int termSelectedCredit = credit.getTerm().intValue();
 		
 		if (forecastYear - yearPurchaseProperty <= termSelectedCredit) {
