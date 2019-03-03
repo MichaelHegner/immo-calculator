@@ -2,8 +2,8 @@ $(document).ready(function() {
 	registerEventTableRowClick();	// OVERVIEW PAGE
 	registerNewButton();			// OVERVIEW PAGE
 	registerSubmitButton();			// EDIT PAGE
-	registerDeactivateButton();		// INVESTMENT PAGE
-	registerActivateButton();		// INVESTMENT PAGE
+	registerDeactivateButton();		// FINANCE PAGE
+	registerActivateButton();		// FINANCE PAGE
 });
 
 function registerNewButton() {

@@ -26,7 +26,7 @@
 						        </li>
 						        <li th:if="${not #lists.isEmpty(properties)}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/investment') ? 'active':''}">
 						        	<a th:href="@{/investment/edit}" href="/investment/edit">
-						        		<span th:text="#{gui.navbar.investment}">INVESTMENT</span> <span class="sr-only">(current)</span>
+						        		<span th:text="#{gui.navbar.finance}">FINANCE</span> <span class="sr-only">(current)</span>
 						        	</a>
 						        </li>
 						        <li th:if="${not #lists.isEmpty(properties)}" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/planning') ? 'active':''}">
