@@ -141,6 +141,7 @@
 	        <resource>
 	            <directory>src/main/resources</directory>
 	            <excludes>
+	            	<exclude>data.sql</exclude>
 	                <exclude>import.sql</exclude>
 	            </excludes>
 	            <filtering>false</filtering>

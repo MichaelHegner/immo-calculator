@@ -40,6 +40,7 @@ public class ImmoCalculatorAppApplication {
 	    	}
 	    }
 
+	    // TODO: Make configurable
 		private ForecastConfiguration createAustrianConfig() {
 			ForecastConfiguration deConfig = new ForecastConfiguration();
 			deConfig.setCountryCode("AT");
@@ -51,6 +52,7 @@ public class ImmoCalculatorAppApplication {
 			return deConfig;
 		}
 
+        // TODO: Make configurable
 		private ForecastConfiguration createGermenConfig() {
 			ForecastConfiguration deConfig = new ForecastConfiguration();
 			deConfig.setCountryCode("DE");
