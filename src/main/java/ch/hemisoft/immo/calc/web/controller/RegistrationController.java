@@ -33,7 +33,7 @@ public class RegistrationController {
             try {
                 User registered = createUserAccount(user, errors);
                 modelMap.addAttribute("user", createPopulated(registered));
-                return "redirect:/login?registration"; // TODO: Maybe go to registration page because of currently strange behavior
+                return "redirect:/login?registration";
             } 
             catch (EmailExistsException e) {
                 modelMap.addAttribute("user", user);
