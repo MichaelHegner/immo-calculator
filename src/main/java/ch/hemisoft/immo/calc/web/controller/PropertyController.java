@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.hemisoft.immo.calc.business.service.PropertyService;
 import ch.hemisoft.immo.calc.web.dto.SessionProperty;
@@ -29,32 +30,36 @@ public class PropertyController {
 	@NonNull PropertyService service;
 
 	@GetMapping("/list")
-	public String list(ModelMap modelMap) {
+	public String list() {
 		return "property/list";
 	}
 	
 	@GetMapping("/new")
-	public String newProperty(ModelMap modelMap) {
-		modelMap.addAttribute("property", new Property());
-		modelMap.addAttribute("selectedProperty", new SessionProperty());
-		return "property/edit";
+	public ModelAndView newProperty() {
+	    ModelAndView mv = new ModelAndView("property/edit");
+	    mv.addObject("property", new Property());
+	    mv.addObject("selectedProperty", new SessionProperty());
+		return mv;
 	}	
 	
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		Long selectedPropertyId = selectedProperty.getId();
 		if(null != selectedPropertyId) { // TO GET THE CORRECT URL WITH ID
-			return "redirect:/property/edit/" + selectedPropertyId;
+			return new ModelAndView("redirect:/property/edit/" + selectedPropertyId);
+		} else {
+		    ModelAndView mv = new ModelAndView("property/edit");
+		    mv.addObject("selectedProperty", selectedProperty);
+    		return mv;
 		}
-		modelMap.addAttribute("selectedProperty", selectedProperty);
-		return "property/edit";
 	}
 
 	@GetMapping("/edit/{propertyId}")
-	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
-		modelMap.addAttribute("property", service.find(propertyId));
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "property/edit";
+	public ModelAndView edit(@PathVariable Long propertyId) {
+	    ModelAndView mv = new ModelAndView("property/edit");
+	    mv.addObject("property", service.find(propertyId));
+	    mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}
 	
 	@ModelAttribute("properties")

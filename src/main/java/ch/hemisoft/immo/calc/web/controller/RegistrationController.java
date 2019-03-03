@@ -1,14 +1,13 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.hemisoft.commons.exception.EmailExistsException;
 import ch.hemisoft.commons.exception.UserNameExistsException;
@@ -23,34 +22,35 @@ public class RegistrationController {
     private final UserService service;
     
     @GetMapping("/registration")
-    public String newRegistration(ModelMap modelMap) {
+    public String newRegistration() {
         return "security/registration";
     }
 
     @PostMapping("/registration")
-    public String edit(@ModelAttribute("user") @Valid UserDto user, BindingResult errors, ModelMap modelMap) {
+    public ModelAndView edit(@ModelAttribute("user") @Valid UserDto user, BindingResult errors) {
         if (!errors.hasErrors()) {
             try {
-                User registered = createUserAccount(user, errors);
-                modelMap.addAttribute("user", createPopulated(registered));
-                return "redirect:/login?registration";
-            } 
-            catch (EmailExistsException e) {
-                modelMap.addAttribute("user", user);
-                modelMap.addAttribute("errors", errors);
+                ModelAndView mv = new ModelAndView("redirect:/login?registration");
+                mv.addObject("user", createPopulated(createUserAccount(user, errors)));
+                return mv;
+            } catch (EmailExistsException e) {
+                ModelAndView mv = new ModelAndView("security/registration");
+                mv.addObject("user", user);
+                mv.addObject("errors", errors);
                 errors.rejectValue("email", "user.email.exist");
-                return "security/registration";
-            } 
-            catch (UserNameExistsException e) {
-                modelMap.addAttribute("user", user);
-                modelMap.addAttribute("errors", errors);
+                return mv;
+            } catch (UserNameExistsException e) {
+                ModelAndView mv = new ModelAndView("security/registration");
+                mv.addObject("user", user);
+                mv.addObject("errors", errors);
                 errors.rejectValue("userName", "user.userName.exist");
-                return "security/registration";
+                return mv;
             } 
         } else {
-            modelMap.addAttribute("user", user);
-            modelMap.addAttribute("errors", errors);
-            return "security/registration";
+            ModelAndView mv = new ModelAndView("security/registration");
+            mv.addObject("user", user);
+            mv.addObject("errors", errors);
+            return mv;
         }
     }
     

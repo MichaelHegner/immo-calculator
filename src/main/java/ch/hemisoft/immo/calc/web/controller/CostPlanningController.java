@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.hemisoft.immo.calc.business.service.CostPlanningService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -35,71 +35,80 @@ public class CostPlanningController {
 	@NonNull final PropertyService propertyService;
 	
 	@GetMapping("/list")
-	public String list(ModelMap modelMap) {
-		List<Property> properties = propertyService.findAll();
-		modelMap.addAttribute("property", new Property());
-		modelMap.addAttribute("selectedProperty", new SessionProperty());
-		modelMap.addAttribute("properties", properties);
-		modelMap.addAttribute("plannings", costPlanningService.findAll(properties));
-		return "planning/edit";
+	public ModelAndView list() {
+	    List<Property> properties = propertyService.findAll();
+
+	    ModelAndView mv = new ModelAndView("planning/edit");
+		mv.addObject("property", new Property());
+		mv.addObject("selectedProperty", new SessionProperty());
+		mv.addObject("properties", properties);
+		mv.addObject("plannings", costPlanningService.findAll(properties));
+		return mv;
 	}	
 	
 	@GetMapping("/new")
-	public String newPlanning(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView newPlanning(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		Long selectedPropertyId = selectedProperty.getId();
 		if(null != selectedPropertyId) {
 			List<Property> properties = propertyService.findAll();
-			modelMap.addAttribute("properties", properties);
-			modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
-			modelMap.addAttribute("selectedProperty", selectedProperty);
-			modelMap.addAttribute("property", propertyService.find(selectedPropertyId));
-			modelMap.addAttribute("planning", createNewPlanning(selectedPropertyId));
-			return "planning/edit";
+			
+			ModelAndView mv = new ModelAndView("planning/edit");
+			mv.addObject("properties", properties);
+			mv.addObject("plannings", costPlanningService.findAll(properties)); 
+			mv.addObject("selectedProperty", selectedProperty);
+			mv.addObject("property", propertyService.find(selectedPropertyId));
+			mv.addObject("planning", createNewPlanning(selectedPropertyId));
+			return mv;
 		} else {
 			throw new IllegalStateException("Selecting new cost planning without selected property not allowed.");
 		}
 	}	
 	
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		if(null == selectedProperty.getId()) {
 			List<Property> properties = propertyService.findAll();
-			modelMap.addAttribute("properties", properties);
-			modelMap.addAttribute("selectedProperty", selectedProperty);
-			modelMap.addAttribute("plannings", costPlanningService.findAll(properties)); 
-			return "planning/edit";
+			
+			ModelAndView mv = new ModelAndView("planning/edit");
+			mv.addObject("properties", properties);
+			mv.addObject("selectedProperty", selectedProperty);
+			mv.addObject("plannings", costPlanningService.findAll(properties)); 
+			return mv;
 		} else {
-			return "redirect:/planning/edit/" + selectedProperty.getId();
+			return new ModelAndView("redirect:/planning/edit/" + selectedProperty.getId());
 		}
 	}	
 	
 	@GetMapping("/edit/{propertyId}")
-	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
+	public ModelAndView edit(@PathVariable Long propertyId) {
 		Property daoProperty = propertyService.find(propertyId);
-		modelMap.addAttribute("plannings", costPlanningService.findAll(daoProperty)); 
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("property", daoProperty);
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "planning/edit";
+		
+		ModelAndView mv = new ModelAndView("planning/edit");
+		mv.addObject("plannings", costPlanningService.findAll(daoProperty)); 
+		mv.addObject("properties", propertyService.findAll());
+		mv.addObject("property", daoProperty);
+		mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}	
 	
 	@GetMapping("/edit/{propertyId}/planning/{planningId}")
-	public String edit(@PathVariable Long propertyId, @PathVariable Long planningId, ModelMap modelMap) {
+	public ModelAndView edit(@PathVariable Long propertyId, @PathVariable Long planningId) {
 		Property daoProperty = propertyService.find(propertyId);
-		modelMap.addAttribute("planning", getPopulated(costPlanningService.find(planningId)));
-		modelMap.addAttribute("plannings", costPlanningService.findAll(daoProperty)); 
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("property", daoProperty);
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "planning/edit";
+		
+		ModelAndView mv = new ModelAndView("planning/edit");
+		mv.addObject("planning", getPopulated(costPlanningService.find(planningId)));
+		mv.addObject("plannings", costPlanningService.findAll(daoProperty)); 
+		mv.addObject("properties", propertyService.findAll());
+		mv.addObject("property", daoProperty);
+		mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}
 
 	@PostMapping("/edit/{propertyId}")
-	public String save (
+	public ModelAndView save (
 			@PathVariable Long propertyId,
 			@ModelAttribute("planning") @Valid CostPlanningDto formCostPlanningDto, 
-			BindingResult errors, 
-			ModelMap modelMap
+			BindingResult errors
 	) {
 		if (!errors.hasErrors()) {
 			Long planningId = formCostPlanningDto.getId();
@@ -113,11 +122,18 @@ public class CostPlanningController {
 				costPlanningService.save(dbCostPlanning);
 			}
 			
-			return "redirect:/planning/edit/" + propertyId;
+			return new ModelAndView("redirect:/planning/edit/" + propertyId);
 	    } else {
-	    	modelMap.addAttribute("planning", formCostPlanningDto);
-	    	modelMap.addAttribute("errors", errors);
-	    	return edit(propertyId, modelMap);
+	        Property daoProperty = propertyService.find(propertyId);
+	        
+	        ModelAndView mv = new ModelAndView("planning/edit");
+	        mv.addObject("plannings", costPlanningService.findAll(daoProperty)); 
+	        mv.addObject("properties", propertyService.findAll());
+	        mv.addObject("property", daoProperty);
+	        mv.addObject("selectedProperty", new SessionProperty(propertyId));
+	        mv.addObject("planning", formCostPlanningDto);
+	        mv.addObject("errors", errors);
+	    	return mv;
 	    }
 	}
 	

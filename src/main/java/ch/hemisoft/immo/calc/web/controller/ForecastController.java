@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.hemisoft.immo.calc.business.service.ForecastService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -29,35 +29,39 @@ public class ForecastController {
 	@NonNull final PropertyService propertyService;
 	
 	@GetMapping("/list")
-	public String list(ModelMap modelMap) {
-		modelMap.addAttribute("property", new Property());
-		modelMap.addAttribute("selectedProperty", new SessionProperty());
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("forecast", new ForecastTableDto(forecastService.findAll(propertyService.findAllConcrete())));
-		return "forecast/list";
+	public ModelAndView list() {
+	    ModelAndView mv = new ModelAndView("forecast/list");
+	    mv.addObject("property", new Property());
+	    mv.addObject("selectedProperty", new SessionProperty());
+	    mv.addObject("properties", propertyService.findAll());
+	    mv.addObject("forecast", new ForecastTableDto(forecastService.findAll(propertyService.findAllConcrete())));
+		return mv;
 	}	
 	
 	@GetMapping("/view")
-	public String view(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView view(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		if(null == selectedProperty.getId()) {
-			modelMap.addAttribute("selectedProperty", selectedProperty);
-			modelMap.addAttribute("properties", propertyService.findAll());
-			modelMap.addAttribute("forecast", new ForecastTableDto(forecastService.findAll(propertyService.findAllConcrete())));
-			return "forecast/list";
+		    ModelAndView mv = new ModelAndView("forecast/list");
+		    mv.addObject("selectedProperty", selectedProperty);
+		    mv.addObject("properties", propertyService.findAll());
+		    mv.addObject("forecast", new ForecastTableDto(forecastService.findAll(propertyService.findAllConcrete())));
+			return mv;
 		} else {
-			return "redirect:/forecast/view/" + selectedProperty.getId();
+			return new ModelAndView("redirect:/forecast/view/" + selectedProperty.getId());
 		}
 	}	
 	
 	@GetMapping("/view/{propertyId}")
-	public String view(@PathVariable Long propertyId, ModelMap modelMap) {
+	public ModelAndView view(@PathVariable Long propertyId) {
 		Property property = propertyService.find(propertyId);
 		List<Property> properties = Arrays.asList(property);
 		List<ForecastVO> forecasts = forecastService.findAll(properties);
-		modelMap.addAttribute("forecast", new ForecastTableDto(forecasts));
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("property", property);
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "forecast/list";
+		
+		ModelAndView mv = new ModelAndView("forecast/list");
+		mv.addObject("forecast", new ForecastTableDto(forecasts));
+		mv.addObject("properties", propertyService.findAll());
+		mv.addObject("property", property);
+		mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}
 }

@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 import ch.hemisoft.immo.calc.business.service.InvestmentService;
 import ch.hemisoft.immo.calc.business.service.PropertyService;
@@ -34,65 +34,70 @@ public class InvestmentController {
 	@NonNull final Validator validator;
 	
 	@GetMapping("/new")
-	public String newCredit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView newCredit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		Long selectedPropertyId = selectedProperty.getId();
+
+		ModelAndView mv = new ModelAndView("investment/edit");
 		if(null != selectedPropertyId) {
 			Property property = propertyService.find(selectedPropertyId);
 			if(!property.getCredits().stream().filter(c -> null == c.getId()).findAny().isPresent()) {
 				property.addCreditOptions(new Credit(property));
 			}
-			modelMap.addAttribute("selectedProperty", selectedProperty);
-			modelMap.addAttribute("property", property);
+			mv.addObject("selectedProperty", selectedProperty);
+			mv.addObject("property", property);
 		}
-		return "investment/edit";
+		return mv;
 	}	
 	
 	@GetMapping("/edit")
-	public String edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty, ModelMap modelMap) {
+	public ModelAndView edit(@ModelAttribute("selectedProperty") SessionProperty selectedProperty) {
 		if(null == selectedProperty.getId()) {
-			modelMap.addAttribute("properties", propertyService.findAll());
-			modelMap.addAttribute("property", new Property());
-			modelMap.addAttribute("selectedProperty", selectedProperty);
-			return "investment/edit";
+		    ModelAndView mv = new ModelAndView("investment/edit");
+		    mv.addObject("properties", propertyService.findAll());
+		    mv.addObject("property", new Property());
+		    mv.addObject("selectedProperty", selectedProperty);
+			return mv;
 		} else {
-			return "redirect:/investment/edit/" + selectedProperty.getId();
+			return new ModelAndView("redirect:/investment/edit/" + selectedProperty.getId());
 		}
 	}
 	
 	@GetMapping("/edit/{propertyId}")
-	public String edit(@PathVariable Long propertyId, ModelMap modelMap) {
-		modelMap.addAttribute("properties", propertyService.findAll());
-		modelMap.addAttribute("property", propertyService.find(propertyId));
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "investment/edit";
+	public ModelAndView edit(@PathVariable Long propertyId) {
+	    ModelAndView mv = new ModelAndView("investment/edit");
+	    mv.addObject("properties", propertyService.findAll());
+	    mv.addObject("property", propertyService.find(propertyId));
+	    mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}
 
 	@GetMapping("/edit/{propertyId}/credit/{creditId}/swap")
-	public String swapCredit(@PathVariable Long propertyId, @PathVariable Long creditId, ModelMap modelMap) {
+	public ModelAndView swapCredit(@PathVariable Long propertyId, @PathVariable Long creditId) {
 		investmentService.swapCredit(creditId);
-		modelMap.addAttribute("property", propertyService.find(propertyId));
-		modelMap.addAttribute("selectedProperty", new SessionProperty(propertyId));
-		return "investment/edit";
+		
+		ModelAndView mv = new ModelAndView("investment/edit");
+		mv.addObject("property", propertyService.find(propertyId));
+		mv.addObject("selectedProperty", new SessionProperty(propertyId));
+		return mv;
 	}
 	
 	@PostMapping("/edit")
-	public String save (
-			@ModelAttribute("property") Property formProperty, 
-			BindingResult errors, 
-			ModelMap modelMap
-	) {
+	public ModelAndView save (@ModelAttribute("property") Property formProperty, BindingResult errors) {
 		formProperty.getCredits().stream().forEach(c -> validator.validate(c, errors));
 		if (!errors.hasErrors()) {
 			final Property dbProperty = propertyService.find(formProperty.getId());
 			mapChangedValues(formProperty, dbProperty);
 	        final Property savedProperty = propertyService.save(dbProperty);
-			modelMap.addAttribute("property", savedProperty);
-			modelMap.addAttribute("selectedProperty", new SessionProperty(savedProperty.getId()));
-			return "redirect:/investment/edit/" + savedProperty.getId();
+	        
+	        ModelAndView mv = new ModelAndView("redirect:/investment/edit/" + savedProperty.getId());
+	        mv.addObject("property", savedProperty);
+	        mv.addObject("selectedProperty", new SessionProperty(savedProperty.getId()));
+			return mv;
 	    } else {
-	    	modelMap.addAttribute("property", formProperty);
-	    	modelMap.addAttribute("errors", errors);
-	    	return "investment/edit";
+	        ModelAndView mv = new ModelAndView("investment/edit");
+	        mv.addObject("property", formProperty);
+	        mv.addObject("errors", errors);
+	    	return mv;
 	    }
 	}
 	
