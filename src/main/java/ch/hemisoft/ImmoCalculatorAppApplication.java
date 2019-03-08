@@ -45,7 +45,7 @@ public class ImmoCalculatorAppApplication {
 			ForecastConfiguration deConfig = new ForecastConfiguration();
 			deConfig.setCountryCode("AT");
 			deConfig.setDeprecation(2.0);
-			deConfig.setRentalIncrease(5.0);
+			deConfig.setRentalIncrease(3.0);
 			deConfig.setRentalIncreaseFrequence(2);
 			deConfig.setRunningCostIndex(1.5);
 			deConfig.setTaxQuote(50.0);
@@ -57,7 +57,7 @@ public class ImmoCalculatorAppApplication {
 			ForecastConfiguration deConfig = new ForecastConfiguration();
 			deConfig.setCountryCode("DE");
 			deConfig.setDeprecation(2.0);
-			deConfig.setRentalIncrease(3.0);
+			deConfig.setRentalIncrease(2.0);
 			deConfig.setRentalIncreaseFrequence(3);
 			deConfig.setRunningCostIndex(1.5);
 			deConfig.setTaxQuote(43.0);
