@@ -10,9 +10,12 @@ https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
 
 MAVEN RELEASE
 mvn release:prepare
+git tag -l
+git checkout tags/<tag_name> -b releases/release-<version>
 
 MAVEN DEPLOY
 Deploy and Upload Full Deployment File
 On Dashboard add new Project immo-calculator
 mvn clean install heroku:deploy -Ptest
 heroku ps
+git checkout master
