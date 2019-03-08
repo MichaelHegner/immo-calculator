@@ -139,6 +139,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+						<configuration>
+							<additionalProperties>
+								<java.version>${java.version}</java.version>
+								<spring.version>${project.parent.version}</spring.version>
+							</additionalProperties>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.heroku.sdk</groupId>
@@ -165,20 +178,25 @@
 		</repository>
 	</repositories>
 	
+	
+	
 	<profiles>
 		<profile>
 			<id>dev</id>
+			<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
 			<build>
 				<resources>
 			        <resource>
 			            <directory>src/main/resources</directory>
-			            <filtering>false</filtering>
+			            <filtering>true</filtering>
 			        </resource>
 			    </resources>
 			</build>
 		</profile>
 		<profile>
-			<id>test</id> <!-- HEROKU TEST ENV -->
+			<id>test</id>
 			<build>
 				<resources>
 			        <resource>
@@ -187,7 +205,7 @@
 			            	<exclude>data.sql</exclude>
 			                <exclude>import.sql</exclude>
 			            </excludes>
-			            <filtering>false</filtering>
+			            <filtering>true</filtering>
 			        </resource>
 			    </resources>
 			</build>
