@@ -8,8 +8,8 @@ Deploy the app
 https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
 
 
-GIT DEPLOY
-
+MAVEN RELEASE
+mvn release:prepare
 
 MAVEN DEPLOY
 Deploy and Upload Full Deployment File
