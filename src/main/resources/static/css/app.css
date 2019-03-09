@@ -32,3 +32,19 @@
 .summarizeInput {
 	font-weight: bold;
 }
+
+/* ******************
+	Design Forms ...
+******************** */
+
+.form-control input, .form-control textarea {
+	padding-right: 30px;
+/* 	border-radius: 5px;	 */
+}
+
+input:required, textarea:required {
+    background-position: 98%;
+    background-image: url(../images/red_asterisk.png);
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+}
