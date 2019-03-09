@@ -2,6 +2,7 @@ package ch.hemisoft.immo.domain;
 
 import static java.util.Objects.requireNonNull;
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import java.util.ArrayList;
@@ -29,24 +30,24 @@ import lombok.RequiredArgsConstructor;
 @Data
 @ToString(excludes = "password")
 public class User implements PasswordProtectable {
-	@Id @GeneratedValue	private Long 	id;
-	@NonNull @NotNull	private String 	userName;
-	@NonNull @NotNull	private String 	password;
-	@NonNull @NotNull	private String 	email;
-	@NonNull @NotNull	private Boolean enabled;
+    @Id @GeneratedValue(strategy = IDENTITY)    Long    id;
+    @NonNull @NotNull                           String  userName;
+    @NonNull @NotNull                           String  password;
+    @NonNull @NotNull                           String  email;
+    @NonNull @NotNull                           Boolean enabled;
 
-	@JoinTable(
-			foreignKey = @ForeignKey(name = "FK_USER_ROLE_TO_USER"),
-			inverseForeignKey = @ForeignKey(name = "FK_USER_TO_USER_ROLE")
-	)
-	@ManyToMany(fetch = EAGER)
-	private Collection<UserRole> userRoles = new ArrayList<>();
-	
-	public User(User user) {
-		id = requireNonNull(user.getId());
-		userName = requireNonNull(user.getUserName());
-		password = requireNonNull(user.getPassword());
-		email = requireNonNull(user.getEmail());
-		enabled = requireNonNull(user.getEnabled());
-	}
+    @JoinTable(
+            foreignKey = @ForeignKey(name = "FK_USER_ROLE_TO_USER"),
+            inverseForeignKey = @ForeignKey(name = "FK_USER_TO_USER_ROLE")
+    )
+    @ManyToMany(fetch = EAGER)
+    private Collection<UserRole> userRoles = new ArrayList<>();
+    
+    public User(User user) {
+        id = requireNonNull(user.getId());
+        userName = requireNonNull(user.getUserName());
+        password = requireNonNull(user.getPassword());
+        email = requireNonNull(user.getEmail());
+        enabled = requireNonNull(user.getEnabled());
+    }
 }

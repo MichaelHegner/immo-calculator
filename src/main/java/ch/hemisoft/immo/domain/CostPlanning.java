@@ -2,6 +2,7 @@ package ch.hemisoft.immo.domain;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -38,33 +39,33 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Data
 public class CostPlanning implements Ownable{
-	@Id @GeneratedValue									private 	Long 		id;
-	@NotNull @NonNull @OneToOne(fetch=LAZY)				private 	Property 	property;
-	@NonNull @NotNull @Column(precision=10, scale=2)	private 	BigDecimal 	amount 		= BigDecimalUtils.convert(0.0);
-	@NonNull @NotNull @Enumerated(STRING)				private 	CostType 	type;
-	@NonNull @NotNull 									private 	String 		description;
+    @Id @GeneratedValue(strategy = IDENTITY)            Long        id;
+    @NotNull @NonNull @OneToOne(fetch=LAZY)             Property    property;
+    @NonNull @NotNull @Column(precision=10, scale=2)    BigDecimal  amount      = BigDecimalUtils.convert(0.0);
+    @NonNull @NotNull @Enumerated(STRING)               CostType    type;
+    @NonNull @NotNull                                   String      description;
 
-	@AttributeOverrides({
-        @AttributeOverride(name = "year", column = @Column(name = "year")),
-        @AttributeOverride(name = "month", column = @Column(name = "month")),
-        @AttributeOverride(name = "day", column = @Column(name = "day"))
-	})
-	@Embedded @NonNull @NotNull							private 	CustomDate 	date 		= new CustomDate();
-	
-	//
-	
-	public CostPlanning(Property property, CostType type, LocalDate date, String description) {
-		this.property = property;
-		this.date.setDate(date);
-		this.type = type;
-		this.description = description;
-	}
-	
-	//
-	
-				public void setDate(LocalDate date) { this.date.setDate(Objects.requireNonNull(date)); }
-	@Override 	public User getOwner() { return property.getOwner(); }
-	@Override 	public void setOwner(User owner) { throw new UnsupportedOperationException(); } // DONT SET FROM HERE!
+    @AttributeOverrides({
+        @AttributeOverride( name = "year",  column = @Column(   name = "year"   )),
+        @AttributeOverride( name = "month", column = @Column(   name = "month"  )),
+        @AttributeOverride( name = "day",   column = @Column(   name = "day"    ))
+    })
+    @Embedded @NonNull @NotNull                         CustomDate  date        = new CustomDate();
+    
+    //
+    
+    public CostPlanning(Property property, CostType type, LocalDate date, String description) {
+        this.property = property;
+        this.date.setDate(date);
+        this.type = type;
+        this.description = description;
+    }
+    
+    //
+    
+                public void setDate(LocalDate date) { this.date.setDate(Objects.requireNonNull(date)); }
+    @Override   public User getOwner() { return property.getOwner(); }
+    @Override   public void setOwner(User owner) { throw new UnsupportedOperationException(); } // DONT SET FROM HERE!
 }
 
 

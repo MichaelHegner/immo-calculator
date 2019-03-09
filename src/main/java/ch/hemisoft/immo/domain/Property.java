@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.GenerationType.IDENTITY;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -39,7 +40,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of={"purchaseDate", "address"})
 @Data
 public class Property implements Ownable {
-	@Id @GeneratedValue		Long 			id; 
+	@Id @GeneratedValue(strategy = IDENTITY) Long id; 
 	
 	// ==============================================================================================
 	// Basic Data ...
