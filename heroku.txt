@@ -9,6 +9,7 @@ https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
 
 
 MAVEN RELEASE
+mvn release:clean
 mvn release:prepare
 git tag -l
 git checkout tags/<tag_name> -b releases/release-<version>
