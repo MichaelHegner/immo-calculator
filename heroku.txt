@@ -9,6 +9,17 @@ Deploy and Upload Full Deployment File
 On Dashboard add new Project immo-calculator
 https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
 
+Pipelines on Heroku:
+https://devcenter.heroku.com/articles/pipelines
+* Development => Development 
+* Review => for Pull Requests
+* Staging => Master Branch after merge
+* Production => a developer promotes the staging app to production => End User
+
+
+Log Heroku:
+heroku logs --tail
+
 
 MAVEN RELEASE
 mvn release:clean
