@@ -104,18 +104,7 @@
 		    <artifactId>validation-api</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- DEVELOPMENT ... -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
+		<!-- DEV-TOOLS -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -133,6 +122,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -140,13 +134,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<dependencies>
-					<dependency>
-					    <groupId>org.springframework.boot.experimental</groupId>
-					    <artifactId>spring-boot-thin-layout</artifactId>
-					    <version>${spring-boot-thin.version}</version>
-					</dependency>
-				</dependencies>
+<!-- 				<dependencies> -->
+<!-- 					<dependency> -->
+<!-- 					    <groupId>org.springframework.boot.experimental</groupId> -->
+<!-- 					    <artifactId>spring-boot-thin-layout</artifactId> -->
+<!-- 					    <version>${spring-boot-thin.version}</version> -->
+<!-- 					</dependency> -->
+<!-- 				</dependencies> -->
 				<executions>
 					<execution>
 						<goals>
@@ -161,32 +155,36 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>2.0.7</version>
-				<configuration>
-			        <appName>${project.name}</appName>
-			        <processTypes>
-			          	<web>java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* ch.hemisoft.ImmoCalculatorAppApplication</web>
-			        </processTypes>
-			    </configuration>
-			</plugin>
-			<plugin>
-			    <groupId>org.springframework.boot.experimental</groupId>
-			    <artifactId>spring-boot-thin-maven-plugin</artifactId>
-			    <version>${spring-boot-thin.version}</version>
-			    <executions>
-			        <execution>
-				        <id>resolve</id>
-				        <goals>
-				            <goal>resolve</goal>
-				        </goals>
-				        <inherited>false</inherited>
-			        </execution>
-			    </executions>
-			</plugin>
+<!-- 			<plugin> -->
+<!-- 				<groupId>com.heroku.sdk</groupId> -->
+<!-- 				<artifactId>heroku-maven-plugin</artifactId> -->
+<!-- 				<version>2.0.7</version> -->
+<!-- 				<configuration> -->
+<!-- 			        <appName>${project.name}</appName> -->
+<!-- 			        <processTypes> -->
+<!-- 			          	<web>java $JAVA_OPTS -Dserver.port=$PORT ch.hemisoft.ImmoCalculatorAppApplication</web> -->
+<!-- 			        </processTypes> -->
+<!-- 			    </configuration> -->
+<!-- 			</plugin> -->
+<!-- 			        <processTypes> -->
+<!-- 			          	<web>java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes:target/dependency/* ch.hemisoft.ImmoCalculatorAppApplication</web> -->
+<!-- 			        </processTypes> -->
+<!-- 			<plugin> -->
+<!-- 			    <groupId>org.springframework.boot.experimental</groupId> -->
+<!-- 			    <artifactId>spring-boot-thin-maven-plugin</artifactId> -->
+<!-- 			    <version>${spring-boot-thin.version}</version> -->
+<!-- 			    <executions> -->
+<!-- 			        <execution> -->
+<!-- 				        <id>resolve</id> -->
+<!-- 				        <goals> -->
+<!-- 				            <goal>resolve</goal> -->
+<!-- 				        </goals> -->
+<!-- 				        <inherited>false</inherited> -->
+<!-- 			        </execution> -->
+<!-- 			    </executions> -->
+<!-- 			</plugin> -->
 		</plugins>
+		
 	</build>
 
 	<repositories>
@@ -200,14 +198,28 @@
 		</repository>
 	</repositories>
 	
-	
-	
+	<!-- https://www.baeldung.com/spring-profiles -->
 	<profiles>
 		<profile>
 			<id>dev</id>
 			<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+	            <activeByDefault>true</activeByDefault>
+	        </activation>
+	        <properties>
+	            <spring.profiles.active>dev</spring.profiles.active>
+	        </properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-devtools</artifactId>
+					<optional>true</optional>
+				</dependency>
+				<dependency>
+					<groupId>org.hsqldb</groupId>
+					<artifactId>hsqldb</artifactId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
 			<build>
 				<resources>
 			        <resource>
@@ -219,6 +231,15 @@
 		</profile>
 		<profile>
 			<id>test</id>
+			<properties>
+	            <spring.profiles.active>test</spring.profiles.active>
+	        </properties>
+			<dependencies>
+				<dependency>
+				    <groupId>org.postgresql</groupId>
+				    <artifactId>postgresql</artifactId>
+				</dependency>
+			</dependencies>
 			<build>
 				<resources>
 			        <resource>

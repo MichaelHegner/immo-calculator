@@ -8,6 +8,7 @@ Deploy the app
 Deploy and Upload Full Deployment File
 On Dashboard add new Project immo-calculator
 https://devcenter.heroku.com/articles/getting-started-with-java#deploy-the-app
+http://frugalisminds.com/spring-boot/deploy-spring-boot-app-on-heroku/
 
 Pipelines on Heroku:
 https://devcenter.heroku.com/articles/pipelines
@@ -17,19 +18,49 @@ https://devcenter.heroku.com/articles/pipelines
 * Production => a developer promotes the staging app to production => End User
 
 
+Prepare Heroku:
+heroku plugins:install heroku-cli-deploy
+heroku plugins:install heroku-repo
+
+
 Log Heroku:
 heroku logs --tail
 
+Prepare Application for Production:
+https://devcenter.heroku.com/articles/preparing-a-spring-boot-app-for-production-on-heroku
+
+HEROKU: Create POSTGRES
+https://devcenter.heroku.com/articles/heroku-postgresql
+https://devcenter.heroku.com/articles/connecting-to-relational-databases-on-heroku-with-java#using-the-jdbc_database_url
+heroku addons:create heroku-postgresql:hobby-dev
+
+HEROKU: Set Profile
+Set active profile: heroku config:set SPRING_PROFILES_ACTIVE=<profile>
+Get configuration: heroku config
+Get active profile: heroku config:get SPRING_PROFILES_ACTIVE
+Unset Profile: heroku config:unset SPRING_PROFILES_ACTIVE
+
 
 MAVEN RELEASE
-mvn release:clean
-mvn release:prepare
+mvn release:clean 
+mvn release:prepare 
 git tag -l
 git checkout tags/<tag_name> -b releases/release-<version>
 
 MAVEN DEPLOY
-mvn clean install heroku:deploy -Ptest
+mvn clean package "-Ptest"
+heroku deploy:jar .\target\immo-calculator-app-<version>.jar
 heroku ps
 
 git checkout master
 mvn release:clean
+
+
+DATABASE
+Reset Database: heroku pg:reset DATABASE --confirm immo-calculator
+Find out DB Values. heroku run env
+
+
+LOCAL
+Run Dev version: mvn clean install; mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
+Run Test version: mvn clean install; mvn spring-boot:run "-Dspring-boot.run.profiles=test"
