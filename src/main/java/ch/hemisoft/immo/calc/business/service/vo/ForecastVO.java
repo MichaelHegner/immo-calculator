@@ -82,7 +82,8 @@ public class ForecastVO {
 	}
 	
 	public BigDecimal getTax() {
-		return BigDecimalUtils.convert(getResultBeforeTax().doubleValue() * (taxQuote.doubleValue() / 100) * ((german) ? 1 : 1.055));
+		double tax = getResultBeforeTax().doubleValue() * (taxQuote.doubleValue() / 100) * ((german) ? 1.0 : 1.055);
+        return BigDecimalUtils.convert(Math.max(tax, 0));
 	}
 	
 	public BigDecimal getResultAfterTax() {
