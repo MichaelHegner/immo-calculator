@@ -43,7 +43,7 @@ Unset Profile: heroku config:unset SPRING_PROFILES_ACTIVE
 
 MAVEN RELEASE
 mvn release:clean 
-mvn release:prepare 
+mvn release:prepare "-Ptest" 
 git tag -l
 git checkout tags/<tag_name> -b releases/release-<version>
 
