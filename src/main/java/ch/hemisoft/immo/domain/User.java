@@ -29,16 +29,10 @@ import lombok.Setter;
 @Table(name="users")
 @NoArgsConstructor(access=PROTECTED)
 @RequiredArgsConstructor
-@ToString(excludes = User.PASSWORD)
-@EqualsAndHashCode(of = User.USER_NAME)
+@ToString(excludes = "password")
+@EqualsAndHashCode(of = "userName")
 @Getter @Setter
 public class User implements PasswordProtectable {
-    static final String ID = "id"; 
-    static final String USER_NAME = "userName"; 
-    static final String PASSWORD = "password"; 
-    static final String EMAIL = "email"; 
-    static final String ENABLED = "enabled"; 
-    
     @Id @GeneratedValue(strategy = IDENTITY)    Long    id;
     @NonNull @NotNull                           String  userName;
     @NonNull @NotNull                           String  password;

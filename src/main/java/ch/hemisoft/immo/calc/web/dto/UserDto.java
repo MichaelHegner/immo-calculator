@@ -11,16 +11,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @PasswordMatches
-@ToString(excludes = {UserDto.PASSWORD, UserDto.MATCHING_PASSWORD})
-@EqualsAndHashCode(of = {UserDto.USER_NAME})
+@ToString(excludes = {"password", "matchingPassword"})
+@EqualsAndHashCode(of = {"userName"})
 @Getter
 @Setter
 public class UserDto {
-    public static final String USER_NAME = "userName";
-    public static final String PASSWORD = "password";
-    public static final String MATCHING_PASSWORD = "matchingPassword";
-    public static final String EMAIL = "email";
-    
     @NotNull
     @NotEmpty
     private String userName;
