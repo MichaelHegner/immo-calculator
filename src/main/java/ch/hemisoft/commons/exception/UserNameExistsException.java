@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserNameExistsException extends RuntimeException {
     private static final long serialVersionUID = 1L;
-    private static final String message = "There is an account with that email adress: ";
+    private static final String message = "There is an account already with that user name: ";
     
     public UserNameExistsException(User user) {
         this(user.getEmail());

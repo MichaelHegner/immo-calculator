@@ -19,35 +19,39 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class RegistrationController {
+    private static final String PAGE_SECURITY_REGISTRATION = "security/registration";
+    private static final String REDIRECT_LOGIN_REGISTRATION = "redirect:/login?registration";
+    
     private final UserService service;
     
     @GetMapping("/registration")
     public String newRegistration() {
-        return "security/registration";
+        return PAGE_SECURITY_REGISTRATION;
     }
 
     @PostMapping("/registration")
     public ModelAndView edit(@ModelAttribute("user") @Valid UserDto user, BindingResult errors) {
         if (!errors.hasErrors()) {
             try {
-                ModelAndView mv = new ModelAndView("redirect:/login?registration");
-                mv.addObject("user", createPopulated(createUserAccount(user, errors)));
+                ModelAndView mv = new ModelAndView(REDIRECT_LOGIN_REGISTRATION);
+                User persistedUser = createUserAccount(user, errors);
+                mv.addObject("user", createPopulated(persistedUser));
                 return mv;
             } catch (EmailExistsException e) {
-                ModelAndView mv = new ModelAndView("security/registration");
+                ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
                 mv.addObject("user", user);
                 mv.addObject("errors", errors);
                 errors.rejectValue("email", "user.email.exist");
                 return mv;
             } catch (UserNameExistsException e) {
-                ModelAndView mv = new ModelAndView("security/registration");
+                ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
                 mv.addObject("user", user);
                 mv.addObject("errors", errors);
                 errors.rejectValue("userName", "user.userName.exist");
                 return mv;
             } 
         } else {
-            ModelAndView mv = new ModelAndView("security/registration");
+            ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
             mv.addObject("user", user);
             mv.addObject("errors", errors);
             return mv;
@@ -60,11 +64,7 @@ public class RegistrationController {
     }
     
     private User createUserAccount(UserDto user, BindingResult result) {
-        try {
-            return service.save(createPopulated(user));
-        } catch (EmailExistsException e) {
-            return null;
-        }    
+        return service.save(createPopulated(user));
     }
     
     private User createPopulated(UserDto dto) {
