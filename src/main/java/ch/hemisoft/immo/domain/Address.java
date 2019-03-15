@@ -8,9 +8,9 @@ import javax.validation.constraints.Size;
 import groovy.transform.EqualsAndHashCode;
 import lombok.Data;
 
-@Data
 @EqualsAndHashCode
 @Embeddable
+@Data
 public class Address {
 	@NotNull @Size(min=5, max=50)			private String street;
 	@NotNull @Size(min=1, max=5)			private String streetNumber;

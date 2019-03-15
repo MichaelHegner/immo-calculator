@@ -6,11 +6,15 @@ import javax.validation.constraints.NotNull;
 import ch.hemisoft.immo.aspect.annotation.PasswordMatches;
 import ch.hemisoft.immo.aspect.annotation.ValidEmail;
 import groovy.transform.ToString;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 @PasswordMatches
 @ToString(excludes = {UserDto.PASSWORD, UserDto.MATCHING_PASSWORD})
+@EqualsAndHashCode(of = {UserDto.USER_NAME})
+@Getter
+@Setter
 public class UserDto {
     public static final String USER_NAME = "userName";
     public static final String PASSWORD = "password";

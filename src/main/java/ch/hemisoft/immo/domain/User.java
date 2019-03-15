@@ -18,18 +18,27 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import groovy.transform.ToString;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name="users")
 @NoArgsConstructor(access=PROTECTED)
 @RequiredArgsConstructor
-@Data
-@ToString(excludes = "password")
+@ToString(excludes = User.PASSWORD)
+@EqualsAndHashCode(of = User.USER_NAME)
+@Getter @Setter
 public class User implements PasswordProtectable {
+    static final String ID = "id"; 
+    static final String USER_NAME = "userName"; 
+    static final String PASSWORD = "password"; 
+    static final String EMAIL = "email"; 
+    static final String ENABLED = "enabled"; 
+    
     @Id @GeneratedValue(strategy = IDENTITY)    Long    id;
     @NonNull @NotNull                           String  userName;
     @NonNull @NotNull                           String  password;
