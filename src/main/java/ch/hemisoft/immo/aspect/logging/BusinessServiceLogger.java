@@ -4,7 +4,6 @@
 package ch.hemisoft.immo.aspect.logging;
 
 import java.util.Date;
-import java.util.NoSuchElementException;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
@@ -40,13 +39,15 @@ public class BusinessServiceLogger extends _AbstractLogger{
 
 	@AfterThrowing(pointcut = ALL, throwing = "exception")
 	public void logAfterThrowing(final Exception exception) throws Throwable {
-		LOGGER.error("Exception occures! " + exception.getMessage(), exception);
-		throw exception;
-	}
-
-	@AfterThrowing(pointcut = ALL, throwing = "exception")
-	public void logAfterThrowing(final NoSuchElementException exception) throws Throwable {
-		LOGGER.warn(exception.getMessage());
-		throw exception;
+	    switch(exception.getClass().getSimpleName()) {
+            case "NoSuchElementException": 
+            case "UserNameExistsException": 
+            case "EmailExistsException": 
+                LOGGER.warn(exception.getMessage());
+                break;
+            default:
+                LOGGER.error("Exception occures! " + exception.getMessage(), exception);
+	    }
+	    throw exception;
 	}
 }

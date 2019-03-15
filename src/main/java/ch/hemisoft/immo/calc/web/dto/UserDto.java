@@ -10,8 +10,13 @@ import lombok.Data;
 
 @Data
 @PasswordMatches
-@ToString(excludes = {"password", "matchingPassword"})
+@ToString(excludes = {UserDto.PASSWORD, UserDto.MATCHING_PASSWORD})
 public class UserDto {
+    public static final String USER_NAME = "userName";
+    public static final String PASSWORD = "password";
+    public static final String MATCHING_PASSWORD = "matchingPassword";
+    public static final String EMAIL = "email";
+    
     @NotNull
     @NotEmpty
     private String userName;
