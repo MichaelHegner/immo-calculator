@@ -1,7 +1,5 @@
 package ch.hemisoft.immo.calc.web.controller;
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.mkopylec.recaptcha.validation.RecaptchaValidator;
+
 import ch.hemisoft.commons.exception.EmailExistsException;
 import ch.hemisoft.commons.exception.UserNameExistsException;
 import ch.hemisoft.immo.calc.business.service.UserService;
 import ch.hemisoft.immo.calc.web.dto.UserDto;
 import ch.hemisoft.immo.domain.User;
-import ch.hemisoft.immo.security.CaptchaService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -25,7 +24,7 @@ public class RegistrationController {
     private static final String REDIRECT_LOGIN_REGISTRATION = "redirect:/login?registration";
     
     private final UserService userService;
-    private final CaptchaService captchaService;
+    private final RecaptchaValidator recaptchaValidator;
     
     @GetMapping("/registration")
     public String newRegistration() {
@@ -34,11 +33,17 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public ModelAndView edit(
-            @ModelAttribute("user") @Valid UserDto user, 
-            @RequestParam(value = "g-recaptcha-response") String recaptcha, 
+            @ModelAttribute("user") UserDto user, 
+            @RequestParam(value = "g-recaptcha-response", required = false) String recaptcha, 
             BindingResult errors
     ) {
-        captchaService.processResponse(recaptcha); // Throws ReCaptchaExceptions.
+        if(recaptchaValidator.validate(recaptcha).isFailure()) {
+            ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
+            mv.addObject("user", user);
+            mv.addObject("errors", errors);
+            errors.reject("user.recaptcha.invalid");
+            return mv;
+        }
         
         if (!errors.hasErrors()) {
             try {

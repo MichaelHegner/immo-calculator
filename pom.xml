@@ -66,6 +66,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.mkopylec</groupId>
+			<artifactId>recaptcha-spring-boot-starter</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 
 		<!-- GUI ... -->
 		<dependency>

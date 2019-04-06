@@ -1,3 +1,4 @@
-.grecaptcha-badge {
-  bottom: 65px !important;
+.g-recaptcha {
+  margin: 5px auto;
+  width: 304px; /* original reCaptcha size */
 }

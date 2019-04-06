@@ -6,19 +6,7 @@
         <!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
         
         <link rel="stylesheet" type="text/css" media="screen" href="/static/css/captcha.css" th:href="@{/css/captcha.css}" />
-		<script src='https://www.google.com/recaptcha/api.js?render=6Le_LZgUAAAAAM5uw_9hujkS6SjBWLNVkQOvewWf'></script>
-		
-		<script th:inline="javascript">
-		
-// 		$(document).ready(function () {
-// 			grecaptcha.ready(function() {
-// 		      grecaptcha.execute('6Le_LZgUAAAAAM5uw_9hujkS6SjBWLNVkQOvewWf', {action: 'homepage'}).then(function(token) {
-// 		         console.log(token);
-// 		      });
-// 			});
-// 		});
-		
-		</script>
+		<script src='https://www.google.com/recaptcha/api.js' async="true" defer="defer"></script>
 		
     </head>
 	<body>
@@ -27,9 +15,14 @@
     		<!--/*/ <th:block th:replace="security/header :: banner"></th:block> /*/-->
 
 			<main id="mainPage">
+			
+				<p th:if="${#httpServletRequest.parameterMap.containsKey('recaptchaError')}" style="color: red">Invalid captcha response</p>
+				<p th:if="${#httpServletRequest.parameterMap.containsKey('recaptchaSuccess')}">Correct captcha response</p>
+			
+			
 			    <div class="well col-md-4 col-md-offset-4">
 					<legend>Bitte registrieren Sie sich.</legend>
-					<form th:action="@{/registration}" th:object="${user}" method="post" enctype="uft8">
+					<form action="#" th:action="@{/registration}" th:object="${user}" method="post" enctype="uft8">
 						
 						<div th:if="${#fields.hasErrors('*')}" class="col-md-12 alert alert-warning alert-dismissable">
 					    	<span th:each="err : ${#fields.errors('*')}" th:text="${err}">Registration alert.<br /></span>
@@ -68,53 +61,22 @@
 						    </div>
 					    </div>
 
-						<button type="submit" th:text="#{gui.button.register}" class="btn btn-info btn-block">register</button>
+						<div class="row filterRow">
+							<div class="g-recaptcha" data-sitekey="6LfwrZsUAAAAAB0kJzH48_CqrXWXbSk2D7t7IcQA"></div>
+						</div>
 						
+						<div class="row filterRow">
+							<button type="submit" th:text="#{gui.button.register}" class="btn btn-info btn-block">register</button>
+						</div>
 					</form>
+					
 					<a th:href="@{/login}" th:text="#{gui.button.login}">login</a>
+					
 				</div>
 			</main>
 
 		    <!--/*/ <th:block th:include="fragments/footer :: common-footer"></th:block> /*/-->
 
 		</div>
-		
-		
-		<script th:inline="javascript">
-// 			var serverContext = [[@{/}]];
-		
-// 			$(document).ready(function () {
-// 				$('form').submit(function(event) {
-// 					register(event);
-// 				})
-// 			});
-				
-// 				function register(event) {
-// 				    event.preventDefault();
-				 
-// 				    var formData= $('form').serialize();
-// 				    $.post(serverContext + "user/registration", formData, function(data){
-// 				        if(data.message == "success") {
-// 				            // success handler
-// 				            alert(data.message);
-// 				        }
-// 				    })
-// 				    .fail( function(data) {
-// 				        grecaptcha.reset();
-				        
-// 				        // ...
-// 				            alert(data.message);
-
-				        
-// 				        if (data.responseJSON.error == "InvalidReCaptcha") { 
-// 				            $("#captchaError").show().html(data.responseJSON.message);
-// 				        }
-				        
-// 				        // ...
-// 				    })
-// 				}
-				
-		
-		</script>
 	</body>
 </html>
