@@ -3,16 +3,24 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>HEMISOFT - Immobilienmanagement - Login</title>
+
         <!--/*/ <th:block th:include="fragments/header :: common-header"></th:block> /*/-->
-        
+
+        <link rel="stylesheet" type="text/css" media="screen" href="/static/css/captcha.css" th:href="@{/css/captcha.css}" />
+		<script src='https://www.google.com/recaptcha/api.js' async="true" defer="defer"></script>
+
     </head>
     <body>
     	<div class="container">
+    	
     		<!--/*/ <th:block th:replace="security/header :: banner"></th:block> /*/-->
     	
 		    <main id="mainPage">
 			    <div class="well col-md-4 col-md-offset-4">
 			    	<legend>Bitte melden Sie sich an.</legend>
+			    	<div th:if="${param.recaptchaError}" class="alert alert-warning alert-dismissable">
+			            Sind Sie ein menschlicher Benutzer?
+			        </div>
 			        <div th:if="${param.error}" class="alert alert-danger alert-warning alert-dismissable">
 			            Falscher Benutzername oder Passwort!
 			        </div>
@@ -29,6 +37,11 @@
 			        	<div class="row filterRow">
 							<input type="password" id="password" class="form-control" name="password" placeholder="Passwort" /> 
 						</div>
+						
+						<div th:if="${param.showRecaptcha}" class="row filterRow">
+							<div class="g-recaptcha" data-sitekey="6LfwrZsUAAAAAB0kJzH48_CqrXWXbSk2D7t7IcQA"></div>
+						</div>
+						
 			        	<div class="row filterRow">
 				            <button type="submit" name="submit" class="btn btn-info btn-block">Anmelden</button>
 						</div>
