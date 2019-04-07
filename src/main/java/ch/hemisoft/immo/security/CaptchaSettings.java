@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import lombok.Data;
 
 @Component
-@ConfigurationProperties(prefix = "google.recaptcha.key")
+@ConfigurationProperties(prefix = "recaptcha.validation")
 @Data
 public class CaptchaSettings {
-    private String site;
-    private String secret;
+    private String websiteKey;
+    private String secretKey;
 }
