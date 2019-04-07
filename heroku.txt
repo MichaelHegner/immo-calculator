@@ -40,6 +40,11 @@ Get configuration: heroku config
 Get active profile: heroku config:get SPRING_PROFILES_ACTIVE
 Unset Profile: heroku config:unset SPRING_PROFILES_ACTIVE
 
+HEORKU: Set Google Captcha
+Set website key: heroku config:set RECAPTCHA_VALIDATION_WEBSITE_KEY=<websiteKey>
+Set server key: heroku config:set RECAPTCHA_VALIDATION_SECRET_KEY=<serverKey>
+
+
 
 MAVEN RELEASE
 mvn clean install "-Ptest"

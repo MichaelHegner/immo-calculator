@@ -39,7 +39,7 @@
 						</div>
 						
 						<div th:if="${param.showRecaptcha}" class="row filterRow">
-							<div class="g-recaptcha" data-sitekey="6LfwrZsUAAAAAB0kJzH48_CqrXWXbSk2D7t7IcQA"></div>
+							<div class="g-recaptcha" th:attr="data-sitekey=${@captchaSettings.websiteKey}"></div>
 						</div>
 						
 			        	<div class="row filterRow">
