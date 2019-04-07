@@ -1,5 +1,7 @@
 package ch.hemisoft.immo.calc.web.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public ModelAndView edit(
-            @ModelAttribute("user") UserDto user, 
+            @ModelAttribute("user") @Valid UserDto user, 
             @RequestParam(value = "g-recaptcha-response", required = false) String recaptcha, 
             BindingResult errors
     ) {
@@ -45,31 +47,24 @@ public class RegistrationController {
             return mv;
         }
         
-        if (!errors.hasErrors()) {
-            try {
-                ModelAndView mv = new ModelAndView(REDIRECT_LOGIN_REGISTRATION);
-                User persistedUser = createUserAccount(user, errors);
-                mv.addObject("user", createPopulated(persistedUser));
-                return mv;
-            } catch (EmailExistsException e) {
-                ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
-                mv.addObject("user", user);
-                mv.addObject("errors", errors);
-                errors.rejectValue("email", "user.email.exist");
-                return mv;
-            } catch (UserNameExistsException e) {
-                ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
-                mv.addObject("user", user);
-                mv.addObject("errors", errors);
-                errors.rejectValue("userName", "user.userName.exist");
-                return mv;
-            } 
-        } else {
+        try {
+            ModelAndView mv = new ModelAndView(REDIRECT_LOGIN_REGISTRATION);
+            User persistedUser = createUserAccount(user, errors);
+            mv.addObject("user", createPopulated(persistedUser));
+            return mv;
+        } catch (EmailExistsException e) {
             ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
             mv.addObject("user", user);
             mv.addObject("errors", errors);
+            errors.rejectValue("email", "user.email.exist");
             return mv;
-        }
+        } catch (UserNameExistsException e) {
+            ModelAndView mv = new ModelAndView(PAGE_SECURITY_REGISTRATION);
+            mv.addObject("user", user);
+            mv.addObject("errors", errors);
+            errors.rejectValue("userName", "user.userName.exist");
+            return mv;
+        } 
     }
     
     @ModelAttribute("user") 

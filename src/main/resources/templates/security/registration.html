@@ -33,7 +33,10 @@
 					        	<label th:text="#{user.userName}">username</label>
 					        </div>
 					        <div class="col-md-6 col-md-offset-2">
-						        <input th:field="*{userName}" class="form-control" />
+						        <input th:field="*{userName}" 
+						        	required="required" 
+						        	class="form-control" 
+						        />
 							</div>
 					    </div>
 					    <div class="row filterRow">
@@ -41,7 +44,11 @@
 						        <label th:text="#{user.email}">email</label>
 							</div>
 					        <div class="col-md-6 col-md-offset-2">
-						        <input type="email" th:field="*{email}" class="form-control" />
+						        <input type="email" 
+						        	th:field="*{email}" 
+						        	required="required" 
+						        	class="form-control" 
+						        />
 					    	</div>
 					    </div>
 					    <div class="row filterRow">
@@ -49,7 +56,11 @@
 						        <label th:text="#{user.password}">password</label>
 					        </div>
 					        <div class="col-md-6 col-md-offset-2">
-						        <input type="password" th:field="*{password}" class="form-control" />
+						        <input type="password" 
+						        	th:field="*{password}" 
+						        	required="required" 
+						        	class="form-control" 
+						        />
 					    	</div>
 					    </div>
 					    <div class="row filterRow">
@@ -57,7 +68,11 @@
 						        <label th:text="#{user.matchingPassword}">confirm</label>
 							</div>
 					        <div class="col-md-6 col-md-offset-2">
-						        <input type="password" th:field="*{matchingPassword}" class="form-control" />
+						        <input type="password" 
+						        	th:field="*{matchingPassword}" 
+						        	required="required" 
+						        	class="form-control" 
+						        />
 						    </div>
 					    </div>
 
