@@ -22,7 +22,7 @@ public class CaptchaLoginFailuresManager extends LoginFailuresManager {
     @Override
     public void addLoginFailure(HttpServletRequest request) {
         String username = getUsername(request);
-        log.warn("Login Failure of user '{0}'", username);
+        log.warn("Login Failure of user '{}'", username);
         failureCount.getAndIncrement(username);
     }
 
@@ -30,7 +30,7 @@ public class CaptchaLoginFailuresManager extends LoginFailuresManager {
     public int getLoginFailuresCount(HttpServletRequest request) {
         String username = getUsername(request);
         long count = failureCount.get(getUsername(request));
-        log.debug("Login Failure Count for user '{0}' = '{1}'", username, count);
+        log.debug("Login Failure Count for user '{}' = '{}'", username, count);
         return (int) count;
     }
 
