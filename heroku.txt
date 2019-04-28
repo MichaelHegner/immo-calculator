@@ -70,3 +70,12 @@ Find out DB Values. heroku run env
 LOCAL
 Run Dev version: mvn clean install; mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
 Run Test version: mvn clean install; mvn spring-boot:run "-Dspring-boot.run.profiles=test"
+
+
+DB_MIGRATION
+Generate a changeLog from an exisiting DB
+mvn liquibase:generateChangeLog
+https://www.baeldung.com/liquibase-refactor-schema-of-java-app
+https://medium.com/@harittweets/evolving-your-database-using-spring-boot-and-liquibase-844fcd7931da
+https://pragtics.de/datenbankversionierung-in-spring-boot-mit-liquibase/
+https://github.com/spring-projects/spring-boot/tree/v2.1.4.RELEASE/spring-boot-samples/spring-boot-sample-liquibase

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>ch.hemisoft</groupId>
@@ -9,14 +11,14 @@
 
 	<name>immo-calculator</name>
 	<description>Demo project for Spring Boot</description>
-	
+
 	<scm>
 		<url>https://github.com/MichaelHegner/immo-calculator</url>
 		<connection>scm:git:https://github.com/MichaelHegner/immo-calculator.git</connection>
 		<developerConnection>scm:git:https://github.com/MichaelHegner/immo-calculator.git</developerConnection>
-	  <tag>immo-calculator-app-0.0.4</tag>
-  </scm>
-	
+		<tag>immo-calculator-app-0.0.4</tag>
+	</scm>
+
 	<developers>
 		<developer>
 			<email>michael.hegner@hemisoft.net</email>
@@ -37,7 +39,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<guava.version>27.1-jre</guava.version>
 	</properties>
 
 	<dependencies>
@@ -87,33 +88,34 @@
 			<artifactId>jquery-validation</artifactId>
 			<version>1.17.0-1</version>
 		</dependency>
-		
+
 		<!-- COMMONS ... -->
 		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>${guava.version}</version>
+			<version>27.1-jre</version>
 		</dependency>
 
 		<!-- DATABASE -->
-		<!-- Support LocalDate for Hibernate to use Type DATE in DB instead of blob -->
+		<!-- Support LocalDate for Hibernate to use Type DATE in DB instead of 
+			blob -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-envers</artifactId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>javax.validation</groupId>
-		    <artifactId>validation-api</artifactId>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
 		</dependency>
-		
+
 		<!-- DEV-TOOLS -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -125,6 +127,15 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-maven-plugin</artifactId>
+			<version>${liquibase.version}</version>
+		</dependency>
 
 		<!-- TESTING ... -->
 		<dependency>
@@ -135,11 +146,6 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -164,7 +170,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		
+
 	</build>
 
 	<repositories>
@@ -177,17 +183,17 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<!-- https://www.baeldung.com/spring-profiles -->
 	<profiles>
 		<profile>
 			<id>dev</id>
 			<activation>
-	            <activeByDefault>true</activeByDefault>
-	        </activation>
-	        <properties>
-	            <spring.profiles.active>dev</spring.profiles.active>
-	        </properties>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
 			<dependencies>
 				<dependency>
 					<groupId>org.springframework.boot</groupId>
@@ -195,44 +201,44 @@
 					<optional>true</optional>
 				</dependency>
 				<dependency>
-					<groupId>org.hsqldb</groupId>
-					<artifactId>hsqldb</artifactId>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>
 			<build>
 				<resources>
-			        <resource>
-			            <directory>src/main/resources</directory>
-			            <filtering>true</filtering>
-			        </resource>
-			    </resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
 			</build>
 		</profile>
 		<profile>
 			<id>test</id>
 			<properties>
-	            <spring.profiles.active>test</spring.profiles.active>
-	        </properties>
+				<spring.profiles.active>test</spring.profiles.active>
+			</properties>
 			<dependencies>
 				<dependency>
-				    <groupId>org.postgresql</groupId>
-				    <artifactId>postgresql</artifactId>
+					<groupId>org.postgresql</groupId>
+					<artifactId>postgresql</artifactId>
 				</dependency>
 			</dependencies>
 			<build>
 				<resources>
-			        <resource>
-			            <directory>src/main/resources</directory>
-			            <excludes>
-			            	<exclude>data.sql</exclude>
-			                <exclude>import.sql</exclude>
-			            </excludes>
-			            <filtering>true</filtering>
-			        </resource>
-			    </resources>
+					<resource>
+						<directory>src/main/resources</directory>
+						<excludes>
+							<exclude>data.sql</exclude>
+							<exclude>import.sql</exclude>
+						</excludes>
+						<filtering>true</filtering>
+					</resource>
+				</resources>
 			</build>
 		</profile>
 	</profiles>
-	
+
 </project>
