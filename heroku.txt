@@ -47,6 +47,7 @@ Set server key: heroku config:set RECAPTCHA_VALIDATION_SECRET_KEY=<serverKey>
 
 
 MAVEN RELEASE
+Backup Database
 mvn clean install "-Ptest"
 mvn release:clean "-Ptest" 
 mvn release:prepare "-Ptest" 
@@ -70,6 +71,9 @@ DATABASE-LIQUIBASE-Migration
 Generate Diff: liquibase:diff
 Rename output: <version>-changelog.xml
 Add <version>-changelog.xml to liquibase-changelog-master.xml
+
+DATABASE-BACKUP
+https://devcenter.heroku.com/articles/heroku-postgres-backups#restoring-backups
 
 
 LOCAL
