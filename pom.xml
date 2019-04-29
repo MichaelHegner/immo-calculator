@@ -233,7 +233,7 @@
 				        <configuration>                  
 				            <propertyFile>src/main/resources/liquibase-h2.properties</propertyFile>
 				            <changeLogFile>src/main/resources/db/liquibase-changelog-master.xml</changeLogFile>
-				            <diffChangeLogFile>src/main/resources/db/changelog/${project.version}_changelog.xml</diffChangeLogFile>
+				            <diffChangeLogFile>src/main/resources/db/changelog/${project.parent.version}_changelog.xml</diffChangeLogFile>
 				            <outputChangeLogFile>src/main/resources/db/changelog/myaddon.db.changelog.xml</outputChangeLogFile>
 				        </configuration>
 		                <dependencies>
@@ -260,7 +260,7 @@
 		                    <dependency>
 		                        <groupId>org.springframework.boot</groupId>
 		                        <artifactId>spring-boot-starter-data-jpa</artifactId>
-		                        <version>${parent.version}</version>
+		                        <version>${project.parent.version}</version>
 		                    </dependency>
 		                    <dependency>
 		                        <groupId>javax.validation</groupId>
