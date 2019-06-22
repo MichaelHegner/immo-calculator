@@ -1,0 +1,122 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Michael Hegner" id="1561203310298-39">
+        <dropSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-1">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="administration_each_apartment" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-2">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="agency" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-3">
+        <dropNotNullConstraint columnDataType="decimal(10,2)" columnName="amount" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-4">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="city" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-5">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="country_code" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-6">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="country_code" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-7">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="court" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-8">
+        <dropNotNullConstraint columnDataType="double" columnName="deprecation" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-9">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="description" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-10">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="email" tableName="users"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-11">
+        <dropNotNullConstraint columnDataType="boolean" columnName="enabled" tableName="users"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-12">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="land_acquisition" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-13">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="land_area_in_qm" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-14">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="living_space_in_qm" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-15">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="maintenance_each_qm" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-16">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="name" tableName="user_role"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-17">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="notary" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-18">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="password" tableName="users"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-19">
+        <dropNotNullConstraint columnDataType="bigint" columnName="property_id" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-20">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="purchase_price" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-21">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="reconstruction" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-22">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="renovation" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-23">
+        <dropNotNullConstraint columnDataType="double" columnName="rental_increase" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-24">
+        <dropNotNullConstraint columnDataType="int" columnName="rental_increase_frequence" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-25">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="rental_net" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-26">
+        <dropNotNullConstraint columnDataType="double" columnName="running_cost_index" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-27">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="status" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-28">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="street" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-29">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="street_number" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-30">
+        <dropNotNullConstraint columnDataType="double" columnName="tax_quote" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-31">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="type" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-32">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="type" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-33">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="user_name" tableName="users"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-34">
+        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="valuation" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-35">
+        <dropNotNullConstraint columnDataType="int" columnName="year_of_construction" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-36">
+        <dropNotNullConstraint columnDataType="varchar(255)" columnName="zip" tableName="property"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-37">
+        <dropUniqueConstraint constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
+        <addUniqueConstraint columnNames="year, month, day, property_id, type" constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1561203310298-38">
+        <dropUniqueConstraint constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
+        <addUniqueConstraint columnNames="country_code" constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
+    </changeSet>
+</databaseChangeLog>
