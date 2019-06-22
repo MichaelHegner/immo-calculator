@@ -36,6 +36,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.liquibase.path>src/main/resources/db/${build.profile.id}</project.liquibase.path>
         <java.version>1.8</java.version>
     </properties>
 
@@ -181,6 +182,75 @@
                 </executions>
             </plugin>
             
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>                  
+                    <propertyFile>${project.liquibase.path}/liquibase.properties</propertyFile>
+                    <changeLogFile>${project.liquibase.path}/liquibase-changelog-master.xml</changeLogFile>
+                    
+                    <!-- Changes directly generated to resource directory to see changes in GIT-Client -->
+                    <diffChangeLogFile>${project.liquibase.path}/changelog/${project.version}_changelog.xml</diffChangeLogFile>
+                    <outputChangeLogFile>${project.liquibase.path}/changelog/myaddon.db.changelog.xml</outputChangeLogFile>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.liquibase.ext</groupId>
+                        <artifactId>liquibase-hibernate5</artifactId>
+                        <version>3.6</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>org.hibernate</groupId>
+                                <artifactId>hibernate-core</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.hibernate</groupId>
+                                <artifactId>hibernate-entitymanager</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.hibernate</groupId>
+                                <artifactId>hibernate-envers</artifactId>
+                            </exclusion>
+                            <exclusion>
+                                <groupId>org.hibernate.javax.persistence</groupId>
+                                <artifactId>hibernate-jpa-2.0-api</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-beans</artifactId>
+                        <version>${spring.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-core</artifactId>
+                        <version>${spring.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring-context</artifactId>
+                        <version>${spring.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter</artifactId>
+                        <version>${project.parent.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-data-jpa</artifactId>
+                        <version>${project.parent.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>javax.validation</groupId>
+                        <artifactId>validation-api</artifactId>
+                        <version>${javax-validation.version}</version>
+                    </dependency>
+                </dependencies>            
+            </plugin> 
+            
         </plugins>
 
     </build>
@@ -205,6 +275,8 @@
             </activation>
             <properties>
                 <spring.profiles.active>dev</spring.profiles.active>
+                <build.profile.id>dev</build.profile.id>
+                <liquibase.dir.changelog>changelog</liquibase.dir.changelog>
             </properties>
             <dependencies>
                 <dependency>
@@ -230,63 +302,7 @@
 				        <groupId>org.liquibase</groupId>
 				        <artifactId>liquibase-maven-plugin</artifactId>
 				        <version>${liquibase.version}</version>
-				        <configuration>                  
-				            <propertyFile>src/main/resources/liquibase-h2.properties</propertyFile>
-				            <changeLogFile>src/main/resources/db/liquibase-changelog-master.xml</changeLogFile>
-				            
-				            <!-- Changes directly generated to resource directory to see changes in GIT-Client -->
-				            <diffChangeLogFile>src/main/resources/db/changelog/${project.version}_changelog.xml</diffChangeLogFile>
-				            <outputChangeLogFile>src/main/resources/db/changelog/myaddon.db.changelog.xml</outputChangeLogFile>
-				        </configuration>
 		                <dependencies>
-		                    <dependency>
-		                        <groupId>org.liquibase.ext</groupId>
-		                        <artifactId>liquibase-hibernate5</artifactId>
-		                        <version>3.6</version>
-		                        <exclusions>
-			                        <exclusion>
-			                            <groupId>org.hibernate</groupId>
-			                            <artifactId>hibernate-core</artifactId>
-			                        </exclusion>
-			                        <exclusion>
-			                            <groupId>org.hibernate</groupId>
-			                            <artifactId>hibernate-entitymanager</artifactId>
-			                        </exclusion>
-			                        <exclusion>
-			                            <groupId>org.hibernate</groupId>
-			                            <artifactId>hibernate-envers</artifactId>
-			                        </exclusion>
-			                        <exclusion>
-			                            <groupId>org.hibernate.javax.persistence</groupId>
-			                            <artifactId>hibernate-jpa-2.0-api</artifactId>
-			                        </exclusion>
-			                    </exclusions>
-		                    </dependency>
-		                    <dependency>
-		                        <groupId>org.springframework</groupId>
-		                        <artifactId>spring-beans</artifactId>
-		                        <version>${spring.version}</version>
-		                    </dependency>
-		                    <dependency>
-                                <groupId>org.springframework</groupId>
-                                <artifactId>spring-core</artifactId>
-                                <version>${spring.version}</version>
-                            </dependency>
-                            <dependency>
-                                <groupId>org.springframework</groupId>
-                                <artifactId>spring-context</artifactId>
-                                <version>${spring.version}</version>
-                            </dependency>
-		                    <dependency>
-		                        <groupId>org.springframework.boot</groupId>
-		                        <artifactId>spring-boot-starter-data-jpa</artifactId>
-		                        <version>${project.parent.version}</version>
-		                    </dependency>
-		                    <dependency>
-		                        <groupId>javax.validation</groupId>
-		                        <artifactId>validation-api</artifactId>
-		                        <version>${javax-validation.version}</version>
-		                    </dependency>
 		                    <dependency>
 			                    <groupId>com.h2database</groupId>
 			                    <artifactId>h2</artifactId>
@@ -301,6 +317,7 @@
             <id>test</id>
             <properties>
                 <spring.profiles.active>test</spring.profiles.active>
+                <build.profile.id>test</build.profile.id>
             </properties>
             <dependencies>
                 <dependency>
@@ -314,6 +331,20 @@
                 </dependency>
             </dependencies>
             <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>${liquibase.version}</version>
+                        <dependencies>
+                            <dependency>
+			                    <groupId>org.postgresql</groupId>
+			                    <artifactId>postgresql</artifactId>
+			                    <version>${postgresql.version}</version>
+			                </dependency>
+                        </dependencies>            
+                    </plugin> 
+                </plugins>
                 <resources>
                     <resource>
                         <directory>src/main/resources</directory>
