@@ -47,6 +47,7 @@ Set server key: heroku config:set RECAPTCHA_VALIDATION_SECRET_KEY=<serverKey>
 
 
 MAVEN RELEASE
+heroku maintenance:on
 Backup Database: heroku pg:backups:capture
 mvn clean install "-Ptest"
 mvn release:clean "-Ptest" 
@@ -58,6 +59,7 @@ MAVEN DEPLOY
 mvn clean package "-Ptest"
 heroku deploy:jar .\target\immo-calculator-app-<version>.jar
 heroku ps
+heroku maintenance:off
 
 git checkout master
 mvn release:clean
