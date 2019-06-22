@@ -47,7 +47,7 @@ Set server key: heroku config:set RECAPTCHA_VALIDATION_SECRET_KEY=<serverKey>
 
 
 MAVEN RELEASE
-Backup Database
+Backup Database: heroku pg:backups:capture
 mvn clean install "-Ptest"
 mvn release:clean "-Ptest" 
 mvn release:prepare "-Ptest" 
