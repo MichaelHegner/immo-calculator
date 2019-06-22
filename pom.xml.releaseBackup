@@ -4,7 +4,7 @@
 
     <groupId>ch.hemisoft</groupId>
     <artifactId>immo-calculator-app</artifactId>
-    <version>0.1.5-SNAPSHOT</version>
+    <version>0.1.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>immo-calculator</name>
@@ -191,7 +191,7 @@
                     <changeLogFile>${project.liquibase.path}/liquibase-changelog-master.xml</changeLogFile>
                     
                     <!-- Changes directly generated to resource directory to see changes in GIT-Client -->
-                    <diffChangeLogFile>${project.liquibase.path}/changelog/${project.version}-changelog.xml</diffChangeLogFile>
+                    <diffChangeLogFile>${project.liquibase.path}/changelog/${project.version}_changelog.xml</diffChangeLogFile>
                     <outputChangeLogFile>${project.liquibase.path}/changelog/myaddon.db.changelog.xml</outputChangeLogFile>
                 </configuration>
                 <dependencies>
