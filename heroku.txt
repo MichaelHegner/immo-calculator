@@ -47,6 +47,7 @@ Set server key: heroku config:set RECAPTCHA_VALIDATION_SECRET_KEY=<serverKey>
 
 
 MAVEN RELEASE
+Backup Database: heroku pg:backups:capture
 mvn clean install "-Ptest"
 mvn release:clean "-Ptest" 
 mvn release:prepare "-Ptest" 
@@ -66,6 +67,15 @@ DATABASE
 Reset Database: heroku pg:reset DATABASE --confirm immo-calculator
 Find out DB Values. heroku run env
 
+DATABASE-LIQUIBASE-Migration
+Generate Diff: liquibase:diff
+Rename output: <version>-changelog.xml
+Add <version>-changelog.xml to liquibase-changelog-master.xml
+
+DATABASE-BACKUP
+https://devcenter.heroku.com/articles/heroku-postgres-backups#restoring-backups
+https://devcenter.heroku.com/articles/heroku-postgres-import-export
+
 
 LOCAL
 Run Dev version: mvn clean install; mvn spring-boot:run "-Dspring-boot.run.profiles=dev"
@@ -79,3 +89,9 @@ https://www.baeldung.com/liquibase-refactor-schema-of-java-app
 https://medium.com/@harittweets/evolving-your-database-using-spring-boot-and-liquibase-844fcd7931da
 https://pragtics.de/datenbankversionierung-in-spring-boot-mit-liquibase/
 https://github.com/spring-projects/spring-boot/tree/v2.1.4.RELEASE/spring-boot-samples/spring-boot-sample-liquibase
+
+
+START & STOP Application
+heroku maintenance:on
+heroku maintenance:off
+

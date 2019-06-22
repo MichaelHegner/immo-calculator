@@ -1,0 +1,214 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="Michael Hegner" id="1556558331044-1">
+        <createTable tableName="cost_planning">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="cost_planningPK"/>
+            </column>
+            <column name="amount" type="DECIMAL(10, 2)"/>
+            <column name="day" type="INT"/>
+            <column name="month" type="INT"/>
+            <column name="year" type="INT"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="property_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-2">
+        <createTable tableName="credit">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="creditPK"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="capital" type="DECIMAL(19, 2)"/>
+            <column name="interest_rate_nominal_in_percent" type="DECIMAL(19, 2)"/>
+            <column name="name_of_institution" type="VARCHAR(255)"/>
+            <column name="redemption_at_begin_in_percent" type="DECIMAL(19, 2)"/>
+            <column name="special_redemption_each_year_in_percent" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-3">
+        <createTable tableName="credit_aud">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="credit_audPK"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints primaryKey="true" primaryKeyName="credit_audPK"/>
+            </column>
+            <column name="revtype" type="TINYINT"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="capital" type="DECIMAL(19, 2)"/>
+            <column name="interest_rate_nominal_in_percent" type="DECIMAL(19, 2)"/>
+            <column name="name_of_institution" type="VARCHAR(255)"/>
+            <column name="redemption_at_begin_in_percent" type="DECIMAL(19, 2)"/>
+            <column name="special_redemption_each_year_in_percent" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-4">
+        <createTable tableName="forecast_configuration">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="forecast_configurationPK"/>
+            </column>
+            <column name="country_code" type="VARCHAR(255)"/>
+            <column name="deprecation" type="DOUBLE"/>
+            <column name="rental_increase" type="DOUBLE"/>
+            <column name="rental_increase_frequence" type="INT"/>
+            <column name="running_cost_index" type="DOUBLE"/>
+            <column name="tax_quote" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-5">
+        <createTable tableName="property">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="propertyPK"/>
+            </column>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country_code" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="street_number" type="VARCHAR(255)"/>
+            <column name="zip" type="VARCHAR(255)"/>
+            <column name="reconstruction" type="DECIMAL(19, 2)"/>
+            <column name="renovation" type="DECIMAL(19, 2)"/>
+            <column name="land_area_in_qm" type="DECIMAL(19, 2)"/>
+            <column name="living_space_in_qm" type="DECIMAL(19, 2)"/>
+            <column name="net_assets" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="no_apartments" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="no_parking" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="agency" type="DECIMAL(19, 2)"/>
+            <column name="court" type="DECIMAL(19, 2)"/>
+            <column name="land_acquisition" type="DECIMAL(19, 2)"/>
+            <column name="notary" type="DECIMAL(19, 2)"/>
+            <column name="valuation" type="DECIMAL(19, 2)"/>
+            <column name="purchase_date" type="date"/>
+            <column name="purchase_price" type="DECIMAL(19, 2)"/>
+            <column name="rental_net" type="DECIMAL(19, 2)"/>
+            <column name="administration_each_apartment" type="DECIMAL(19, 2)"/>
+            <column name="maintenance_each_qm" type="DECIMAL(19, 2)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="year_of_construction" type="INT"/>
+            <column name="owner_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-6">
+        <createTable tableName="property_aud">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="property_audPK"/>
+            </column>
+            <column name="rev" type="INT">
+                <constraints primaryKey="true" primaryKeyName="property_audPK"/>
+            </column>
+            <column name="revtype" type="TINYINT"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="country_code" type="VARCHAR(255)"/>
+            <column name="street" type="VARCHAR(255)"/>
+            <column name="street_number" type="VARCHAR(255)"/>
+            <column name="zip" type="VARCHAR(255)"/>
+            <column name="reconstruction" type="DECIMAL(19, 2)"/>
+            <column name="renovation" type="DECIMAL(19, 2)"/>
+            <column name="land_area_in_qm" type="DECIMAL(19, 2)"/>
+            <column name="living_space_in_qm" type="DECIMAL(19, 2)"/>
+            <column name="net_assets" type="DOUBLE"/>
+            <column name="no_apartments" type="BIGINT"/>
+            <column name="no_parking" type="BIGINT"/>
+            <column name="agency" type="DECIMAL(19, 2)"/>
+            <column name="court" type="DECIMAL(19, 2)"/>
+            <column name="land_acquisition" type="DECIMAL(19, 2)"/>
+            <column name="notary" type="DECIMAL(19, 2)"/>
+            <column name="valuation" type="DECIMAL(19, 2)"/>
+            <column name="purchase_date" type="date"/>
+            <column name="purchase_price" type="DECIMAL(19, 2)"/>
+            <column name="rental_net" type="DECIMAL(19, 2)"/>
+            <column name="administration_each_apartment" type="DECIMAL(19, 2)"/>
+            <column name="maintenance_each_qm" type="DECIMAL(19, 2)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="year_of_construction" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-7">
+        <createTable tableName="property_credit">
+            <column name="property_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="credit_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="property_creditPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-8">
+        <createTable tableName="revinfo">
+            <column autoIncrement="true" name="rev" type="INT">
+                <constraints primaryKey="true" primaryKeyName="revinfoPK"/>
+            </column>
+            <column name="revtstmp" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-9">
+        <createTable tableName="user_role">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="user_rolePK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-10">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="usersPK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="enabled" type="BOOLEAN"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="user_name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-11">
+        <createTable tableName="users_user_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_roles_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-12">
+        <addUniqueConstraint columnNames="year, month, day, property_id, type" constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-13">
+        <addUniqueConstraint columnNames="country_code" constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-14">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="users_user_roles" constraintName="FK_USER_ROLE_TO_USER" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-15">
+        <addForeignKeyConstraint baseColumnNames="user_roles_id" baseTableName="users_user_roles" constraintName="FK_USER_TO_USER_ROLE" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_role" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-16">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="property_aud" constraintName="FKbax3qj40a4fxbpk03gaqswe57" deferrable="false" initiallyDeferred="false" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-17">
+        <addForeignKeyConstraint baseColumnNames="property_id" baseTableName="cost_planning" constraintName="FKmgoc8xq8rg6qqjtskbuuwphij" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="property" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-18">
+        <addForeignKeyConstraint baseColumnNames="property_id" baseTableName="property_credit" constraintName="FKp2q6rr6opxrk6r2kt4rl5mct2" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="property" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-19">
+        <addForeignKeyConstraint baseColumnNames="rev" baseTableName="credit_aud" constraintName="FKpabkjmbd9ephut6xcs0fwy47v" deferrable="false" initiallyDeferred="false" referencedColumnNames="rev" referencedTableName="revinfo" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-20">
+        <addForeignKeyConstraint baseColumnNames="owner_id" baseTableName="property" constraintName="FKqje3em0djsxgnxwy7klv6yju9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="Michael Hegner" id="1556558331044-21">
+        <addForeignKeyConstraint baseColumnNames="credit_id" baseTableName="property_credit" constraintName="FKrie9lx44ruwlaelmxr26wocp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="credit" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
