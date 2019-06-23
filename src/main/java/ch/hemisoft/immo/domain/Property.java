@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -48,27 +49,27 @@ public class Property implements Ownable {
     // Basic Data ...
     // ==============================================================================================
 
-    @NotNull @Min(1) @Max(100)      long            noApartments;
-    @NotNull @Min(0) @Max(100)      long            noParking;
-    @NotNull @Min(1) @Max(10000)    BigDecimal      livingSpaceInQm;
-    @NotNull @Min(0) @Max(10000)    BigDecimal      landAreaInQm;
-    @NotNull @Valid                 Address         address;
-    @NotNull @Min(1800) @Max(2100)  Integer         yearOfConstruction;
+    @NotNull @Min(1) @Max(100)   @Column(nullable = false)    long            noApartments;
+    @NotNull @Min(0) @Max(100)   @Column(nullable = false)    long            noParking;
+    @NotNull @Min(1) @Max(10000) @Column(nullable = false)    BigDecimal      livingSpaceInQm;
+    @NotNull @Min(0) @Max(10000) @Column(nullable = false)    BigDecimal      landAreaInQm;
+    @NotNull @Valid                                           Address         address;
+    @NotNull @Min(1800) @Max(2100) @Column(nullable = false)  Integer         yearOfConstruction;
 
-    @NotNull @Enumerated(STRING)    PropertyType    type;
-    @NotNull @Enumerated(STRING)    PropertyStatus  status;
+    @NotNull @Enumerated(STRING) @Column(nullable = false)    PropertyType    type;
+    @NotNull @Enumerated(STRING) @Column(nullable = false)    PropertyStatus  status;
     
     @DateTimeFormat(iso=DATE)
-    @PastLocalDate                  LocalDate       purchaseDate; // TODO: Combined Check Constained with status
+    @PastLocalDate               @Column(nullable = false)    LocalDate       purchaseDate; // TODO: Combined Check Constained with status
 
     
     // ==============================================================================================
     // Purchase Costs ...
     // ==============================================================================================
 
-    @NotNull @Min(1) @Max(10000000) BigDecimal      purchasePrice;
-    @NotNull @Valid                 PurchaseCost    purchaseCost;
-    @NotNull @Valid                 CompletionCost  completionCost;
+    @NotNull @Min(1) @Max(10000000) @Column(nullable = false) BigDecimal      purchasePrice;
+    @NotNull @Valid                 @Column(nullable = false) PurchaseCost    purchaseCost;
+    @NotNull @Valid                 @Column(nullable = false) CompletionCost  completionCost;
     
     public BigDecimal getTotalAttendantCost() {
         return BigDecimalUtils.convert(getTotalAttendantCostAsDouble());
@@ -92,7 +93,7 @@ public class Property implements Ownable {
     // Management Costs ...
     // ==============================================================================================
     
-    @NotNull @Valid                 RunningCost     runningCost;
+    @NotNull @Valid                 @Column(nullable = false) RunningCost     runningCost;
     
     public BigDecimal getTotalAdministrationCost() {
         double administrationEachApartment = null == runningCost || null == runningCost.getAdministrationEachApartment() ? 0.0 : runningCost.getAdministrationEachApartment().doubleValue();
@@ -115,7 +116,7 @@ public class Property implements Ownable {
     // Rental ...
     // ==============================================================================================
     
-    @NotNull @Min(0)                BigDecimal      rentalNet;
+    @NotNull @Min(0)                @Column(nullable = false) BigDecimal      rentalNet;
     
     public BigDecimal getRentalNetAfterManagementCost() {
         return BigDecimalUtils.convert(getRentalNetAfterManagementCostAsDouble());
@@ -147,7 +148,7 @@ public class Property implements Ownable {
     // ==============================================================================================
     // Financial Needs ...
     // ==============================================================================================
-    @Min(0)                 double        netAssets;
+    @Min(0)                         @Column(nullable = false) double        netAssets;
     
     public BigDecimal getFinancialNeedsTotal() {
         return BigDecimalUtils.convert(getFinancialNeedsTotalAsDouble());

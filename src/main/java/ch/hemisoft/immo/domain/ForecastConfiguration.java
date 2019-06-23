@@ -17,18 +17,18 @@ import lombok.ToString;
 
 @Entity
 @Table(uniqueConstraints={
-        @UniqueConstraint(columnNames = {"countryCode"}, name="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE")
+        @UniqueConstraint(columnNames = "countryCode", name="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE")
 }) 
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
 @Data
 public class ForecastConfiguration {
-    @Id @GeneratedValue(strategy = IDENTITY) Long       id;
-    @NotNull @Column(unique=true)            String     countryCode; // TODO: CHECK VALID CODE
-    @NotNull                                 Double     taxQuote;
-    @NotNull                                 Double     runningCostIndex;
-    @NotNull                                 Double     deprecation;
-    @NotNull                                 Double     rentalIncrease;
-    @NotNull                                 Integer    rentalIncreaseFrequence;
+    @Id @GeneratedValue(strategy = IDENTITY)          Long       id;
+    @NotNull @Column(unique = true, nullable = false) String     countryCode; // TODO: CHECK VALID CODE
+    @NotNull @Column(nullable = false)                Double     taxQuote;
+    @NotNull @Column(nullable = false)                Double     runningCostIndex;
+    @NotNull @Column(nullable = false)                Double     deprecation;
+    @NotNull @Column(nullable = false)                Double     rentalIncrease;
+    @NotNull @Column(nullable = false)                Integer    rentalIncreaseFrequence;
 }

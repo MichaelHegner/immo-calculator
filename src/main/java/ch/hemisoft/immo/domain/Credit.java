@@ -6,6 +6,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -34,15 +35,15 @@ import net.hemisoft.financial.calculator.library.utils.AnnuityCalculator;
 @RequiredArgsConstructor
 @Data
 public class Credit {
-    @Id @GeneratedValue(strategy = IDENTITY)    Long        id;
-    @Size(min = 1, max = 255)                   String      nameOfInstitution;
-    @Min(0)                                     BigDecimal  capital                             = BigDecimal.ZERO;
-    @Min(0)                                     BigDecimal  interestRateNominalInPercent        = BigDecimal.ZERO;
-    @Min(0)                                     BigDecimal  redemptionAtBeginInPercent          = BigDecimal.ZERO;            
-    @Min(0)                                     BigDecimal  specialRedemptionEachYearInPercent  = BigDecimal.ZERO;
-                                                Boolean     active                              = Boolean.FALSE;
+    @Id @GeneratedValue(strategy = IDENTITY)            Long        id;
+    @Size(min = 1, max = 255) @Column(nullable = false) String      nameOfInstitution;
+    @Min(0) @Column(nullable = false)                   BigDecimal  capital                             = BigDecimal.ZERO;
+    @Min(0) @Column(nullable = false)                   BigDecimal  interestRateNominalInPercent        = BigDecimal.ZERO;
+    @Min(0) @Column(nullable = false)                   BigDecimal  redemptionAtBeginInPercent          = BigDecimal.ZERO;            
+    @Min(0) @Column(nullable = false)                   BigDecimal  specialRedemptionEachYearInPercent  = BigDecimal.ZERO;
+            @Column(nullable = false)                   Boolean     active                              = Boolean.FALSE;
     
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, optional = false)
     @JoinTable(
             name                = "PROPERTY_CREDIT",
             joinColumns         = @JoinColumn(name="CREDIT_ID",   nullable = false, foreignKey = @ForeignKey(name = "FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"), unique = true),
@@ -50,8 +51,9 @@ public class Credit {
             foreignKey          = @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_CREDIT"),
             inverseForeignKey   = @ForeignKey(name="FK_PROPERTY_CREDIT_OPTIONS_TO_PROPERTY")
     )
+    
     @org.hibernate.envers.NotAudited
-    @NotNull @NonNull                           Property     property;
+    @NotNull @NonNull                                   Property     property;
     
     public void activate()    { active = TRUE; }
     public void deactivate()  { active = Boolean.FALSE; }
