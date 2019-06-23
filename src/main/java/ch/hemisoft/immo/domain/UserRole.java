@@ -3,6 +3,7 @@ package ch.hemisoft.immo.domain;
 import static javax.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PACKAGE;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,5 +22,5 @@ import lombok.ToString;
 @Data
 public class UserRole {
     @Id @GeneratedValue(strategy = IDENTITY)    Long    id;
-    @NonNull @NotNull                           String  name;
+    @NonNull @NotNull @Column(nullable = false) String  name;
 }

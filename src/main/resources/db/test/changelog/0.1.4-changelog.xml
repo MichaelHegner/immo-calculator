@@ -1,121 +1,37 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
-    <changeSet author="micha (generated)" id="1561286849026-39">
-        <dropSequence sequenceName="hibernate_sequence"/>
+    <changeSet author="Michael Hegner" id="1561297180167-11">
+        <addUniqueConstraint columnNames="property_id" constraintName="UK_rw02o4g3prefl02a7kwjt7g5o" tableName="cost_planning"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-1">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="administration_each_apartment" tableName="property"/>
+    <changeSet author="Michael Hegner" id="1561297180167-1">
+        <addNotNullConstraint columnDataType="boolean" columnName="active" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-2">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="agency" tableName="property"/>
+    <changeSet author="Michael Hegner" id="1561297180167-2">
+        <addNotNullConstraint columnDataType="number(19,2)" columnName="capital" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-3">
-        <dropNotNullConstraint columnDataType="decimal(10,2)" columnName="amount" tableName="cost_planning"/>
+    <changeSet author="Michael Hegner" id="1561297180167-3">
+        <addNotNullConstraint columnDataType="number(19,2)" columnName="interest_rate_nominal_in_percent" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-4">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="city" tableName="property"/>
+    <changeSet author="Michael Hegner" id="1561297180167-4">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="name_of_institution" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-5">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="country_code" tableName="forecast_configuration"/>
+    <changeSet author="Michael Hegner" id="1561297180167-5">
+        <addNotNullConstraint columnDataType="date" columnName="purchase_date" tableName="property"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-6">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="country_code" tableName="property"/>
+    <changeSet author="Michael Hegner" id="1561297180167-6">
+        <addNotNullConstraint columnDataType="number(19,2)" columnName="redemption_at_begin_in_percent" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-7">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="court" tableName="property"/>
+    <changeSet author="Michael Hegner" id="1561297180167-7">
+        <addDefaultValue columnDataType="int" columnName="rev" defaultValueComputed="nextval('revinfo_rev_seq'::regclass)" tableName="revinfo"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-8">
-        <dropNotNullConstraint columnDataType="double" columnName="deprecation" tableName="forecast_configuration"/>
+    <changeSet author="Michael Hegner" id="1561297180167-8">
+        <addNotNullConstraint columnDataType="number(19,2)" columnName="special_redemption_each_year_in_percent" tableName="credit"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-9">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="description" tableName="cost_planning"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-10">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="email" tableName="users"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-11">
-        <dropNotNullConstraint columnDataType="boolean" columnName="enabled" tableName="users"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-12">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="land_acquisition" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-13">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="land_area_in_qm" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-14">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="living_space_in_qm" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-15">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="maintenance_each_qm" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-16">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="name" tableName="user_role"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-17">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="notary" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-18">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="password" tableName="users"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-19">
-        <dropNotNullConstraint columnDataType="bigint" columnName="property_id" tableName="cost_planning"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-20">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="purchase_price" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-21">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="reconstruction" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-22">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="renovation" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-23">
-        <dropNotNullConstraint columnDataType="double" columnName="rental_increase" tableName="forecast_configuration"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-24">
-        <dropNotNullConstraint columnDataType="int" columnName="rental_increase_frequence" tableName="forecast_configuration"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-25">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="rental_net" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-26">
-        <dropNotNullConstraint columnDataType="double" columnName="running_cost_index" tableName="forecast_configuration"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-27">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="status" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-28">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="street" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-29">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="street_number" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-30">
-        <dropNotNullConstraint columnDataType="double" columnName="tax_quote" tableName="forecast_configuration"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-31">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="type" tableName="cost_planning"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-32">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="type" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-33">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="user_name" tableName="users"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-34">
-        <dropNotNullConstraint columnDataType="decimal(19,2)" columnName="valuation" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-35">
-        <dropNotNullConstraint columnDataType="int" columnName="year_of_construction" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-36">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="zip" tableName="property"/>
-    </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-37">
+    <changeSet author="Michael Hegner" id="1561297180167-9">
         <dropUniqueConstraint constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
         <addUniqueConstraint columnNames="year, month, day, property_id, type" constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
     </changeSet>
-    <changeSet author="micha (generated)" id="1561286849026-38">
+    <changeSet author="Michael Hegner" id="1561297180167-10">
         <dropUniqueConstraint constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
         <addUniqueConstraint columnNames="country_code" constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
     </changeSet>

@@ -8,6 +8,7 @@ import static lombok.AccessLevel.PROTECTED;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -34,10 +35,10 @@ import lombok.Setter;
 @Getter @Setter
 public class User implements PasswordProtectable {
     @Id @GeneratedValue(strategy = IDENTITY)    Long    id;
-    @NonNull @NotNull                           String  userName;
-    @NonNull @NotNull                           String  password;
-    @NonNull @NotNull                           String  email;
-    @NonNull @NotNull                           Boolean enabled;
+    @NonNull @NotNull @Column(nullable = false) String  userName;
+    @NonNull @NotNull @Column(nullable = false) String  password;
+    @NonNull @NotNull @Column(nullable = false) String  email;
+    @NonNull @NotNull @Column(nullable = false) Boolean enabled;
 
     @JoinTable(
             foreignKey = @ForeignKey(name = "FK_USER_ROLE_TO_USER"),

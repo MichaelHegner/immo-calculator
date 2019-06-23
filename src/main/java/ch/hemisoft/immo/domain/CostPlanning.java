@@ -39,11 +39,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @Data
 public class CostPlanning implements Ownable{
-    @Id @GeneratedValue(strategy = IDENTITY)            Long        id;
-    @NotNull @NonNull @OneToOne(fetch=LAZY)             Property    property;
-    @NonNull @NotNull @Column(precision=10, scale=2)    BigDecimal  amount      = BigDecimalUtils.convert(0.0);
-    @NonNull @NotNull @Enumerated(STRING)               CostType    type;
-    @NonNull @NotNull                                   String      description;
+    @Id @GeneratedValue(strategy = IDENTITY)                            Long        id;
+    @NotNull @NonNull @OneToOne(fetch=LAZY, optional = false)           Property    property;
+    @NonNull @NotNull @Column(precision=10, scale=2, nullable = false) 	BigDecimal  amount      = BigDecimalUtils.convert(0.0);
+    @NonNull @NotNull @Enumerated(STRING) @Column(nullable = false)     CostType    type;
+    @NonNull @NotNull @Column(nullable = false)                         String      description;
 
     @AttributeOverrides({
         @AttributeOverride( name = "year",  column = @Column(   name = "year"   )),
