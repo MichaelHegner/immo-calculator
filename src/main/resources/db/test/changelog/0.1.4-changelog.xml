@@ -32,7 +32,7 @@
         <addUniqueConstraint columnNames="year, month, day, property_id, type" constraintName="UK_COST_PLANNING" tableName="cost_planning"/>
     </changeSet>
     <changeSet author="Michael Hegner" id="1561297180167-10">
-        <dropUniqueConstraint constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
+<!--         <dropUniqueConstraint constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/> -->
         <addUniqueConstraint columnNames="country_code" constraintName="UK_FORECAST_CONFIGURATION_ON_COUNTRY_CODE" tableName="forecast_configuration"/>
     </changeSet>
 </databaseChangeLog>
