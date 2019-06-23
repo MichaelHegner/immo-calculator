@@ -76,6 +76,7 @@ Add <version>-changelog.xml to liquibase-changelog-master.xml
 
 DATABASE-BACKUP
 https://devcenter.heroku.com/articles/heroku-postgres-backups#restoring-backups
+heroku pg:backups:restore <version>
 https://devcenter.heroku.com/articles/heroku-postgres-import-export
 
 

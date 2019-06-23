@@ -21,9 +21,9 @@
     <changeSet author="Michael Hegner" id="1561297180167-6">
         <addNotNullConstraint columnDataType="number(19,2)" columnName="redemption_at_begin_in_percent" tableName="credit"/>
     </changeSet>
-    <changeSet author="Michael Hegner" id="1561297180167-7">
-        <addDefaultValue columnDataType="int" columnName="rev" defaultValueComputed="nextval('revinfo_rev_seq'::regclass)" tableName="revinfo"/>
-    </changeSet>
+<!--     <changeSet author="Michael Hegner" id="1561297180167-7"> -->
+<!--         <addDefaultValue columnDataType="int" columnName="rev" defaultValueComputed="nextval('revinfo_rev_seq'::regclass)" tableName="revinfo"/> -->
+<!--     </changeSet> -->
     <changeSet author="Michael Hegner" id="1561297180167-8">
         <addNotNullConstraint columnDataType="number(19,2)" columnName="special_redemption_each_year_in_percent" tableName="credit"/>
     </changeSet>
