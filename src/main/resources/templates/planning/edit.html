@@ -19,7 +19,7 @@
 		
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 		
-			<a id="linkSelectFromTable" th:if="${null != property and null != property.id}" th:href="@{/planning/edit/} + ${property.id} + '/planning/'"></a> 
+			<a id="linkSelectFromTable" th:if="${null != property and null != property.id}" th:href="@{/planning/edit/} + ${property.id} + '/planning'"></a> 
 			<a id="linkListPage" th:href="@{/planning/list}"></a> 
 			<a id="linkNewPage" th:href="@{/planning/new}"></a> 
 			<a id="linkEditPage" th:href="@{/planning/edit}"></a> 
