@@ -26,14 +26,6 @@ public class ImmoCalculatorAppApplication {
 		
 	    @Override
 	    public void run(String... args) throws Exception {
-	    	if(null == userRepository.findByUserName("user")) {
-	    		String userName = "user";
-	    		String password = "password";
-				String email = "user@hemisoft.net";
-				Boolean enabled = true;
-				userRepository.save(new User(userName, password, email, enabled));
-	    	}
-	    	
 	    	if(CollectionUtils.isEmpty(forcastConfigurationRepository.findAll())) {
 	    		forcastConfigurationRepository.save(createAustrianConfig());
 	    		forcastConfigurationRepository.save(createGermenConfig());
