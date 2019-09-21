@@ -1,7 +1,7 @@
 Install Heroku on your System:
 https://devcenter.heroku.com/articles/getting-started-with-java#set-up
 
-Create Heroku App
+Create Heroku App:
 https://devcenter.heroku.com/articles/deploying-java-applications-with-the-heroku-maven-plugin
 
 Deploy the app
