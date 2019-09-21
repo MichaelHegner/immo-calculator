@@ -1,9 +1,10 @@
 $(document).ready(function() {
-	registerEventTableRowClick();	// OVERVIEW PAGE
 	registerNewButton();			// OVERVIEW PAGE
 	registerSubmitButton();			// EDIT PAGE
 	registerDeactivateButton();		// FINANCE PAGE
 	registerActivateButton();		// FINANCE PAGE
+	registerEditButton();			// LIST PAGE
+	registerDeleteButton();			// LIST PAGE
 });
 
 function registerNewButton() {
@@ -15,13 +16,6 @@ function registerNewButton() {
 function registerSubmitButton() {
 	$("#buttonSubmit").click(function(){
 		$('form').submit();
-	});
-}
-
-function registerEventTableRowClick() {
-	$("tr.property-row").click(function(e){
-		var propertyId = $(this).find("td:first").text();
-		directToSelectUrl(propertyId);
 	});
 }
 
@@ -42,6 +36,33 @@ function registerActivateButton() {
 			var propertyId = $("#propertyId").val();
 			var creditId = $(this).parent().find('input[type=hidden]').val();
 			window.location = getBaseURL() + '/investment/edit/' + propertyId + '/credit/' + creditId + '/swap';
+		});
+	});
+}
+
+function registerEditButton() {
+	$(".btnEdit").each(function(){
+		$(this).click(function(){
+			var propertyId = $(this).closest('tr').find("td:first").text();
+			directToEditUrl(propertyId);
+		});
+	});
+}
+
+function registerDeleteButton() {
+	$(".btnDelete").each(function(){
+		$(this).click(function(){
+			// TODO: LINK
+			var propertyId = $(this).closest('tr').find("td:first").text();
+			var url = getBaseURL() + getDeleteUrl();
+			
+			$.ajax({
+			   url: getBaseURL() + getDeleteUrl() + "/" + propertyId,
+			   type: 'DELETE',
+			   success: function(response) {
+				   directToListUrl();
+			   }
+			});
 		});
 	});
 }
@@ -74,6 +95,10 @@ function getEditUrl(id) {
 	return url;
 }
 
+function getDeleteUrl() {
+	return $('#linkDeletePage').attr('href');
+}
+
 function getBaseURL() {
 	return location.protocol + '//' + location.host;
 }
@@ -98,6 +123,10 @@ function directToNewUrl() {
 
 function directToEditUrl(id) {
 	directToUrl(getEditUrl(id));
+}
+
+function directToDeleteUrl(id) {
+	directToUrl(getDeleteUrl(id));
 }
 
 function directToUrl(url) {

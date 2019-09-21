@@ -42,4 +42,9 @@ public class PropertyServiceImpl implements PropertyService {
 	public Property save(Property property) {
 		return repository.save(property);
 	}
+
+	@Override
+	public void deleteById(long id) {
+		repository.deleteById(id);
+	}
 }
