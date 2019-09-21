@@ -10,4 +10,5 @@ public interface PropertyService {
 	List<Property> findAllConcrete();
 	Property find(Long id);
 	Property save(Property property);
+	void deleteById(long id);
 }

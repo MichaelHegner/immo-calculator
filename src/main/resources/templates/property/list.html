@@ -14,8 +14,10 @@
 			<!--/*/ <th:block th:replace="fragments/navbar :: common-navbar"></th:block> /*/-->
 			
 			<a id="linkSelectFromTable" th:href="@{/property/edit}"></a> 
+			<a id="linkListPage" th:href="@{/property/list}"></a> 
 			<a id="linkNewPage" th:href="@{/property/new}"></a> 
 			<a id="linkEditPage" th:href="@{/property/edit}"></a> 
+			<a id="linkDeletePage" th:href="@{/property/delete}"></a> 
 		
 			<main id="mainPage">
 				<div class="panel panel-primary">
@@ -39,6 +41,7 @@
 										<th text="#{property.landAreaInQm}">Grundstücksfläche</th>
 										<th text="#{property.yearOfConstruction}">Bauhjahr</th>
 										<th text="#{property.propertyStatus}">Status</th>
+										<th></th>
 									</tr>
 									<tr th:if="${#lists.isEmpty(properties)}">
 										<td colspan="6" text="#{gui.list.entry.no}">Keine Einträge vorhanden.</td>
@@ -52,6 +55,14 @@
 										<td th:text="${property.landAreaInQm}">LAND_AREA_IN_QM</td>
 										<td th:text="${property.yearOfConstruction}">YEAR_OF_CONSTRUCTION</td>
 										<td th:text="#{property.propertyStatus. + ${property.status.name()}}">STATUS</td>
+										<td>
+										    <button type="submit" class="btn btn-default btnEdit">
+                                                 <span class="glyphicon glyphicon-edit"></span>
+                                            </button>
+			                                <button type="submit" class="btn btn-default btnDelete">
+			                                     <span class="glyphicon glyphicon-trash"></span>
+			                                </button>
+										</td>
 									</tr>
 								</table>
 							</section>				
